@@ -50,8 +50,10 @@ const activites: Activity[] = [
 
 export default function ActivityCards() {
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-      <h2 className="mb-3 text-center text-4xl">Activités</h2>
+    <section className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 sm:pt-16">
+      <h2 className="mb-3 text-center font-display italic text-4xl text-violet-dark">
+        Activités
+      </h2>
       <p className="mb-10 text-center font-display italic text-violet-dark">
         Reprise des cours le 08 septembre
       </p>
@@ -77,8 +79,8 @@ export default function ActivityCards() {
               {a.sousTitre}
             </p>
             <p className="mt-3 flex-1 text-sm text-encre/80">{a.texte}</p>
-            <a
-              href={a.href}
+            
+              <a href={a.href}
               className="mx-auto mt-5 min-h-[44px] rounded-pill bg-violet-light px-5 py-2.5 text-sm font-semibold text-violet-dark"
             >
               {a.cta}
