@@ -53,8 +53,8 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/enligne/200/200",
     cta: "Contenu en ligne",
     href: "/mon-espace",
-    niveau: "Tous niveaux",
-    duree: "45 min",
+    niveau: "A votre rythme",
+    duree: "",
     badge: "Nouveau !",
   },
 ];
