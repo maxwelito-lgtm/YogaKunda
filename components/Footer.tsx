@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { site } from "@/site.config";
 
 export default function Footer() {
