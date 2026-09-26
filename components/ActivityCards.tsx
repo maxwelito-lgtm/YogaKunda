@@ -85,7 +85,7 @@ export default function ActivityCards() {
                 alt={a.titre}
                 className="h-full w-full rounded-full object-cover"
               />
-              <div className="absolute -bottom-1 left-1/2 flex -translate-x-1/2 gap-1">
+              <div className="absolute -bottom-1 left-0 flex gap-1">
                 <span className="flex items-center gap-1 rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
                   <LevelIcon />
                   {a.niveau}
