@@ -165,62 +165,104 @@ function LotusIcon() {
   );
 }
 
+// Fond pastel + couleur d'accent par catégorie
+const iconStyles: Record<string, { bg: string; color: string }> = {
+  stress: { bg: "#FAECE7", color: "#993C1D" },
+  sommeil: { bg: "#EEEDFE", color: "#534AB7" },
+  energie: { bg: "#FAEEDA", color: "#854F0B" },
+  decouverte: { bg: "#E1F5EE", color: "#0F6E56" },
+};
+
 function FocusIcon({ type }: { type: string }) {
-  const common = {
-    width: 30,
-    height: 30,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "#ffffff",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
+  const { bg, color } = iconStyles[type];
 
-  const icons: Record<string, JSX.Element> = {
+  const content: Record<string, JSX.Element> = {
+    // Om — stress & anxiété
     stress: (
-      <svg {...common} aria-hidden="true">
-        <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
-        <circle cx="12" cy="12" r="4" />
-      </svg>
+      <span style={{ fontSize: 28, color, lineHeight: 1 }} aria-hidden="true">
+        ॐ
+      </span>
     ),
+    // Lotus — sommeil
     sommeil: (
-      <svg {...common} aria-hidden="true">
-        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z" />
+      <svg
+        width={30}
+        height={30}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 21c-4.5-1-7.5-4.2-7.5-8 3.2 1 5.3 3 7.5 6.2C14.2 15.8 16.3 13.8 19.5 13c0 3.8-3 7-7.5 8z" />
+        <path d="M12 14c-2-3-2-7.5 0-11 2 3.5 2 8 0 11z" />
       </svg>
     ),
+    // Serpent kundalini mystique — énergie & vitalité
     energie: (
-      <svg {...common} aria-hidden="true">
-        <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
+      <svg width={42} height={42} viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M13.2 5.1c1.9 1 3.3 2.9 3.4 5.4"
+          fill="none"
+          stroke={color}
+          strokeWidth={2.6}
+          strokeLinecap="round"
+        />
+        <path
+          d="M16.6 10.5c.1 2.4-1.7 4.4-4.3 5.1"
+          fill="none"
+          stroke={color}
+          strokeWidth={2.1}
+          strokeLinecap="round"
+        />
+        <path
+          d="M12.3 15.6c-1.9.5-3.6-.4-4-2.1-.3-1.3.5-2.5 1.8-2.7"
+          fill="none"
+          stroke={color}
+          strokeWidth={1.5}
+          strokeLinecap="round"
+        />
+        <path
+          d="M10.1 10.8c.6.1 1 .5.9 1"
+          fill="none"
+          stroke={color}
+          strokeWidth={1}
+          strokeLinecap="round"
+        />
+        <path
+          d="M12.8 3.4 15 4.6c.5.3.5.9 0 1.1l-2.3 1c-.5.2-1-.2-1-.7l.1-2c0-.5.5-.9 1-.6Z"
+          fill={color}
+        />
+        <path
+          d="M14.7 4.1l1.6-.5M14.7 4.1l1.3-1.1"
+          stroke={color}
+          strokeWidth={0.9}
+          strokeLinecap="round"
+        />
+        <circle cx={6.1} cy={7} r={0.5} fill="#BA7517" />
+        <circle cx={19} cy={9} r={0.4} fill="#BA7517" />
+        <path
+          d="M18 15.8a1.6 1.6 0 1 1 0-2.9 2 2 0 1 0 0 2.9z"
+          fill="#BA7517"
+        />
       </svg>
     ),
+    // अ — découverte / débutant (première lettre du devanagari)
     decouverte: (
-      <svg {...common} aria-hidden="true">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 8v4l3 2" />
-      </svg>
+      <span style={{ fontSize: 30, color, lineHeight: 1 }} aria-hidden="true">
+        अ
+      </span>
     ),
-  };
-
-  const gradients: Record<string, string> = {
-    stress: "from-orange-400 to-pink-500",
-    sommeil: "from-indigo-500 to-blue-600",
-    energie: "from-amber-400 to-orange-500",
-    decouverte: "from-emerald-400 to-teal-600",
-  };
-
-  const shadows: Record<string, string> = {
-    stress: "shadow-orange-300/50",
-    sommeil: "shadow-indigo-400/50",
-    energie: "shadow-amber-300/50",
-    decouverte: "shadow-emerald-300/50",
   };
 
   return (
     <span
-      className={`flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br ${gradients[type]} shadow-lg ${shadows[type]}`}
+      className="flex h-16 w-16 items-center justify-center rounded-2xl"
+      style={{ backgroundColor: bg }}
     >
-      {icons[type]}
+      {content[type]}
     </span>
   );
 }
