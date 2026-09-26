@@ -74,15 +74,18 @@ export default function ActivityCards() {
                 {a.badge}
               </span>
             )}
-            <img
-              src={a.image}
-              alt={a.titre}
-              className="mx-auto mb-4 h-20 w-20 rounded-full object-cover"
-            />
-            <span className="mx-auto mb-2 w-fit rounded-pill bg-encre/5 px-3 py-1 text-xs font-medium text-encre/70">
-              Niveau : {a.niveau}
-            </span>
-            <h3 className="text-xl">{a.titre}</h3>
+            <div className="relative mx-auto mb-4 h-20 w-20">
+              <img
+                src={a.image}
+                alt={a.titre}
+                className="h-full w-full rounded-full object-cover"
+              />
+              <span className="absolute -bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
+                <LevelIcon />
+                {a.niveau}
+              </span>
+            </div>
+            <h3 className="mt-3 text-xl">{a.titre}</h3>
             <p className="mt-1 font-display italic text-sm text-encre/70">
               {a.sousTitre}
             </p>
@@ -94,5 +97,15 @@ export default function ActivityCards() {
         ))}
       </div>
     </section>
+  );
+}
+
+function LevelIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="14" width="4" height="7" rx="1" fill="currentColor" />
+      <rect x="10" y="9" width="4" height="12" rx="1" fill="currentColor" />
+      <rect x="17" y="4" width="4" height="17" rx="1" fill="currentColor" />
+    </svg>
   );
 }
