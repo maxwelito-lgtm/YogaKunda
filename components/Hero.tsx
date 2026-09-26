@@ -4,7 +4,7 @@ import { site } from "@/site.config";
 export default function Hero() {
   return (
     <section className="relative">
-      <div className="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[21/9]">
+      <div className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[21/9]">
         {/* Remplacer par une vraie photo (paysage, posture, lieu) */}
         <img
           src="https://picsum.photos/seed/yoga-hero/1600/700"
@@ -13,24 +13,24 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-encre/60 via-transparent to-transparent" />
 
-        <div className="absolute inset-0 flex flex-col justify-end gap-6 p-6 sm:p-12">
-          <h1 className="max-w-xl font-display text-4xl italic text-white sm:text-6xl">
+        <div className="absolute inset-0 flex flex-col justify-end gap-4 p-5 sm:gap-6 sm:p-12">
+          <h1 className="max-w-xl font-display text-3xl italic text-white sm:text-6xl">
             {site.accroche}
           </h1>
           <p className="max-w-md text-white/90">
             Cours de Kundalini et Tantra Yoga, en présentiel à {site.ville} ou en
             ligne, où que vous soyez et quand vous le voulez.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             <Link
               href="/inscription"
-              className="rounded-pill border-2 border-violet-dark bg-violet-light px-6 py-3 text-sm font-semibold text-violet-dark hover:bg-white"
+              className="rounded-pill border-2 border-violet-dark bg-violet-light px-4 py-2 text-xs font-semibold text-violet-dark hover:bg-white sm:px-6 sm:py-3 sm:text-sm"
             >
               Créer mon compte
             </Link>
             <Link
               href="/yoga"
-              className="rounded-pill border-2 border-white px-6 py-3 text-sm font-semibold text-white hover:bg-white hover:text-encre"
+              className="rounded-pill border-2 border-white px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-encre sm:px-6 sm:py-3 sm:text-sm"
             >
               Découvrir les formules
             </Link>
