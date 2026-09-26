@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-lavande text-encre font-body text-[16px] leading-relaxed;
+}
+
+h1, h2, h3, h4 {
+  @apply font-display;
+}
+
+/* Focus visible clavier — accessibilité */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #6B46C1;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
