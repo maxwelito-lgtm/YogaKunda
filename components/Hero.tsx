@@ -18,7 +18,7 @@ export default function Hero() {
             {site.accroche}
           </h1>
           <p className="max-w-md text-white/90 drop-shadow-md">
-            Cours de Kundalini et Tantra Yoga, en présentiel à {site.ville} ou en
+            Cours de Kundalini et Tantra Yoga, en présentiel ou en
             ligne, où que vous soyez et quand vous le voulez.
           </p>
           <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -41,8 +41,7 @@ export default function Hero() {
       {/* Bandeau essai gratuit */}
       <div className="bg-sauge/20 px-4 py-3 text-center text-sm sm:px-6">
         <strong className="font-semibold">7 jours d&rsquo;essai gratuit</strong>
-        {" "}sur les cours en ligne — renouvellement automatique sauf résiliation
-        avant échéance.
+        {" "}sur les cours en ligne —
       </div>
     </section>
   );

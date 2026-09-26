@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import EventBanner from "@/components/EventBanner";
 import ActivityCards from "@/components/ActivityCards";
 import LocationSection from "@/components/LocationSection";
 import MantrasBanner from "@/components/MantrasBanner";
@@ -12,7 +11,6 @@ export default function HomePage() {
     <main>
       <Header />
       <Hero />
-      <EventBanner />
       <ActivityCards />
       <LocationSection />
       <MantrasBanner />
