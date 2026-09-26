@@ -15,10 +15,7 @@ export const site = {
     instagram: "#",
   },
   nav: [
-    { label: "Yoga", href: "/yoga" },
-    { label: "Mon Espace en ligne", href: "/mon-espace" },
-    { label: "Thérapie Holistique", href: "/therapie-holistique" },
-    { label: "Nous rencontrer", href: "/nous-rencontrer" },
-    { label: "Mantras", href: "/mantras" },
+    { label: "Enseignements", href: "/enseignements" },
+    { label: "Nous contacter", href: "/nous-contacter" },
   ],
 };
