@@ -32,7 +32,7 @@ export default function Hero() {
               href="/yoga"
               className="rounded-pill border-2 border-white px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-encre sm:px-6 sm:py-3 sm:text-sm"
             >
-              Découvrir les formules
+              Essayer 7 jours gratuits
             </Link>
           </div>
         </div>
