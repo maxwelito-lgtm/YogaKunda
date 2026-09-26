@@ -19,7 +19,7 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/tantra/200/200",
     cta: "En savoir plus",
     href: "/yoga#tantra",
-    niveau: "Débutant",
+    niveau: "Niveau 1",
     duree: "60 min",
   },
   {
@@ -30,7 +30,7 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/kundalini/200/200",
     cta: "En savoir plus",
     href: "/yoga#kundalini",
-    niveau: "Intermédiaire",
+    niveau: "Niveau 2",
     duree: "60 min",
   },
   {
