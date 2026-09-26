@@ -260,7 +260,7 @@ function FocusIcon({ type }: { type: string }) {
   return (
     <span
       className="flex h-24 w-24 items-center justify-center rounded-2xl"
-      style={{ backgroundColor: bg }}
+      style={{ backgroundColor: bg, border: "2px solid rgba(0,0,0,0.8)" }}
     >
       {content[type]}
     </span>
