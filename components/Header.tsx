@@ -9,7 +9,26 @@ export default function Header() {
 
   return (
     <header className="bg-encre text-white">
-            <div className="relative mx-auto flex max-w-6xl items-center justify-end px-4 py-4 sm:px-6">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+        {/* Actions gauche : burger + connexion */}
+        <div className="flex items-center gap-4">
+          <button
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={open}
+            onClick={() => setOpen(!open)}
+            className="flex h-11 w-11 items-center justify-center rounded-pill md:hidden"
+          >
+            <BurgerIcon open={open} />
+          </button>
+          <Link
+            href="/connexion"
+            className="hidden items-center gap-2 text-sm font-medium text-violet-light hover:text-white sm:flex"
+          >
+            <UserIcon />
+            Se connecter
+          </Link>
+        </div>
+
         {/* Logo circulaire, centré */}
         <Link
           href="/"
@@ -21,27 +40,10 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Actions droite : connexion + panier + burger */}
-        <div className="flex items-center gap-4">
-          <Link
-            href="/connexion"
-            className="hidden items-center gap-2 text-sm font-medium text-violet-light hover:text-white sm:flex"
-          >
-            <UserIcon />
-            Se connecter
-          </Link>
-          <Link href="/panier" aria-label="Panier" className="p-2">
-            <CartIcon />
-          </Link>
-          <button
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-            className="flex h-11 w-11 items-center justify-center rounded-pill md:hidden"
-          >
-            <BurgerIcon open={open} />
-          </button>
-        </div>
+        {/* Action droite : panier */}
+        <Link href="/panier" aria-label="Panier" className="p-2">
+          <CartIcon />
+        </Link>
       </div>
 
       {/* Navigation desktop */}
