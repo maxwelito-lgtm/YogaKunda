@@ -146,10 +146,7 @@ export default function FocusSection() {
               ))}
             </div>
 
-            
-              href={selected.href}
-              className="mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
-            >
+            <a href={selected.href} className="mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white">
               {selected.cta}
             </a>
           </div>
