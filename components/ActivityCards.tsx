@@ -5,6 +5,7 @@ type Activity = {
   image: string;
   cta: string;
   href: string;
+  niveau: string;
   badge?: string;
 };
 
@@ -17,6 +18,7 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/tantra/200/200",
     cta: "En savoir plus",
     href: "/yoga#tantra",
+    niveau: "Débutant",
   },
   {
     titre: "Cours de Kundalini Yoga",
@@ -26,6 +28,7 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/kundalini/200/200",
     cta: "En savoir plus",
     href: "/yoga#kundalini",
+    niveau: "Intermédiaire",
   },
   {
     titre: "Cours en ligne & relaxations audio",
@@ -35,6 +38,7 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/enligne/200/200",
     cta: "Découvrir l'espace en ligne",
     href: "/mon-espace",
+    niveau: "Tous niveaux",
     badge: "Nouveau !",
   },
   {
@@ -45,6 +49,7 @@ const activites: Activity[] = [
     image: "https://picsum.photos/seed/therapie/200/200",
     cta: "En savoir plus",
     href: "/therapie-holistique",
+    niveau: "Tous niveaux",
   },
 ];
 
@@ -74,15 +79,15 @@ export default function ActivityCards() {
               alt={a.titre}
               className="mx-auto mb-4 h-20 w-20 rounded-full object-cover"
             />
+            <span className="mx-auto mb-2 w-fit rounded-pill bg-encre/5 px-3 py-1 text-xs font-medium text-encre/70">
+              Niveau : {a.niveau}
+            </span>
             <h3 className="text-xl">{a.titre}</h3>
             <p className="mt-1 font-display italic text-sm text-encre/70">
               {a.sousTitre}
             </p>
             <p className="mt-3 flex-1 text-sm text-encre/80">{a.texte}</p>
-            
-              <a href={a.href}
-              className="mx-auto mt-5 min-h-[44px] rounded-pill bg-violet-light px-5 py-2.5 text-sm font-semibold text-violet-dark"
-            >
+            <a href={a.href} className="mx-auto mt-5 min-h-[44px] rounded-pill bg-violet-light px-5 py-2.5 text-sm font-semibold text-violet-dark">
               {a.cta}
             </a>
           </article>
