@@ -1,8 +1,8 @@
 export default function CredibilityStats() {
   const stats = [
-    { chiffre: "5+", label: "ans d'expérience" },
+    { chiffre: "8+", label: "ans d'expérience" },
     { chiffre: "80+", label: "élèves accompagnés" },
-    { chiffre: "2", label: "disciplines enseignées" },
+    { chiffre: "5", label: "disciplines enseignées" },
     { chiffre: "100%", label: "présentiel & en ligne" },
   ];
 
