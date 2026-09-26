@@ -35,7 +35,7 @@ export default function Header() {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           aria-label="Accueil"
         >
-          <span className="shine-effect flex h-16 w-16 items-center justify-center rounded-full bg-white">
+          <span className="shine-effect flex h-12 w-12 items-center justify-center rounded-full bg-white sm:h-16 sm:w-16">
             <img
               src="/images/logo-yoga.png"
               alt={site.nom}
