@@ -8,7 +8,8 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-      <div className="relative mx-auto flex max-w-6xl items-center justify-end px-4 py-4 sm:px-6">
+    <header className="bg-encre text-white">
+            <div className="relative mx-auto flex max-w-6xl items-center justify-end px-4 py-4 sm:px-6">
         {/* Logo circulaire, centré */}
         <Link
           href="/"
@@ -19,7 +20,6 @@ export default function Header() {
             {site.nom}
           </span>
         </Link>
-
 
         {/* Actions droite : connexion + panier + burger */}
         <div className="flex items-center gap-4">
