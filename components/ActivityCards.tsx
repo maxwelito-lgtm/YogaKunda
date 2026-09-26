@@ -79,23 +79,12 @@ export default function ActivityCards() {
                 {a.badge}
               </span>
             )}
-            <div className="relative mx-auto mb-4 h-20 w-20">
-              <img
-                src={a.image}
-                alt={a.titre}
-                className="h-full w-full rounded-full object-cover"
-              />
-              <div className="absolute -bottom-1 left-0 flex gap-1">
-                <span className="flex items-center gap-1 rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
-                  <LevelIcon />
-                  {a.niveau}
-                </span>
-                <span className="flex items-center rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
-                  {a.duree}
-                </span>
-              </div>
-            </div>
-            <h3 className="mt-3 text-xl">{a.titre}</h3>
+            <img
+              src={a.image}
+              alt={a.titre}
+              className="mx-auto mb-4 h-20 w-20 rounded-full object-cover"
+            />
+            <h3 className="text-xl">{a.titre}</h3>
             <p className="mt-1 font-display italic text-sm text-encre/70">
               {a.sousTitre}
             </p>
@@ -103,6 +92,15 @@ export default function ActivityCards() {
             <a href={a.href} className="mx-auto mt-5 min-h-[44px] rounded-pill bg-violet-light px-5 py-2.5 text-sm font-semibold text-violet-dark">
               {a.cta}
             </a>
+            <div className="mx-auto mt-4 flex gap-2">
+              <span className="flex items-center gap-1 rounded-pill bg-encre/5 px-3 py-1 text-xs font-medium text-encre/70">
+                <LevelIcon />
+                {a.niveau}
+              </span>
+              <span className="flex items-center rounded-pill bg-encre/5 px-3 py-1 text-xs font-medium text-encre/70">
+                {a.duree}
+              </span>
+            </div>
           </article>
         ))}
       </div>
@@ -112,7 +110,7 @@ export default function ActivityCards() {
 
 function LevelIcon() {
   return (
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <rect x="3" y="14" width="4" height="7" rx="1" fill="currentColor" />
       <rect x="10" y="9" width="4" height="12" rx="1" fill="currentColor" />
       <rect x="17" y="4" width="4" height="17" rx="1" fill="currentColor" />
