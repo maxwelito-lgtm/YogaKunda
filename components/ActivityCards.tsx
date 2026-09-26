@@ -65,7 +65,7 @@ export default function ActivityCards() {
         Activités
       </h2>
       <p className="mb-10 text-center font-display italic text-dark">
-        Explorer votre bien être 
+        Explorez votre bien être au travers de nos activités
       </p>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
