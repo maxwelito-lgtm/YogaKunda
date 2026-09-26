@@ -39,7 +39,7 @@ const activites: Activity[] = [
     texte:
       "Retrouvez les cours de Kundalini Yoga et de Tantra Yoga en direct et/ou en replay, ainsi que les relaxations audio guidées.",
     image: "https://picsum.photos/seed/enligne/200/200",
-    cta: "Découvrir l'espace en ligne",
+    cta: "Découvrir",
     href: "/mon-espace",
     niveau: "Tous niveaux",
     duree: "45 min",
