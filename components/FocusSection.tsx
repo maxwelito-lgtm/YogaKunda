@@ -98,7 +98,7 @@ export default function FocusSection() {
           <button
             key={item.titre}
             onClick={() => setSelected(item)}
-            className="group flex flex-col items-center gap-3 rounded-2xl border border-violet-light bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+            className="group flex flex-col items-center gap-3 rounded-2xl border border-violet-light bg-white p-5 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
           >
             <FocusIcon type={item.icone} />
             <span className="text-sm font-semibold text-encre transition-colors group-hover:text-violet-dark">
@@ -179,15 +179,15 @@ function FocusIcon({ type }: { type: string }) {
   const content: Record<string, JSX.Element> = {
     // Om — stress & anxiété
     stress: (
-      <span style={{ fontSize: 28, color, lineHeight: 1 }} aria-hidden="true">
+      <span style={{ fontSize: 36, color, lineHeight: 1 }} aria-hidden="true">
         ॐ
       </span>
     ),
     // Lotus — sommeil
     sommeil: (
       <svg
-        width={30}
-        height={30}
+        width={38}
+        height={38}
         viewBox="0 0 24 24"
         fill="none"
         stroke={color}
@@ -202,7 +202,7 @@ function FocusIcon({ type }: { type: string }) {
     ),
     // Serpent kundalini mystique — énergie & vitalité
     energie: (
-      <svg width={42} height={42} viewBox="0 0 24 24" aria-hidden="true">
+      <svg width={52} height={52} viewBox="0 0 24 24" aria-hidden="true">
         <path
           d="M13.2 5.1c1.9 1 3.3 2.9 3.4 5.4"
           fill="none"
@@ -251,7 +251,7 @@ function FocusIcon({ type }: { type: string }) {
     ),
     // अ — découverte / débutant (première lettre du devanagari)
     decouverte: (
-      <span style={{ fontSize: 30, color, lineHeight: 1 }} aria-hidden="true">
+      <span style={{ fontSize: 38, color, lineHeight: 1 }} aria-hidden="true">
         अ
       </span>
     ),
@@ -259,7 +259,7 @@ function FocusIcon({ type }: { type: string }) {
 
   return (
     <span
-      className="flex h-16 w-16 items-center justify-center rounded-2xl"
+      className="flex h-20 w-20 items-center justify-center rounded-2xl"
       style={{ backgroundColor: bg }}
     >
       {content[type]}
