@@ -64,8 +64,8 @@ export default function ActivityCards() {
       <h2 className="mb-3 text-center font-display italic text-4xl text-encre">
         Activités
       </h2>
-      <p className="mb-10 text-center font-display italic text-violet-dark">
-        Reprise des cours le 08 septembre
+      <p className="mb-10 text-center font-display italic text-dark">
+        Explorer votre bien être 
       </p>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

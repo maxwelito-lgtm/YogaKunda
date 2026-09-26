@@ -6,7 +6,7 @@
 export const site = {
   nom: "Racines & Lotus", // TODO: remplacer par le nom définitif
   accroche: "Retrouvez l'harmonie intérieure",
-  ville: "Angoulême",
+  ville: "",
   email: "contact@votre-domaine.fr", // TODO
   telephone: "06 00 00 00 00", // TODO
   reseaux: {
