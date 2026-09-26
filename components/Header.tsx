@@ -29,14 +29,18 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Logo circulaire, centré */}
+                {/* Logo circulaire, centré */}
         <Link
           href="/"
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           aria-label="Accueil"
         >
-          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center font-display text-[10px] uppercase tracking-wide text-encre">
-            {site.nom}
+          <span className="shine-effect flex h-16 w-16 items-center justify-center rounded-full bg-white">
+            <img
+              src="/images/logo-yoga.png"
+              alt={site.nom}
+              className="h-full w-full rounded-full object-cover"
+            />
           </span>
         </Link>
 
