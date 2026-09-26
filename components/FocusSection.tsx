@@ -98,10 +98,10 @@ export default function FocusSection() {
           <button
             key={item.titre}
             onClick={() => setSelected(item)}
-            className="flex flex-col items-center gap-3 rounded-2xl border border-violet-light bg-violet-light/20 p-6 text-center transition hover:bg-violet-light/40"
+            className="group flex flex-col items-center gap-3 rounded-2xl border border-violet-light bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
           >
             <FocusIcon type={item.icone} />
-            <span className="text-sm font-semibold text-encre">
+            <span className="text-sm font-semibold text-encre transition-colors group-hover:text-violet-dark">
               {item.titre}
             </span>
           </button>
@@ -167,8 +167,8 @@ function LotusIcon() {
 
 function FocusIcon({ type }: { type: string }) {
   const common = {
-    width: 28,
-    height: 28,
+    width: 30,
+    height: 30,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "#ffffff",
@@ -202,8 +202,24 @@ function FocusIcon({ type }: { type: string }) {
     ),
   };
 
+  const gradients: Record<string, string> = {
+    stress: "from-orange-400 to-pink-500",
+    sommeil: "from-indigo-500 to-blue-600",
+    energie: "from-amber-400 to-orange-500",
+    decouverte: "from-emerald-400 to-teal-600",
+  };
+
+  const shadows: Record<string, string> = {
+    stress: "shadow-orange-300/50",
+    sommeil: "shadow-indigo-400/50",
+    energie: "shadow-amber-300/50",
+    decouverte: "shadow-emerald-300/50",
+  };
+
   return (
-    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-dark">
+    <span
+      className={`flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br ${gradients[type]} shadow-lg ${shadows[type]}`}
+    >
       {icons[type]}
     </span>
   );
