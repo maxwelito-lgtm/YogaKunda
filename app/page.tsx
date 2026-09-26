@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CredibilityStats from "@/components/CredibilityStats";
-import FocusSection from "@/components/FocusSection";
 import ActivityCards from "@/components/ActivityCards";
+import FocusSection from "@/components/FocusSection";
 import LocationSection from "@/components/LocationSection";
 import MantrasBanner from "@/components/MantrasBanner";
 import EngagementSection from "@/components/EngagementSection";
@@ -14,8 +14,8 @@ export default function HomePage() {
       <Header />
       <Hero />
       <CredibilityStats />
-      <FocusSection />
       <ActivityCards />
+      <FocusSection />
       <LocationSection />
       <MantrasBanner />
       <EngagementSection />

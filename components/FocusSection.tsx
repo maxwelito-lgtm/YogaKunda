@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { JSX } from "react";
 
 type Practice = {
   titre: string;
@@ -166,40 +167,44 @@ function LotusIcon() {
 
 function FocusIcon({ type }: { type: string }) {
   const common = {
-    width: 48,
-    height: 48,
-    viewBox: "0 0 48 48",
+    width: 28,
+    height: 28,
+    viewBox: "0 0 24 24",
     fill: "none",
-    stroke: "#6B46C1",
-    strokeWidth: 1.2,
+    stroke: "#ffffff",
+    strokeWidth: 2,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
   };
 
-  if (type === "stress") {
-    return (
+  const icons: Record<string, JSX.Element> = {
+    stress: (
       <svg {...common} aria-hidden="true">
-        <path d="M24 8v6M24 34v6M8 24h6M34 24h6M13 13l4 4M31 31l4 4M13 35l4-4M31 17l4-4" strokeLinecap="round" />
-        <circle cx="24" cy="24" r="8" />
+        <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
+        <circle cx="12" cy="12" r="4" />
       </svg>
-    );
-  }
-  if (type === "sommeil") {
-    return (
+    ),
+    sommeil: (
       <svg {...common} aria-hidden="true">
-        <path d="M30 10a14 14 0 1 0 8 20 11 11 0 0 1-8-20Z" strokeLinejoin="round" />
+        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z" />
       </svg>
-    );
-  }
-  if (type === "energie") {
-    return (
+    ),
+    energie: (
       <svg {...common} aria-hidden="true">
-        <path d="M26 6 12 26h9l-3 16 16-22h-9l1-14Z" strokeLinejoin="round" />
+        <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
       </svg>
-    );
-  }
+    ),
+    decouverte: (
+      <svg {...common} aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v4l3 2" />
+      </svg>
+    ),
+  };
+
   return (
-    <svg {...common} aria-hidden="true">
-      <circle cx="24" cy="24" r="16" />
-      <path d="M24 16v8l6 4" strokeLinecap="round" />
-    </svg>
+    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-dark">
+      {icons[type]}
+    </span>
   );
 }
