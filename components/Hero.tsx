@@ -6,9 +6,9 @@ export default function Hero() {
     <section className="relative">
       <div className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[21/9]">
         {/* Remplacer par une vraie photo (paysage, posture, lieu) */}
-        <img
-          src="https://picsum.photos/seed/yoga-hero/1600/700"
-          alt="Silhouette en posture de méditation, mains jointes au-dessus de la tête, face à un paysage de verdure"
+         <img
+          src="/images/yoga-nature.png"
+          alt="Personne en méditation dans un jardin luxuriant, ambiance lumineuse et paisible"
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-encre/60 via-transparent to-transparent" />
@@ -41,8 +41,7 @@ export default function Hero() {
       {/* Bandeau essai gratuit */}
       <div className="bg-sauge/20 px-4 py-3 text-center text-sm sm:px-6">
         <strong className="font-semibold">7 jours d&rsquo;essai gratuit</strong>
-        {" "}sur les cours en ligne — renouvellement automatique sauf résiliation
-        avant échéance.
+        {" "}sur les cours en ligne —
       </div>
     </section>
   );
