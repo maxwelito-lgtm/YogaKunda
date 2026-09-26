@@ -3,7 +3,7 @@ import { site } from "@/site.config";
 export default function LocationSection() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6">
-      <h2 className="text-violet text-4xl">L&rsquo;espace {site.nom}</h2>
+      <h2 className="text-encre text-4xl">L&rsquo;espace {site.nom}</h2>
       <p className="mx-auto mt-4 max-w-2xl text-encre/80">
         Découvrez un espace chaleureux et
         intimiste pour vos activités hebdomadaires, vos ateliers ou vos

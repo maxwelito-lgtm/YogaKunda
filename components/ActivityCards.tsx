@@ -61,7 +61,7 @@ const activites: Activity[] = [
 export default function ActivityCards() {
   return (
     <section id="activites" className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 sm:pt-16">
-      <h2 className="mb-3 text-center font-display italic text-4xl text-violet-dark">
+      <h2 className="mb-3 text-center font-display italic text-4xl text-encre">
         Activités
       </h2>
       <p className="mb-10 text-center font-display italic text-violet-dark">

@@ -86,7 +86,7 @@ export default function FocusSection() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h2 className="mb-2 text-center font-display text-3xl italic text-violet-dark sm:text-4xl">
+      <h2 className="mb-2 text-center font-display text-3xl italic text-encre sm:text-4xl">
         Explorez selon votre besoin
       </h2>
       <p className="mb-8 text-center text-sm text-encre/70">
