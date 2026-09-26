@@ -92,12 +92,12 @@ export default function ActivityCards() {
             <a href={a.href} className="mx-auto mt-5 min-h-[44px] rounded-pill bg-violet-light px-5 py-2.5 text-sm font-semibold text-violet-dark">
               {a.cta}
             </a>
-            <div className="mx-auto mt-4 flex gap-2">
-              <span className="flex items-center gap-1 rounded-pill bg-encre/5 px-3 py-1 text-xs font-medium text-encre/70">
+                        <div className="mx-auto mt-4 flex gap-2">
+              <span className="flex items-center gap-1 rounded-pill bg-encre/10 px-3 py-1.5 text-xs font-bold text-encre">
                 <LevelIcon />
                 {a.niveau}
               </span>
-              <span className="flex items-center rounded-pill bg-encre/5 px-3 py-1 text-xs font-medium text-encre/70">
+              <span className="flex items-center rounded-pill bg-encre/10 px-3 py-1.5 text-xs font-bold text-encre">
                 {a.duree}
               </span>
             </div>
