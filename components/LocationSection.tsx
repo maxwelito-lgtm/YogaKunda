@@ -5,7 +5,7 @@ export default function LocationSection() {
     <section className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6">
       <h2 className="text-violet text-4xl">L&rsquo;espace {site.nom}</h2>
       <p className="mx-auto mt-4 max-w-2xl text-encre/80">
-        Au cœur d&rsquo;{site.ville}, découvrez un espace chaleureux et
+        Découvrez un espace chaleureux et
         intimiste pour vos activités hebdomadaires, vos ateliers ou vos
         événements.
       </p>
