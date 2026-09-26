@@ -6,6 +6,7 @@ type Activity = {
   cta: string;
   href: string;
   niveau: string;
+  duree: string;
   badge?: string;
 };
 
@@ -19,6 +20,7 @@ const activites: Activity[] = [
     cta: "En savoir plus",
     href: "/yoga#tantra",
     niveau: "Débutant",
+    duree: "60 min",
   },
   {
     titre: "Cours de Kundalini Yoga",
@@ -29,6 +31,7 @@ const activites: Activity[] = [
     cta: "En savoir plus",
     href: "/yoga#kundalini",
     niveau: "Intermédiaire",
+    duree: "60 min",
   },
   {
     titre: "Cours en ligne & relaxations audio",
@@ -39,6 +42,7 @@ const activites: Activity[] = [
     cta: "Découvrir l'espace en ligne",
     href: "/mon-espace",
     niveau: "Tous niveaux",
+    duree: "45 min",
     badge: "Nouveau !",
   },
   {
@@ -50,6 +54,7 @@ const activites: Activity[] = [
     cta: "En savoir plus",
     href: "/therapie-holistique",
     niveau: "Tous niveaux",
+    duree: "60 min",
   },
 ];
 
@@ -80,10 +85,15 @@ export default function ActivityCards() {
                 alt={a.titre}
                 className="h-full w-full rounded-full object-cover"
               />
-              <span className="absolute -bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
-                <LevelIcon />
-                {a.niveau}
-              </span>
+              <div className="absolute -bottom-1 left-1/2 flex -translate-x-1/2 gap-1">
+                <span className="flex items-center gap-1 rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
+                  <LevelIcon />
+                  {a.niveau}
+                </span>
+                <span className="flex items-center rounded-pill bg-encre/70 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
+                  {a.duree}
+                </span>
+              </div>
             </div>
             <h3 className="mt-3 text-xl">{a.titre}</h3>
             <p className="mt-1 font-display italic text-sm text-encre/70">
