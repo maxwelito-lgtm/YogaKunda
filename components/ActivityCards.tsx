@@ -54,7 +54,7 @@ const activites: Activity[] = [
     cta: "Contenu en ligne",
     href: "/mon-espace",
     niveau: "A votre rythme",
-    duree: "",
+    duree: "30 min",
     badge: "Nouveau !",
   },
 ];
