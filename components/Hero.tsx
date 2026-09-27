@@ -17,25 +17,20 @@ export default function Hero() {
           <h1 className="max-w-xl font-display text-3xl italic text-white drop-shadow-lg sm:text-6xl">
             {site.accroche}
           </h1>
-          <p className="max-w-md text-white/90 drop-shadow-md">
-            Cours de Kundalini et Tantra Yoga, en présentiel ou en
-            ligne, où que vous soyez et quand vous le voulez.
-          </p>
-          <div className="flex flex-wrap gap-2 sm:gap-3">
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+            <p className="max-w-md text-white/90 drop-shadow-md">
+              Cours de Kundalini et Tantra Yoga, en présentiel ou en
+              ligne, où que vous soyez et quand vous le voulez.
+            </p>
             <Link
               href="/yoga"
-              className="rounded-pill border-2 border-white px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-encre sm:px-6 sm:py-3 sm:text-sm"
+              className="shrink-0 self-start rounded-pill border-2 border-white px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-encre sm:self-end sm:px-6 sm:py-3 sm:text-sm"
             >
               Essayer 7 jours gratuits
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* Bandeau essai gratuit */}
-      <div className="bg-sauge/20 px-4 py-3 text-center text-sm sm:px-6">
-        <strong className="font-semibold">7 jours d&rsquo;essai gratuit</strong>
-        {" "}sur les cours en ligne —
       </div>
     </section>
   );
