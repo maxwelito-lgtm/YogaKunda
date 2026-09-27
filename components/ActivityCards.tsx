@@ -73,7 +73,7 @@ export default function ActivityCards() {
         {activites.map((a) => (
           <article
             key={a.titre}
-            className="relative flex flex-col rounded-2xl bg-white p-6 text-center shadow-sm"
+            className="card-bounce relative flex flex-col rounded-2xl bg-white p-6 text-center shadow-sm"
           >
             {a.badge && (
               <span className="absolute -top-3 left-4 rounded-pill bg-violet px-3 py-1 text-xs font-semibold text-white">
