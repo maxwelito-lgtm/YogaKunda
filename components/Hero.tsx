@@ -25,7 +25,7 @@ export default function Hero() {
             </p>
             <Link
               href="/yoga"
-              className="shrink-0 self-start rounded-pill border-[1.5px] border-white bg-black/35 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-md hover:bg-black/50 sm:self-end sm:px-6 sm:py-3 sm:text-sm"
+              className="btn-bounce shrink-0 self-start rounded-pill border-[1.5px] border-white bg-black/35 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-md hover:bg-black/50 sm:self-end sm:px-6 sm:py-3 sm:text-sm"
             >
               Essayer 7 jours gratuits
             </Link>
