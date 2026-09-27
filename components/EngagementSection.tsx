@@ -2,28 +2,29 @@ const valeurs = [
   {
     titre: "Conscience",
     texte:
-      "Mettre de la lumière et de la clarté dans ses actions, dans sa parole, afin d'être témoin et d'accepter ce qui est, sans jugement.",
+      "Chaque cours est pensé avec attention, pour rester à l'écoute de ce que vous vivez, ici et maintenant.",
   },
   {
     titre: "Liberté",
-    texte: "Être libre d'exister tel que l'on est, en toutes circonstances.",
+    texte:
+      "Vous avancez à votre rythme, sans pression ni comparaison — chaque corps, chaque histoire est respectée.",
   },
   {
     titre: "Créativité",
     texte:
-      "Laisser sa créativité s'exprimer, laisser son enfant intérieur jouer avec ce qui est pour transformer la négativité.",
+      "Les séances évoluent au fil du temps, pour que la pratique reste vivante et proche de ce dont vous avez besoin.",
   },
   {
     titre: "Amour",
-    texte: "Ouvrir toujours plus grand son cœur pour que l'amour devienne la boussole à suivre.",
+    texte:
+      "Vous êtes accueilli avec bienveillance, sans jugement — un espace pensé pour que vous puissiez simplement être vous-même.",
   },
   {
     titre: "Humilité",
     texte:
-      "Se rappeler que le plus grand des miracles est de ne pas chercher à en accomplir. L'extraordinaire est de rester ordinaire.",
+      "Le yoga se transmet avec sincérité et simplicité, sans grandes promesses — juste un accompagnement honnête, pas à pas.",
   },
 ];
-
 export default function EngagementSection() {
   return (
     <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
