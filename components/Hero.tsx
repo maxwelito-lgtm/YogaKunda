@@ -23,12 +23,6 @@ export default function Hero() {
           </p>
           <div className="flex flex-wrap gap-2 sm:gap-3">
             <Link
-              href="/inscription"
-              className="rounded-pill border-2 border-violet-dark bg-violet-light px-4 py-2 text-xs font-semibold text-violet-dark hover:bg-white sm:px-6 sm:py-3 sm:text-sm"
-            >
-              Créer mon compte
-            </Link>
-            <Link
               href="/yoga"
               className="rounded-pill border-2 border-white px-4 py-2 text-xs font-semibold text-white hover:bg-white hover:text-encre sm:px-6 sm:py-3 sm:text-sm"
             >

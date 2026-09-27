@@ -36,7 +36,7 @@ const activites: Activity[] = [
 
   {
     titre: "Thérapie Holistique",
-    sousTitre: "Un accompagnement personnel",
+    sousTitre: "Un accompagnement adapté à vous",
     texte:
       "Une thérapie qui prend en compte toutes les dimensions de l'être — physique, psychique et émotionnelle.",
     image: "https://picsum.photos/seed/therapie/200/200",
