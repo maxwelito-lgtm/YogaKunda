@@ -1,7 +1,7 @@
 export default function PricingSection() {
   return (
     <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
-      <h2 className="mb-2 text-center font-display text-3xl italic text-violet-dark sm:text-4xl">
+      <h2 className="mb-2 text-center font-display text-3xl italic text-dark sm:text-4xl">
         Essayez gratuitement pendant 7 jours
       </h2>
       <p className="mb-10 text-center text-sm text-encre/70">
