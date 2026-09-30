@@ -18,8 +18,8 @@ export default function HomePage() {
       <ActivityCards />
       <FocusSection />
       <LocationSection />
-      <MantrasBanner />
       <PricingSection />
+      <MantrasBanner />
       <EngagementSection />
       <Footer />
     </main>
