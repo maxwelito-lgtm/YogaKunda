@@ -5,6 +5,7 @@ import ActivityCards from "@/components/ActivityCards";
 import FocusSection from "@/components/FocusSection";
 import LocationSection from "@/components/LocationSection";
 import MantrasBanner from "@/components/MantrasBanner";
+import PricingSection from "@/components/PricingSection";
 import EngagementSection from "@/components/EngagementSection";
 import Footer from "@/components/Footer";
 
@@ -18,6 +19,7 @@ export default function HomePage() {
       <FocusSection />
       <LocationSection />
       <MantrasBanner />
+      <PricingSection />
       <EngagementSection />
       <Footer />
     </main>
