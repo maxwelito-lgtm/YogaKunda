@@ -98,9 +98,9 @@ export default function FocusSection() {
           <button
             key={item.titre}
             onClick={() => setSelected(item)}
-            className="group flex flex-col items-center gap-3 text-center transition-transform hover:-translate-y-1"
+            className="group flex flex-col items-center gap-3 text-center"
           >
-            <FocusIcon type={item.icone} />
+            <FocusPhotoTile type={item.icone} />
             <span className="text-sm font-semibold text-encre transition-colors group-hover:text-violet-dark">
               {item.titre}
             </span>
@@ -173,21 +173,25 @@ const iconStyles: Record<string, { bg: string; color: string }> = {
   decouverte: { bg: "#E1F5EE", color: "#0F6E56" },
 };
 
-function FocusIcon({ type }: { type: string }) {
-  const { bg, color } = iconStyles[type];
+// Photo de fond par catégorie (placeholders — à remplacer par tes propres images)
+const bgImages: Record<string, string> = {
+  stress: "https://picsum.photos/seed/focus-stress/400/400",
+  sommeil: "https://picsum.photos/seed/focus-sommeil/400/400",
+  energie: "https://picsum.photos/seed/focus-energie/400/400",
+  decouverte: "https://picsum.photos/seed/focus-decouverte/400/400",
+};
 
-  const content: Record<string, JSX.Element> = {
-    // Om — stress & anxiété
+function focusContent(color: string): Record<string, JSX.Element> {
+  return {
     stress: (
-      <span style={{ fontSize: 42, color, lineHeight: 1 }} aria-hidden="true">
+      <span style={{ fontSize: 34, color, lineHeight: 1 }} aria-hidden="true">
         ॐ
       </span>
     ),
-    // Lotus — sommeil
     sommeil: (
       <svg
-        width={44}
-        height={44}
+        width={36}
+        height={36}
         viewBox="0 0 24 24"
         fill="none"
         stroke={color}
@@ -200,62 +204,62 @@ function FocusIcon({ type }: { type: string }) {
         <path d="M12 14c-2-3-2-7.5 0-11 2 3.5 2 8 0 11z" />
       </svg>
     ),
-    // Serpent kundalini mystique — énergie & vitalité
     energie: (
-      <svg width={60} height={60} viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M13.2 5.1c1.9 1 3.3 2.9 3.4 5.4"
-          fill="none"
-          stroke={color}
-          strokeWidth={2.6}
-          strokeLinecap="round"
-        />
-        <path
-          d="M16.6 10.5c.1 2.4-1.7 4.4-4.3 5.1"
-          fill="none"
-          stroke={color}
-          strokeWidth={2.1}
-          strokeLinecap="round"
-        />
-        <path
-          d="M12.3 15.6c-1.9.5-3.6-.4-4-2.1-.3-1.3.5-2.5 1.8-2.7"
-          fill="none"
-          stroke={color}
-          strokeWidth={1.5}
-          strokeLinecap="round"
-        />
-        <path
-          d="M10.1 10.8c.6.1 1 .5.9 1"
-          fill="none"
-          stroke={color}
-          strokeWidth={1}
-          strokeLinecap="round"
-        />
-        <path
-          d="M12.8 3.4 15 4.6c.5.3.5.9 0 1.1l-2.3 1c-.5.2-1-.2-1-.7l.1-2c0-.5.5-.9 1-.6Z"
-          fill={color}
-        />
-        <path
-          d="M14.7 4.1l1.6-.5M14.7 4.1l1.3-1.1"
-          stroke={color}
-          strokeWidth={0.9}
-          strokeLinecap="round"
-        />
+      <svg width={48} height={48} viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M13.2 5.1c1.9 1 3.3 2.9 3.4 5.4" fill="none" stroke={color} strokeWidth={2.6} strokeLinecap="round" />
+        <path d="M16.6 10.5c.1 2.4-1.7 4.4-4.3 5.1" fill="none" stroke={color} strokeWidth={2.1} strokeLinecap="round" />
+        <path d="M12.3 15.6c-1.9.5-3.6-.4-4-2.1-.3-1.3.5-2.5 1.8-2.7" fill="none" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+        <path d="M10.1 10.8c.6.1 1 .5.9 1" fill="none" stroke={color} strokeWidth={1} strokeLinecap="round" />
+        <path d="M12.8 3.4 15 4.6c.5.3.5.9 0 1.1l-2.3 1c-.5.2-1-.2-1-.7l.1-2c0-.5.5-.9 1-.6Z" fill={color} />
+        <path d="M14.7 4.1l1.6-.5M14.7 4.1l1.3-1.1" stroke={color} strokeWidth={0.9} strokeLinecap="round" />
         <circle cx={6.1} cy={7} r={0.5} fill="#BA7517" />
         <circle cx={19} cy={9} r={0.4} fill="#BA7517" />
-        <path
-          d="M18 15.8a1.6 1.6 0 1 1 0-2.9 2 2 0 1 0 0 2.9z"
-          fill="#BA7517"
-        />
+        <path d="M18 15.8a1.6 1.6 0 1 1 0-2.9 2 2 0 1 0 0 2.9z" fill="#BA7517" />
       </svg>
     ),
-    // अ — découverte / débutant (première lettre du devanagari)
     decouverte: (
-      <span style={{ fontSize: 42, color, lineHeight: 1 }} aria-hidden="true">
+      <span style={{ fontSize: 34, color, lineHeight: 1 }} aria-hidden="true">
         अ
       </span>
     ),
   };
+}
+
+// Version "tuile photo" utilisée dans la grille cliquable
+function FocusPhotoTile({ type }: { type: string }) {
+  const { bg, color } = iconStyles[type];
+  const content = focusContent(color);
+
+  return (
+    <span className="relative block h-28 w-28 overflow-hidden rounded-3xl shadow-md ring-1 ring-black/5 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl sm:h-32 sm:w-32">
+      <img
+        src={bgImages[type]}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px] brightness-75 transition-transform duration-500 group-hover:scale-125"
+      />
+      <span
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(135deg, ${color}55, rgba(0,0,0,0.35))`,
+        }}
+      />
+      <span className="absolute inset-0 flex items-center justify-center">
+        <span
+          className="flex h-16 w-16 items-center justify-center rounded-full backdrop-blur-md sm:h-[72px] sm:w-[72px]"
+          style={{ backgroundColor: `${bg}dd` }}
+        >
+          {content[type]}
+        </span>
+      </span>
+    </span>
+  );
+}
+
+// Version simple (sans photo) utilisée dans l'en-tête de la modale
+function FocusIcon({ type }: { type: string }) {
+  const { bg, color } = iconStyles[type];
+  const content = focusContent(color);
 
   return (
     <span
