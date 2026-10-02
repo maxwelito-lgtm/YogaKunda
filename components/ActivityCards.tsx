@@ -16,7 +16,7 @@ const activites: Activity[] = [
     sousTitre: "Le Yoga holistique par excellence",
     texte:
       "Un yoga complet pour cultiver le lâcher-prise, pacifier son mental et apporter un apaisement émotionnel profond.",
-    image: "https://picsum.photos/seed/tantra/200/200",
+    image: "https://picsum.photos/seed/tantra/500/700",
     cta: "En savoir plus",
     href: "/yoga#tantra",
     niveau: "Niveau 1",
@@ -27,19 +27,18 @@ const activites: Activity[] = [
     sousTitre: "Le Yoga pour l'éveil de l'énergie créatrice",
     texte:
       "Au-delà de l'équilibre entre le corps et l'esprit, ce yoga est une véritable science pour révéler son plein potentiel.",
-    image: "https://picsum.photos/seed/kundalini/200/200",
+    image: "https://picsum.photos/seed/kundalini/500/700",
     cta: "En savoir plus",
     href: "/yoga#kundalini",
     niveau: "Niveau 2",
     duree: "60 min",
   },
-
   {
     titre: "Thérapie Holistique",
     sousTitre: "Un accompagnement adapté à vous",
     texte:
       "Une thérapie qui prend en compte toutes les dimensions de l'être — physique, psychique et émotionnelle.",
-    image: "https://picsum.photos/seed/therapie/200/200",
+    image: "https://picsum.photos/seed/therapie/500/700",
     cta: "En savoir plus",
     href: "/therapie-holistique",
     niveau: "Tous niveaux",
@@ -50,7 +49,7 @@ const activites: Activity[] = [
     sousTitre: "Une façon de pratiquer en toute flexibilité",
     texte:
       "Retrouvez les cours de Kundalini Yoga et de Tantra Yoga en direct et/ou en replay, ainsi que les relaxations audio guidées.",
-    image: "https://picsum.photos/seed/enligne/200/200",
+    image: "https://picsum.photos/seed/enligne/500/700",
     cta: "Contenus en ligne",
     href: "/mon-espace",
     niveau: "A votre rythme",
@@ -73,34 +72,47 @@ export default function ActivityCards() {
         {activites.map((a) => (
           <article
             key={a.titre}
-            className="card-bounce relative flex flex-col rounded-2xl bg-white p-6 text-center shadow-sm"
+            className="card-bounce relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-2xl text-left shadow-sm"
           >
-            {a.badge && (
-              <span className="absolute -top-3 left-4 rounded-pill bg-violet px-3 py-1 text-xs font-semibold text-white">
-                {a.badge}
-              </span>
-            )}
             <img
               src={a.image}
               alt={a.titre}
-              className="mx-auto mb-4 h-20 w-20 rounded-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
             />
-            <h3 className="text-xl">{a.titre}</h3>
-            <p className="mt-1 font-display italic text-sm text-encre/70">
-              {a.sousTitre}
-            </p>
-            <p className="mt-3 flex-1 text-sm text-encre/80">{a.texte}</p>
-            <a href={a.href} className="mx-auto mt-5 min-h-[44px] rounded-pill bg-violet-light px-5 py-2.5 text-sm font-semibold text-violet-dark">
-              {a.cta}
-            </a>
-            <div className="mx-auto mt-4 flex gap-2">
-              <span className="flex items-center gap-1 rounded-pill bg-violet-light px-3 py-1.5 text-xs font-bold text-violet-dark">
-                <LevelIcon />
-                {a.niveau}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+
+            {a.badge && (
+              <span className="absolute top-4 left-4 z-10 w-fit rounded-pill bg-violet px-3 py-1 text-xs font-semibold text-white">
+                {a.badge}
               </span>
-              <span className="flex items-center rounded-pill bg-violet-light px-3 py-1.5 text-xs font-bold text-violet-dark">
-                {a.duree}
-              </span>
+            )}
+
+            <div className="relative z-10 p-5 pt-14">
+              <h3 className="text-xl text-white drop-shadow-md">{a.titre}</h3>
+              <p className="mt-1 font-display italic text-sm text-white/85 drop-shadow-md">
+                {a.sousTitre}
+              </p>
+            </div>
+
+            <div className="relative z-10 flex flex-col gap-4 p-5 pt-0">
+              <p className="text-sm text-white/90 drop-shadow-md">{a.texte}</p>
+
+              <a
+                href={a.href}
+                className="btn-bounce w-fit min-h-[44px] rounded-pill bg-white px-5 py-2.5 text-sm font-semibold text-encre"
+              >
+                {a.cta}
+              </a>
+
+              <div className="flex gap-2">
+                <span className="flex items-center gap-1 rounded-pill bg-white/20 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-sm">
+                  <LevelIcon />
+                  {a.niveau}
+                </span>
+                <span className="flex items-center rounded-pill bg-white/20 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-sm">
+                  {a.duree}
+                </span>
+              </div>
             </div>
           </article>
         ))}
