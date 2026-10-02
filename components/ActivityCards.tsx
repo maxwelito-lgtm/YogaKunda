@@ -72,7 +72,7 @@ export default function ActivityCards() {
         {activites.map((a) => (
           <article
             key={a.titre}
-            className="card-bounce relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-2xl text-left shadow-sm"
+            className="card-bounce relative flex min-h-[440px] flex-col justify-between overflow-hidden rounded-2xl text-left shadow-sm"
           >
             <img
               src={a.image}
