@@ -9,6 +9,9 @@ export default function Header() {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 text-white">
+      {/* Voile sombre dédié au header, indépendant du dégradé du Hero */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent sm:h-40" />
+
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         {/* Actions gauche : burger + connexion */}
         <div className="flex items-center gap-4">
@@ -16,14 +19,14 @@ export default function Header() {
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
             onClick={() => setOpen(!open)}
-            className="flex h-11 w-11 items-center justify-center rounded-pill md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-pill drop-shadow-md md:hidden"
           >
             <BurgerIcon open={open} />
           </button>
 
           <Link
             href="/connexion"
-            className="hidden items-center gap-2 text-sm font-medium text-white hover:text-violet-light sm:flex"
+            className="hidden items-center gap-2 text-sm font-medium text-white drop-shadow-md hover:text-violet-light sm:flex"
           >
             <UserIcon />
             Se connecter
@@ -36,7 +39,7 @@ export default function Header() {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           aria-label="Accueil"
         >
-          <span className="shine-effect flex h-12 w-12 items-center justify-center rounded-full bg-white sm:h-16 sm:w-16">
+          <span className="shine-effect flex h-12 w-12 items-center justify-center rounded-full bg-white drop-shadow-md sm:h-16 sm:w-16">
             <img
               src="/images/logo-yoga.png"
               alt={site.nom}
@@ -49,20 +52,20 @@ export default function Header() {
         <Link
           href="/panier"
           aria-label="Panier"
-          className="p-2 text-white hover:text-violet-light"
+          className="p-2 text-white drop-shadow-md hover:text-violet-light"
         >
           <CartIcon />
         </Link>
       </div>
 
       {/* Navigation desktop */}
-      <nav className="hidden md:block">
+      <nav className="relative hidden md:block">
         <ul className="mx-auto flex max-w-6xl items-center justify-center gap-10 px-6 py-3 text-sm">
           {site.nav.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="text-white hover:text-violet-light"
+                className="text-white drop-shadow-md hover:text-violet-light"
               >
                 {item.label}
               </Link>
@@ -73,7 +76,7 @@ export default function Header() {
 
       {/* Navigation mobile (menu burger) */}
       {open && (
-        <nav className="border-t border-white/10 bg-black/30 backdrop-blur-md md:hidden">
+        <nav className="relative border-t border-white/10 bg-black/30 backdrop-blur-md md:hidden">
           <ul className="flex flex-col px-4 py-2">
             {site.nav.map((item) => (
               <li key={item.href}>
