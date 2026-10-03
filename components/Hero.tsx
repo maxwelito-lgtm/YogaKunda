@@ -10,7 +10,6 @@ export default function Hero() {
         src="/images/yoga-nature.png"
         alt="Personne en méditation dans un jardin luxuriant, ambiance lumineuse et paisible"
         className="absolute inset-0 h-full w-full object-cover"
-        style={{ objectPosition: "58% center" }}
       />
 
       {/* Dégradé sombre pour améliorer la lisibilité du texte */}
