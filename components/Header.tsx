@@ -15,7 +15,7 @@ export default function Header() {
       {/* Voile sombre dédié au header, indépendant du dégradé du Hero */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent sm:h-40" />
 
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <div className="relative mx-auto flex max-w-[1800px] items-center justify-between px-6 py-4 sm:px-10 lg:px-14">
         {/* Gauche : logo + nom du site */}
         <Link href="/" className="flex items-center gap-3" aria-label="Accueil">
           <span className="shine-effect flex h-10 w-10 items-center justify-center rounded-full bg-white drop-shadow-md sm:h-12 sm:w-12">
