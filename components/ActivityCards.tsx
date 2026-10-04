@@ -16,7 +16,7 @@ const activites: Activity[] = [
     sousTitre: "Le Yoga holistique par excellence",
     texte:
       "Un yoga complet pour cultiver le lâcher-prise, pacifier son mental et apporter un apaisement émotionnel profond.",
-    image: "https://picsum.photos/seed/tantra/500/700",
+    image: "/images/tantra.jpeg",
     cta: "En savoir plus",
     href: "/yoga#tantra",
     niveau: "Niveau 1",
@@ -27,7 +27,7 @@ const activites: Activity[] = [
     sousTitre: "Le Yoga pour l'éveil de l'énergie créatrice",
     texte:
       "Au-delà de l'équilibre entre le corps et l'esprit, ce yoga est une véritable science pour révéler son plein potentiel.",
-    image: "https://picsum.photos/seed/kundalini/500/700",
+    image: "/images/kundalini.jpeg",
     cta: "En savoir plus",
     href: "/yoga#kundalini",
     niveau: "Niveau 2",
@@ -38,7 +38,7 @@ const activites: Activity[] = [
     sousTitre: "Un accompagnement adapté à vous",
     texte:
       "Une thérapie qui prend en compte toutes les dimensions de l'être — physique, psychique et émotionnelle.",
-    image: "https://picsum.photos/seed/therapie/500/700",
+    image: "/images/therapie.jpeg",
     cta: "En savoir plus",
     href: "/therapie-holistique",
     niveau: "Tous niveaux",
