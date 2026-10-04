@@ -8,8 +8,8 @@ export default function Hero() {
       {/* Image */}
       <img
         src="/images/yoga-nature.png"
-        alt="Personne en méditation dans un jardin luxuriant, ambiance lumineuse et paisible"
-        className="absolute inset-0 h-full w-full object-cover"
+        alt="Silhouette en posture de l'arbre sur un rocher, face à des montagnes au coucher du soleil"
+        className="absolute inset-0 h-full w-full object-cover object-[10%_center] md:object-center"
       />
 
       {/* Dégradé sombre pour améliorer la lisibilité du texte */}
