@@ -16,7 +16,7 @@ const activites: Activity[] = [
     sousTitre: "Le Yoga holistique par excellence",
     texte:
       "Un yoga complet pour cultiver le lâcher-prise, pacifier son mental et apporter un apaisement émotionnel profond.",
-    image: "/images/tantra.jpeg",
+    image: "/images/Tantra.png",
     cta: "En savoir plus",
     href: "/yoga#tantra",
     niveau: "Niveau 1",
@@ -27,7 +27,7 @@ const activites: Activity[] = [
     sousTitre: "Le Yoga pour l'éveil de l'énergie créatrice",
     texte:
       "Au-delà de l'équilibre entre le corps et l'esprit, ce yoga est une véritable science pour révéler son plein potentiel.",
-    image: "/images/kundalini.jpeg",
+    image: "/images/Kundalini.png",
     cta: "En savoir plus",
     href: "/yoga#kundalini",
     niveau: "Niveau 2",
