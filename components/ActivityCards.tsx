@@ -18,7 +18,7 @@ const activites: Activity[] = [
       "Un yoga complet pour cultiver le lâcher-prise, pacifier son mental et apporter un apaisement émotionnel profond.",
     image: "/images/tantra.png",
     cta: "En savoir plus",
-    href: "/yoga#tantra",
+      href: "/yoga/tantra",
     niveau: "Niveau 1",
     duree: "60 min",
   },
