@@ -30,7 +30,7 @@ export default async function ActivityRoute({ params }: Props) {
   if (!data) notFound();
 
   return (
-    <main>
+    <main style={data.fond ? { backgroundColor: data.fond } : undefined}>
       <Header />
       <ActivityPage data={data} />
       <Footer />
