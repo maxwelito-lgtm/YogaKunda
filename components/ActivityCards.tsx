@@ -29,7 +29,7 @@ const activites: Activity[] = [
       "Au-delà de l'équilibre entre le corps et l'esprit, ce yoga est une véritable science pour révéler son plein potentiel.",
     image: "/images/kundalini.png",
     cta: "En savoir plus",
-    href: "/yoga#kundalini",
+    href: "/yoga/kundalini",
     niveau: "Niveau 2",
     duree: "60 min",
   },
