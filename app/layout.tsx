@@ -16,8 +16,10 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
+const titreBase = `${site.nom} — Yoga & Thérapie Holistique`;
+
 export const metadata: Metadata = {
-  title: `${site.nom} — Yoga & Thérapie Holistique à ${site.ville}`,
+  title: site.ville ? `${titreBase} à ${site.ville}` : titreBase,
   description:
     "Cours de yoga en présentiel et en ligne, thérapie holistique et mantras, à Angoulême.",
 };
