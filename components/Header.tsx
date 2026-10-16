@@ -18,11 +18,11 @@ export default function Header() {
       <div className="relative mx-auto flex max-w-[1800px] items-center justify-between px-6 py-4 sm:px-10 lg:px-14">
         {/* Gauche : logo + nom du site */}
         <Link href="/" className="flex items-center gap-3" aria-label="Accueil">
-          <span className="shine-effect flex h-10 w-10 items-center justify-center rounded-full bg-white drop-shadow-md sm:h-12 sm:w-12">
+          <span className="flex h-12 w-12 items-center justify-center sm:h-14 sm:w-14">
             <img
               src="/images/logo-yoga.png"
               alt=""
-              className="h-full w-full rounded-full object-cover"
+              className="h-full w-full object-contain"
             />
           </span>
           <span className="font-display text-sm italic text-white drop-shadow-md sm:text-base">
