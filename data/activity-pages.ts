@@ -1,3 +1,4 @@
+import { site } from "@/site.config";
 export type Cta = { label: string; href: string };
 
 export type ActivityPageData = {
@@ -149,8 +150,8 @@ const kundalini: ActivityPageData = {
         cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
       },
     ],
-    lieu: "[adresse du studio]",
-    contact: "[téléphone] · [e-mail]",
+    lieu: site.adresse,
+   contact: `${site.telephone} · ${site.email}`,
   },
 };
 
@@ -271,7 +272,7 @@ const tantra: ActivityPageData = {
       },
     ],
     lieu: "[adresse du studio]",
-    contact: "[téléphone] · [e-mail]",
+    contact: `${site.telephone} · ${site.email}`,
   },
 };
 

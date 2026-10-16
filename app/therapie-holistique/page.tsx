@@ -147,7 +147,7 @@ export default function TherapieHolistiquePage() {
               <li>Durée : 60 min</li>
               <li>Prix : [à compléter]</li>
               <li>Disponibilités : [à compléter]</li>
-              <li>Lieu : [adresse du studio]</li>
+              <li>Lieu : {site.adresse}</li>
             </ul>
           </div>
           <div className="mt-8">

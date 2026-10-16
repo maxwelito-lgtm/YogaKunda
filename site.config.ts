@@ -4,11 +4,12 @@
 // ------------------------------------------------------------------
 
 export const site = {
-  nom: "Racines & Lotus", // TODO: remplacer par le nom définitif
+  nom: "Shantalam",
   accroche: "Retrouvez l'harmonie intérieure",
-  ville: "",
-  email: "contact@votre-domaine.fr", // TODO
-  telephone: "06 00 00 00 00", // TODO
+  ville: "", // TODO
+  adresse: "[adresse du studio]", // TODO
+  email: "chantallassier1@gmail.com",
+  telephone: "06 74 15 76 78",
   reseaux: {
     youtube: "#",
     facebook: "#",
