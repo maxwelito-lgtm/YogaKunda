@@ -18,14 +18,14 @@ export default function Header() {
       <div className="relative mx-auto flex max-w-[1800px] items-center justify-between px-6 py-4 sm:px-10 lg:px-14">
         {/* Gauche : logo + nom du site */}
         <Link href="/" className="flex items-center gap-3" aria-label="Accueil">
-          <span className="flex h-12 w-12 items-center justify-center sm:h-14 sm:w-14">
+          <span className="flex h-14 w-14 items-center justify-center sm:h-16 sm:w-16">
             <img
-           src="/images/logo-shantalam.png"
+              src="/images/logo-shantalam.png"
               alt=""
               className="h-full w-full object-contain"
             />
           </span>
-          <span className="font-display text-sm italic text-white drop-shadow-md sm:text-base">
+          <span className="font-display text-base italic text-white drop-shadow-md sm:text-xl">
             {site.nom}
           </span>
         </Link>
@@ -33,7 +33,7 @@ export default function Header() {
         {/* Droite (desktop) : nav + connexion + panier, tout sur la même ligne */}
         <div className="hidden items-center gap-8 md:flex">
           <nav>
-            <ul className="flex items-center gap-8 text-sm">
+            <ul className="flex items-center gap-8 text-[15px] lg:text-base">
               {site.nav.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -49,7 +49,7 @@ export default function Header() {
 
           <Link
             href="/connexion"
-            className="flex items-center gap-2 text-sm font-medium text-white drop-shadow-md hover:text-violet-light"
+            className="flex items-center gap-2 text-[15px] font-medium text-white drop-shadow-md hover:text-violet-light lg:text-base"
           >
             <UserIcon />
             Se connecter
@@ -118,7 +118,7 @@ export default function Header() {
 
 function UserIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" />
       <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" strokeWidth="1.5" />
     </svg>
@@ -127,7 +127,7 @@ function UserIcon() {
 
 function CartIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M6 8h12l-1 11H7L6 8Z"
         stroke="currentColor"
