@@ -1,24 +1,86 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { site } from "@/site.config";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [atTop, setAtTop] = useState(true); // tout en haut de la page
+  const [hidden, setHidden] = useState(false); // header caché (scroll vers le bas)
+  const lastY = useRef(0);
+  const openRef = useRef(false);
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const update = () => {
+      // max(0) : évite les valeurs négatives du rebond (overscroll) sur iPhone
+      const y = Math.max(0, window.scrollY);
+      const delta = y - lastY.current;
+
+      if (y <= 24) {
+        setAtTop(true);
+        setHidden(false);
+        lastY.current = y;
+      } else if (Math.abs(delta) >= 6) {
+        setAtTop(false);
+        if (delta > 0 && !openRef.current) {
+          setHidden(true); // on descend : on cache
+        } else if (delta < 0) {
+          setHidden(false); // on remonte : on affiche
+        }
+        lastY.current = y;
+      }
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header
-      className="absolute inset-x-0 top-0 z-50 text-white"
+      className={`fixed inset-x-0 top-0 z-50 text-white transition-all duration-300 motion-reduce:transition-none ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      } ${
+        atTop
+          ? "bg-transparent"
+          : "bg-[rgba(36,28,24,0.92)] shadow-lg backdrop-blur-md"
+      }`}
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
-      {/* Voile sombre dédié au header, indépendant du dégradé du Hero */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent sm:h-40" />
+      {/* Voile sombre en haut de page uniquement (disparaît quand la barre foncée s'affiche) */}
+      <div
+        className={`pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent transition-opacity duration-300 sm:h-40 ${
+          atTop ? "opacity-100" : "opacity-0"
+        }`}
+      />
 
-      <div className="relative mx-auto flex max-w-[1800px] items-center justify-between px-6 py-4 sm:px-10 lg:px-14">
+      <div
+        className={`relative mx-auto flex max-w-[1800px] items-center justify-between px-6 transition-all duration-300 sm:px-10 lg:px-14 ${
+          atTop ? "py-4" : "py-2"
+        }`}
+      >
         {/* Gauche : logo + nom du site */}
         <Link href="/" className="flex items-center gap-3" aria-label="Accueil">
-          <span className="flex h-14 w-14 items-center justify-center sm:h-16 sm:w-16">
+          <span
+            className={`flex items-center justify-center transition-all duration-300 ${
+              atTop ? "h-14 w-14 sm:h-16 sm:w-16" : "h-11 w-11 sm:h-12 sm:w-12"
+            }`}
+          >
             <img
               src="/images/logo-shantalam.png"
               alt=""
