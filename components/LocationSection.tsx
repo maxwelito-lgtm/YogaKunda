@@ -1,3 +1,4 @@
+import PresentationVideo from "@/components/PresentationVideo";
 import { site } from "@/site.config";
 
 export default function LocationSection() {
@@ -9,6 +10,7 @@ export default function LocationSection() {
         intimiste pour vos activités hebdomadaires, vos ateliers ou vos
         événements.
       </p>
+            <PresentationVideo />
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <img
