@@ -20,7 +20,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3" aria-label="Accueil">
           <span className="flex h-12 w-12 items-center justify-center sm:h-14 sm:w-14">
             <img
-              src="/images/logo-yoga.png"
+           src="/images/logo-shantalam.png"
               alt=""
               className="h-full w-full object-contain"
             />
