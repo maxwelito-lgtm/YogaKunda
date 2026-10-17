@@ -33,15 +33,15 @@ export default function Hero() {
             href="#activites"
             className="btn-bounce inline-flex min-h-[44px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-7 py-3 text-sm font-semibold text-white backdrop-blur-md hover:bg-[#75523F]"
           >
-            Réserver votre séance
+            Trouver votre séance
           </a>
 
-          {/* Bouton secondaire : cours en ligne & relaxations audio (page à créer) */}
+          {/* Bouton secondaire : Cours en ligne  (page à créer) */}
           <Link
             href="/mon-espace"
             className="btn-bounce inline-flex min-h-[44px] items-center justify-center rounded-pill border-[1.5px] border-white/80 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15"
           >
-            Cours en ligne &amp; relaxations audio
+            Cours en ligne &amp; 
           </Link>
         </div>
       </div>
