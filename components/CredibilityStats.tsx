@@ -7,7 +7,7 @@ export default function CredibilityStats() {
   ];
 
   return (
-    <section className="bg-violet-light/40 px-4 py-10 sm:px-6">
+        <section className="bg-[#E6DCC6] px-4 py-10 sm:px-6">
       <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 text-center sm:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label} className="flex flex-col items-center">
