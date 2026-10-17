@@ -259,16 +259,16 @@ const tantra: ActivityPageData = {
         titre: "Atelier en groupe",
         texte:
           "En présentiel, en petit groupe : un atelier de Tantra Yoga ou de Kundalini Yoga pour explorer davantage, pratiquer et partager ensemble.",
-        duree: "Tantra : 2h · Kundalini : 3h",
-        tarif: "Tantra : 20 € · Kundalini : 30 € par personne",
+        duree: "Tantra : 2h ···· Kundalini : 3h",
+        tarif: "Tantra : 20 €/pers ···· Kundalini : 30 €/pers",
         cta: { label: "Voir les dates", href: "/nous-contacter" },
       },
       {
         titre: "Atelier personnalisé",
         texte:
           "Un atelier individuel de Tantra ou de Kundalini, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "[à compléter]",
-        tarif: "Tantra : 60 € · Kundalini : 70 €",
+        duree: "[2H]",
+        tarif: "Tantra : 70 € · Kundalini : 80 €",
         cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
       },
     ],
