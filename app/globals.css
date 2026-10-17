@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply bg-lavande text-encre font-body text-[16px] leading-relaxed;
+  @apply bg-[#F5F3E7] text-encre font-body text-[16px] leading-relaxed;
 }
 
 h1, h2, h3, h4 {
