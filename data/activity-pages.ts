@@ -138,16 +138,16 @@ const kundalini: ActivityPageData = {
         titre: "Stage en groupe",
         texte:
           "En présentiel, en petit groupe : un temps pour pratiquer, partager et approfondir ensemble.",
-        duree: "[60 minutes]",
-        tarif: "[15€/personne]",
+        duree: "60 min",
+        tarif: "15 € par personne",
         cta: { label: "Voir les dates", href: "/nous-contacter" },
       },
       {
         titre: "Séance personnalisée",
         texte:
           "Un accompagnement individuel, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "[60 minutes]",
-        tarif: "[50€/personne]",
+        duree: "60 min",
+        tarif: "50 € par séance",
         cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
       },
     ],
@@ -254,7 +254,7 @@ const tantra: ActivityPageData = {
     },
   ],
   infos: {
-     formats: [
+    formats: [
       {
         titre: "Atelier en groupe",
         texte:
@@ -267,7 +267,7 @@ const tantra: ActivityPageData = {
         titre: "Atelier personnalisé",
         texte:
           "Un atelier individuel de Tantra ou de Kundalini, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "[2H]",
+        duree: "2h",
         tarif: "Tantra : 70 € · Kundalini : 80 €",
         cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
       },
