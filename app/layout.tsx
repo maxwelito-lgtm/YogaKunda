@@ -21,7 +21,7 @@ const titreBase = `${site.nom} — Yoga & Thérapie Holistique`;
 export const metadata: Metadata = {
   title: site.ville ? `${titreBase} à ${site.ville}` : titreBase,
   description:
-    "Cours de yoga en présentiel et en ligne, thérapie holistique et mantras, à Angoulême.",
+    "Cours de yoga en présentiel et en ligne, thérapie holistique & Podcasts.",
 };
 
 export default function RootLayout({
