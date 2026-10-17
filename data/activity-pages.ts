@@ -160,19 +160,19 @@ const tantra: ActivityPageData = {
   slug: "tantra",
   fond: "#F5F3E7",
   metaDescription:
-    "Découvrez le Tantra Yoga : un yoga complet pour cultiver le lâcher-prise, apaiser le mental et accueillir ses émotions avec douceur, dès le premier cours.",
-  titre: "Tantra Yoga",
+    "Ateliers Tantra & Kundalini en présentiel : des ateliers de 2 à 3 heures pour lâcher prise, apaiser le mental et explorer plus profondément votre pratique, en groupe ou en séance personnalisée.",
+  titre: "Ateliers Tantra & Kundalini",
   accroche:
-    "Le yoga holistique par excellence : lâchez prise, apaisez votre mental et accueillez vos émotions avec douceur.",
+    "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 à 3 heures.",
   heroImage: "/images/tantra.png",
-  heroAlt: "Salle de pratique chaleureuse pour un cours de Tantra Yoga",
-  ctaPrincipal: { label: "Essayer un cours", href: "#infos" },
+  heroAlt: "Salle de pratique chaleureuse pour un atelier de Tantra et Kundalini Yoga",
+  ctaPrincipal: { label: "Réserver un atelier", href: "#infos" },
   ctaSecondaire: { label: "Nous poser une question", href: "/nous-contacter" },
   intro: {
     titre: "Un yoga qui relie le corps, le cœur et l'esprit",
     paragraphes: [
       "Le Tantra Yoga est une approche globale : on ne cherche pas à dompter le corps ou le mental, mais à les écouter et à les mettre en harmonie. Postures, respiration, sons et méditation sont réunis dans une même pratique, pour vivre pleinement chaque sensation.",
-      "C'est un yoga accessible, qui s'adresse aussi bien à celles et ceux qui découvrent qu'aux pratiquants réguliers. Le cours se déroule à votre rythme, dans un cadre bienveillant, sans performance ni jugement.",
+      "C'est un yoga accessible, qui s'adresse aussi bien à celles et ceux qui découvrent qu'aux pratiquants réguliers. L'atelier se déroule à votre rythme, dans un cadre bienveillant, sans performance ni jugement.",
     ],
     cta: { label: "Voir les infos pratiques", href: "#infos" },
   },
@@ -184,7 +184,7 @@ const tantra: ActivityPageData = {
     imageAlt: "Personnes en pratique de yoga dans un espace chaleureux",
   },
   deroule: {
-    titre: "Le déroulé d'un cours",
+    titre: "Le déroulé d'un atelier",
     etapes: [
       {
         titre: "Accueil et ancrage",
@@ -219,9 +219,9 @@ const tantra: ActivityPageData = {
     alt: "Ambiance apaisante",
   },
   pourQui:
-    "Le Tantra Yoga s'adresse à toute personne désireuse de ralentir, de mieux se connaître et de traverser les moments chargés avec plus de sérénité. Aucun prérequis n'est nécessaire : ni souplesse, ni expérience, ni croyance particulière. Le cours accueille les débutants, tout en restant riche pour les pratiquants plus avancés.",
+    "Les ateliers s'adressent à toute personne désireuse de ralentir, de mieux se connaître et de traverser les moments chargés avec plus de sérénité. Aucun prérequis n'est nécessaire : ni souplesse, ni expérience, ni croyance particulière. L'atelier accueille les débutants, tout en restant riche pour les pratiquants plus avancés.",
   pourquoi: {
-    intro: "Le Tantra Yoga peut vous accompagner pour :",
+    intro: "Les ateliers peuvent vous accompagner pour :",
     points: [
       "relâcher le stress et les tensions accumulées",
       "pacifier un mental trop agité",
@@ -256,23 +256,23 @@ const tantra: ActivityPageData = {
   infos: {
     formats: [
       {
-        titre: "Cours collectif",
+        titre: "Atelier en groupe",
         texte:
-          "En petit groupe, chaque semaine : un rendez-vous régulier pour installer la pratique dans la durée.",
-        duree: "60 min",
+          "En présentiel, en petit groupe : un temps de 2 à 3 heures pour explorer davantage, pratiquer et partager ensemble.",
+        duree: "2h à 3h",
         tarif: "[à compléter]",
-        cta: { label: "Voir les horaires", href: "/nous-contacter" },
+        cta: { label: "Voir les dates", href: "/nous-contacter" },
       },
       {
-        titre: "Cours en ligne",
+        titre: "Atelier personnalisé",
         texte:
-          "En direct ou en replay, pour pratiquer où que vous soyez et quand vous le voulez.",
-        duree: "[à compléter]",
+          "Un atelier individuel de 2 à 3 heures, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
+        duree: "2h à 3h",
         tarif: "[à compléter]",
-        cta: { label: "Nous contacter", href: "/nous-contacter" },
+        cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
       },
     ],
-    lieu: "[adresse du studio]",
+    lieu: site.adresse,
     contact: `${site.telephone} · ${site.email}`,
   },
 };
