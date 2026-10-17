@@ -138,16 +138,16 @@ const kundalini: ActivityPageData = {
         titre: "Stage en groupe",
         texte:
           "En présentiel, en petit groupe : un temps pour pratiquer, partager et approfondir ensemble.",
-        duree: "[à compléter]",
-        tarif: "[à compléter]",
+        duree: "[60 minutes]",
+        tarif: "[15€/personne]",
         cta: { label: "Voir les dates", href: "/nous-contacter" },
       },
       {
         titre: "Séance personnalisée",
         texte:
           "Un accompagnement individuel, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "[à compléter]",
-        tarif: "[à compléter]",
+        duree: "[60 minutes]",
+        tarif: "[50€/personne]",
         cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
       },
     ],
