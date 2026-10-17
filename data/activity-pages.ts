@@ -37,6 +37,7 @@ export type ActivityPageData = {
 
 const kundalini: ActivityPageData = {
   slug: "kundalini",
+  fond: "#F5F3E7",
   metaDescription:
     "Découvrez le Kundalini Yoga : stages en groupe et séances personnalisées pour réveiller votre énergie, apaiser votre mental et vous recentrer.",
   titre: "Kundalini Yoga",
@@ -151,7 +152,7 @@ const kundalini: ActivityPageData = {
       },
     ],
     lieu: site.adresse,
-   contact: `${site.telephone} · ${site.email}`,
+    contact: `${site.telephone} · ${site.email}`,
   },
 };
 

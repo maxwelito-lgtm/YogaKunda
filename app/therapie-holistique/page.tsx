@@ -19,7 +19,7 @@ const bouton =
 
 export default function TherapieHolistiquePage() {
   return (
-    <main style={{ backgroundColor: "#FBFBFA" }}>
+    <main style={{ backgroundColor: "#F5F3E7" }}>
       <Header />
 
       {/* Haut de page : photo + panneau titre */}
@@ -30,7 +30,7 @@ export default function TherapieHolistiquePage() {
             alt="Paysage apaisant et lumineux"
             className="h-64 w-full object-cover md:absolute md:left-0 md:top-0 md:h-[516px] md:w-[62%]"
           />
-          <div className="relative z-10 bg-[#FBFBFA] py-8 md:ml-auto md:mt-[87px] md:min-h-[398px] md:w-[52%] md:py-12 md:pl-20 md:pr-6">
+          <div className="relative z-10 bg-[#F5F3E7] py-8 md:ml-auto md:mt-[87px] md:min-h-[398px] md:w-[52%] md:py-12 md:pl-20 md:pr-6">
             <h1 className="font-body text-4xl font-light text-[#9C8541] md:text-5xl">
               Thérapie Holistique
             </h1>
