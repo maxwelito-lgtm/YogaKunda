@@ -3,8 +3,8 @@ import { site } from "@/site.config";
 
 export default function Footer() {
   return (
-    <footer className="bg-lavande">
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6">
+    <footer className="bg-[#F5F3E7]">
+            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6">
         {/* Colonne identité */}
         <div className="text-center sm:text-left">
           <div className="mb-4 flex justify-center gap-4 sm:justify-start">
@@ -18,9 +18,11 @@ export default function Footer() {
               <SocialIcon type="instagram" />
             </a>
           </div>
-          <span className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-white text-center font-display text-[9px] uppercase text-encre sm:mx-0">
-            {site.nom}
-          </span>
+                    <img
+            src="/images/logo-shantalam.png"
+            alt={site.nom}
+            className="mx-auto h-24 w-24 object-contain sm:mx-0"
+          />
           <p className="mt-3 text-sm text-encre/80">{site.email}</p>
           <p className="text-sm text-encre/80">{site.telephone}</p>
         </div>
