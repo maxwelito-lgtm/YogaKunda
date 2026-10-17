@@ -45,7 +45,7 @@ const kundalini: ActivityPageData = {
     "Réveillez votre énergie, apaisez votre mental et retrouvez votre élan intérieur.",
   heroImage: "https://picsum.photos/seed/kundalini-hero/1600/900",
   heroAlt: "Ambiance paisible et lumineuse pour une pratique de yoga",
-  ctaPrincipal: { label: "Trouver votre stage", href: "#infos" },
+  ctaPrincipal: { label: "Séance collective", href: "#infos" },
   ctaSecondaire: { label: "Séance personnalisée", href: "#infos" },
   intro: {
     titre: "Une science de l'énergie, accessible à tous",
@@ -166,8 +166,8 @@ const tantra: ActivityPageData = {
     "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 à 3 heures.",
   heroImage: "/images/tantra.png",
   heroAlt: "Salle de pratique chaleureuse pour un atelier de Tantra et Kundalini Yoga",
-  ctaPrincipal: { label: "Réserver un atelier", href: "#infos" },
-  ctaSecondaire: { label: "Nous poser une question", href: "/nous-contacter" },
+  ctaPrincipal: { label: "Séance collective", href: "#infos" },
+  ctaSecondaire: { label: "Séance individuelle", href: "#infos" },
   intro: {
     titre: "Un yoga qui relie le corps, le cœur et l'esprit",
     paragraphes: [
