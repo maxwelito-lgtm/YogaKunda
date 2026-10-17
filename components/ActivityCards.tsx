@@ -12,15 +12,15 @@ type Activity = {
 
 const activites: Activity[] = [
   {
-    titre: "Cours de Tantra Yoga",
-    sousTitre: "Le Yoga holistique par excellence",
+    titre: "Ateliers Tantra & Kundalini",
+    sousTitre: "Prendre le temps d'approfondir",
     texte:
-      "Un yoga complet pour cultiver le lâcher-prise, pacifier son mental et apporter un apaisement émotionnel profond.",
+      "Des ateliers de 2 à 3 heures pour explorer davantage le Tantra Yoga et le Kundalini Yoga, ressentir plus profondément et enrichir votre pratique.",
     image: "/images/tantra.png",
     cta: "En savoir plus",
-      href: "/yoga/tantra",
+    href: "/yoga/tantra",
     niveau: "Niveau 1",
-    duree: "60 min",
+    duree: "2h à 3h",
   },
   {
     titre: "Cours de Kundalini Yoga",
