@@ -27,21 +27,21 @@ export default function Hero() {
           où que vous soyez et quand vous le voulez.
         </p>
 
-        <div className="mt-1 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
+        <div className="mt-1 flex items-center justify-center gap-3 sm:gap-4">
           {/* Bouton principal : défile vers la section Activités */}
           <a
             href="#activites"
-            className="btn-bounce inline-flex min-h-[44px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-7 py-3 text-sm font-semibold text-white backdrop-blur-md hover:bg-[#75523F]"
+            className="btn-bounce inline-flex min-h-[44px] min-w-[210px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-7 py-3 text-sm font-semibold text-white backdrop-blur-md hover:bg-[#75523F]"
           >
             Trouver votre séance
           </a>
 
-          {/* Bouton secondaire : Cours en ligne  (page à créer) */}
+          {/* Bouton secondaire : visible à partir de la taille tablette, masqué sur mobile */}
           <Link
             href="/mon-espace"
-            className="btn-bounce inline-flex min-h-[44px] items-center justify-center rounded-pill border-[1.5px] border-white/80 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15"
+            className="btn-bounce hidden min-h-[44px] min-w-[210px] items-center justify-center rounded-pill border-[1.5px] border-white/80 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15 sm:inline-flex"
           >
-            Cours en ligne 
+            Cours en ligne
           </Link>
         </div>
       </div>
