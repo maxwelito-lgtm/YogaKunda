@@ -41,7 +41,7 @@ export default function Hero() {
             href="/mon-espace"
             className="btn-bounce inline-flex min-h-[44px] items-center justify-center rounded-pill border-[1.5px] border-white/80 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15"
           >
-            Cours en ligne &amp; 
+            Cours en ligne ; 
           </Link>
         </div>
       </div>
