@@ -92,7 +92,7 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Droite (desktop) : nav + connexion + panier, tout sur la même ligne */}
+        {/* Droite (desktop) : nav + panier, tout sur la même ligne */}
         <div className="hidden items-center gap-8 md:flex">
           <nav>
             <ul className="flex items-center gap-8 text-[15px] lg:text-base">
@@ -108,14 +108,6 @@ export default function Header() {
               ))}
             </ul>
           </nav>
-
-          <Link
-            href="/connexion"
-            className="flex items-center gap-2 text-[15px] font-medium text-white drop-shadow-md hover:text-violet-light lg:text-base"
-          >
-            <UserIcon />
-            Se connecter
-          </Link>
 
           <Link
             href="/panier"
@@ -161,29 +153,10 @@ export default function Header() {
                 </Link>
               </li>
             ))}
-
-            <li>
-              <Link
-                href="/connexion"
-                className="block min-h-[44px] py-3 text-base text-violet-light"
-                onClick={() => setOpen(false)}
-              >
-                Se connecter
-              </Link>
-            </li>
           </ul>
         </nav>
       )}
     </header>
-  );
-}
-
-function UserIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
   );
 }
 
