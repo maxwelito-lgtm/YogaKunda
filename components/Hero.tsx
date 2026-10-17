@@ -29,7 +29,8 @@ export default function Hero() {
 
         <Link
           href="/yoga"
-className="btn-bounce rounded-pill border-[1.5px] border-white bg-[#96543C]/90 hover:bg-[#96543C] … backdrop-blur-md"        >
+          className="btn-bounce min-h-[44px] rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-7 py-3 text-sm font-semibold text-white backdrop-blur-md hover:bg-[#75523F]"
+        >
           Trouver votre stage
         </Link>
       </div>
