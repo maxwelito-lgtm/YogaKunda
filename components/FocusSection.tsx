@@ -3,9 +3,12 @@
 import { useState } from "react";
 import type { JSX } from "react";
 
+type Mode = "presentiel" | "en-ligne";
+
 type Practice = {
   titre: string;
   texte: string;
+  mode: Mode;
 };
 
 type FocusItem = {
@@ -13,10 +16,25 @@ type FocusItem = {
   souscription: string;
   icone: string;
   pratiques: Practice[];
-  cta: string;
-  href: string;
 };
 
+// Libellé de colonne, bouton et destination selon le mode.
+// "Réserver un cours" pointera vers la page de réservation quand elle existera.
+const modes: Record<Mode, { libelle: string; cta: string; href: string }> = {
+  presentiel: {
+    libelle: "Présentiel",
+    cta: "Réserver un cours",
+    href: "#activites",
+  },
+  "en-ligne": {
+    libelle: "En ligne",
+    cta: "Cours en ligne",
+    href: "/mon-espace",
+  },
+};
+
+// Pour rendre une catégorie "mixte" (deux colonnes dans la fenêtre), il suffit
+// d'y ajouter une pratique avec mode: "presentiel" ET une avec mode: "en-ligne".
 const focusItems: FocusItem[] = [
   {
     titre: "Stress & anxiété",
@@ -27,15 +45,15 @@ const focusItems: FocusItem[] = [
         titre: "Thérapie Holistique",
         texte:
           "Un accompagnement personnel qui prend en compte toutes les dimensions de l'être pour apaiser le mental.",
+        mode: "presentiel",
       },
       {
         titre: "Tantra Yoga",
         texte:
           "Cultive le lâcher-prise et pacifie le mental pour un apaisement émotionnel profond.",
+        mode: "presentiel",
       },
     ],
-    cta: "Essayer 7 jours gratuits",
-    href: "#activites",
   },
   {
     titre: "Sommeil",
@@ -46,10 +64,9 @@ const focusItems: FocusItem[] = [
         titre: "Cours en ligne & relaxations audio",
         texte:
           "Relaxations audio guidées, à écouter le soir pour préparer un sommeil réparateur.",
+        mode: "en-ligne",
       },
     ],
-    cta: "Essayer 7 jours gratuits",
-    href: "/mon-espace",
   },
   {
     titre: "Énergie & vitalité",
@@ -60,10 +77,9 @@ const focusItems: FocusItem[] = [
         titre: "Kundalini Yoga",
         texte:
           "Le yoga de l'éveil de l'énergie créatrice, pour révéler son plein potentiel.",
+        mode: "presentiel",
       },
     ],
-    cta: "Essayer 7 jours gratuits",
-    href: "#activites",
   },
   {
     titre: "Découverte / débutant",
@@ -74,15 +90,20 @@ const focusItems: FocusItem[] = [
         titre: "Tantra Yoga — Niveau 1",
         texte:
           "Le yoga holistique par excellence, accessible dès le premier cours, sans prérequis.",
+        mode: "presentiel",
       },
     ],
-    cta: "Essayer 7 jours gratuits",
-    href: "#activites",
   },
 ];
 
 export default function FocusSection() {
   const [selected, setSelected] = useState<FocusItem | null>(null);
+
+  const presentiel =
+    selected?.pratiques.filter((p) => p.mode === "presentiel") ?? [];
+  const enLigne =
+    selected?.pratiques.filter((p) => p.mode === "en-ligne") ?? [];
+  const mixte = presentiel.length > 0 && enLigne.length > 0;
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -114,7 +135,9 @@ export default function FocusSection() {
           onClick={() => setSelected(null)}
         >
           <div
-            className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-[#F5F3E7] p-8"
+            className={`relative max-h-[85vh] w-full overflow-y-auto rounded-2xl bg-[#F5F3E7] p-8 ${
+              mixte ? "max-w-3xl" : "max-w-lg"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -133,27 +156,75 @@ export default function FocusSection() {
               {selected.souscription}
             </p>
 
-            <div className="mt-6 flex flex-col gap-5">
-              {selected.pratiques.map((p) => (
-                <div key={p.titre} className="flex gap-3">
-                  <span className="mt-1 flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#75523F]/10">
-                    <LotusIcon />
-                  </span>
-                  <div>
-                    <p className="font-semibold text-encre">{p.titre}</p>
-                    <p className="text-sm text-encre/70">{p.texte}</p>
-                  </div>
-                </div>
-              ))}
+            <div className={`mt-6 grid gap-8 ${mixte ? "sm:grid-cols-2" : ""}`}>
+              {presentiel.length > 0 && (
+                <Colonne
+                  mode="presentiel"
+                  pratiques={presentiel}
+                  afficherTitre={mixte}
+                  fermer={() => setSelected(null)}
+                />
+              )}
+              {enLigne.length > 0 && (
+                <Colonne
+                  mode="en-ligne"
+                  pratiques={enLigne}
+                  afficherTitre={mixte}
+                  fermer={() => setSelected(null)}
+                />
+              )}
             </div>
-
-            <a href={selected.href} className="btn-bounce mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 py-3 text-sm font-semibold text-white hover:bg-[#75523F]">
-              {selected.cta}
-            </a>
           </div>
         </div>
       )}
     </section>
+  );
+}
+
+// Une colonne = une liste de pratiques + son bouton (présentiel ou en ligne)
+function Colonne({
+  mode,
+  pratiques,
+  afficherTitre,
+  fermer,
+}: {
+  mode: Mode;
+  pratiques: Practice[];
+  afficherTitre: boolean;
+  fermer: () => void;
+}) {
+  const m = modes[mode];
+
+  return (
+    <div className="flex flex-col">
+      {afficherTitre && (
+        <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[#75523F]">
+          {m.libelle}
+        </h4>
+      )}
+
+      <div className="flex flex-1 flex-col gap-5">
+        {pratiques.map((p) => (
+          <div key={p.titre} className="flex gap-3">
+            <span className="mt-1 flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#75523F]/10">
+              <LotusIcon />
+            </span>
+            <div>
+              <p className="font-semibold text-encre">{p.titre}</p>
+              <p className="text-sm text-encre/70">{p.texte}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <a
+        href={m.href}
+        onClick={fermer}
+        className="btn-bounce mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 py-3 text-sm font-semibold text-white hover:bg-[#75523F]"
+      >
+        {m.cta}
+      </a>
+    </div>
   );
 }
 
