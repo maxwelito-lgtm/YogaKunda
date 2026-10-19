@@ -76,9 +76,11 @@ const activites: Activity[] = [
 // RÉGLAGES DU CARROUSEL
 // ---------------------------------------------------------------
 // Vitesse du défilement continu, en pixels par seconde.
-// Plus la valeur est grande, plus ça défile vite.
 const VITESSE_PC = 50;
 const VITESSE_MOBILE = 35;
+// Vitesse sur PC quand la souris est au-dessus du carrousel.
+// 0 = arrêt complet. Mettre la même valeur que VITESSE_PC = pas de ralentissement.
+const VITESSE_PC_SURVOL = 12;
 // Temps d'attente (ms) avant que le défilement reparte après une action.
 const REPRISE_PC = 2000;
 const REPRISE_MOBILE = 3000;
@@ -86,6 +88,9 @@ const REPRISE_MOBILE = 3000;
 const DUREE_FLECHE = 500;
 // Nombre de copies de la liste (pour la boucle infinie). 3 suffit.
 const COPIES = 3;
+// true = pas de défilement automatique si l'appareil a l'option
+// "réduire les animations" activée (recommandé pour l'accessibilité).
+const RESPECTER_REDUCTION_ANIMATIONS = true;
 
 export default function ActivityCards() {
   const pisteRef = useRef<HTMLDivElement>(null);
@@ -101,6 +106,7 @@ export default function ActivityCards() {
     visible: true,
     anim: false,
     tactile: false,
+    vitesse: 0, // vitesse actuelle (px/s), qui évolue en douceur
     reprise: 0, // pas de défilement auto avant cet instant
     derniereEcriture: 0, // dernière position écrite par le code (pas par la personne)
     idle: undefined as number | undefined,
@@ -161,6 +167,7 @@ export default function ActivityCards() {
       const s = etat.current;
       interrompre();
       normaliser();
+      s.reprise = Date.now() + delaiReprise();
 
       const debut = piste.scrollLeft;
       const reduit = window.matchMedia(
@@ -196,6 +203,21 @@ export default function ActivityCards() {
     [interrompre, normaliser]
   );
 
+  // Fin d'un glisser à la souris (écoutée sur toute la fenêtre pour ne jamais rester bloqué)
+  const finirGlisser = useCallback(
+    (e: PointerEvent) => {
+      const piste = pisteRef.current;
+      if (!drag.current.actif || !piste) return;
+      drag.current.actif = false;
+      if (piste.hasPointerCapture(e.pointerId)) {
+        piste.releasePointerCapture(e.pointerId);
+      }
+      etat.current.reprise = Date.now() + REPRISE_PC;
+      if (drag.current.deplace) normaliser();
+    },
+    [normaliser]
+  );
+
   // ---------------------------------------------------------------
   // Défilement continu et infini
   // ---------------------------------------------------------------
@@ -204,9 +226,9 @@ export default function ActivityCards() {
     if (!piste) return;
     const s = etat.current;
 
-    const reduit = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const reduit =
+      RESPECTER_REDUCTION_ANIMATIONS &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const requeteTactile = window.matchMedia("(pointer: coarse)");
     s.tactile = requeteTactile.matches;
 
@@ -231,6 +253,8 @@ export default function ActivityCards() {
       }
     };
     window.addEventListener("resize", surResize);
+    window.addEventListener("pointerup", finirGlisser);
+    window.addEventListener("pointercancel", finirGlisser);
 
     // Pause quand le carrousel n'est plus à l'écran
     let observer: IntersectionObserver | undefined;
@@ -255,18 +279,23 @@ export default function ActivityCards() {
         reduit ||
         document.hidden ||
         !s.visible ||
-        s.survol ||
         s.touche ||
         s.focus ||
         drag.current.actif ||
         s.anim ||
         Date.now() < s.reprise;
 
-      if (!pause) {
+      if (pause) {
+        s.vitesse = 0; // on repartira en douceur
+      } else {
+        const base = s.tactile ? VITESSE_MOBILE : VITESSE_PC;
+        const cible = !s.tactile && s.survol ? VITESSE_PC_SURVOL : base;
+        // la vitesse rejoint la vitesse voulue progressivement
+        s.vitesse += (cible - s.vitesse) * Math.min(1, dt * 6);
+
         const L = longueurCopie();
-        if (L) {
-          let x =
-            posRef.current + (s.tactile ? VITESSE_MOBILE : VITESSE_PC) * dt;
+        if (L && s.vitesse > 0.3) {
+          let x = posRef.current + s.vitesse * dt;
           if (x >= 2 * L) x -= L; // boucle infinie, sans saut visible
           posRef.current = x;
           piste.scrollLeft = x;
@@ -279,12 +308,14 @@ export default function ActivityCards() {
 
     return () => {
       window.removeEventListener("resize", surResize);
+      window.removeEventListener("pointerup", finirGlisser);
+      window.removeEventListener("pointercancel", finirGlisser);
       observer?.disconnect();
       cancelAnimationFrame(raf);
       if (animRef.current) cancelAnimationFrame(animRef.current);
       if (s.idle) window.clearTimeout(s.idle);
     };
-  }, [longueurCopie]);
+  }, [longueurCopie, finirGlisser]);
 
   // Défilement fait par la personne (doigt, inertie, trackpad, glisser)
   function surScroll() {
@@ -331,17 +362,6 @@ export default function ActivityCards() {
     }
   }
 
-  function surPointerFin(e: React.PointerEvent<HTMLDivElement>) {
-    const piste = pisteRef.current;
-    if (!drag.current.actif || !piste) return;
-    drag.current.actif = false;
-    if (piste.hasPointerCapture(e.pointerId)) {
-      piste.releasePointerCapture(e.pointerId);
-    }
-    etat.current.reprise = Date.now() + REPRISE_PC;
-    if (drag.current.deplace) normaliser();
-  }
-
   // Après un glisser à la souris, on n'ouvre pas le lien sous le curseur
   function surClicCapture(e: React.MouseEvent<HTMLDivElement>) {
     if (drag.current.deplace) {
@@ -383,8 +403,11 @@ export default function ActivityCards() {
             etat.current.reprise = Date.now() + REPRISE_PC;
           }
         }}
-        onFocus={() => {
-          etat.current.focus = true;
+        onFocus={(e) => {
+          // Seul le focus au clavier met en pause (pas un simple clic de souris)
+          if ((e.target as HTMLElement).matches(":focus-visible")) {
+            etat.current.focus = true;
+          }
         }}
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
@@ -430,8 +453,6 @@ export default function ActivityCards() {
           onWheel={interrompre}
           onPointerDown={surPointerDown}
           onPointerMove={surPointerMove}
-          onPointerUp={surPointerFin}
-          onPointerCancel={surPointerFin}
           onClickCapture={surClicCapture}
           onDragStart={(e) => e.preventDefault()}
           className="-mx-2 -my-4 flex gap-6 overflow-x-auto overscroll-x-contain px-2 py-4 select-none [scrollbar-width:none] sm:cursor-grab sm:active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
