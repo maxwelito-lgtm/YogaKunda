@@ -24,12 +24,11 @@ export default function Footer() {
             alt={site.nom}
             className="mx-auto h-24 w-24 object-contain sm:mx-0"
           />
-          <p className="mt-3 text-sm text-encre/80">{site.email}</p>
           <p className="text-sm text-encre/80">{site.telephone}</p>
         </div>
 
         <NewsletterForm />
-        
+
       </div>
 
       <div className="border-t border-encre/10 px-4 py-6 text-center text-xs text-encre/70 sm:px-6">

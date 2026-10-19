@@ -8,7 +8,7 @@ export const site = {
   accroche: "Retrouvez l'harmonie intérieure",
   ville: "", // TODO
   adresse: "[adresse du studio]", // TODO
-  email: "chantallassier1@gmail.com",
+  email: "shantalam-yoga@outlook.fr",
   telephone: "06 74 15 76 78",
   reseaux: {
     youtube: "#",
