@@ -18,24 +18,24 @@ export default function Hero() {
       {/* Contenu centré */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-5 p-5 text-center sm:gap-7 sm:p-12">
 
-        {/* Logo centré au-dessus du titre */}
+        {/* Logo centré au-dessus du titre : apparition douce puis respiration lente */}
         <img
           src="/images/logo-shantalam.png"
           alt=""
           aria-hidden="true"
-          className="h-24 w-24 object-contain sm:h-[120px] sm:w-[120px]"
+          className="hero-logo h-24 w-24 object-contain sm:h-[120px] sm:w-[120px]"
         />
         
-        <h1 className="max-w-2xl font-display text-3xl italic text-white drop-shadow-lg sm:text-6xl">
+        <h1 className="hero-t1 max-w-2xl font-display text-3xl italic text-white drop-shadow-lg sm:text-6xl">
           {site.accroche}
         </h1>
 
-        <p className="max-w-md text-white/90 drop-shadow-md">
+        <p className="hero-t2 max-w-md text-white/90 drop-shadow-md">
           Cours de Kundalini et Tantra Yoga, en présentiel ou en ligne,
           où que vous soyez et quand vous le voulez.
         </p>
 
-        <div className="mt-1 flex items-center justify-center gap-3 sm:gap-4">
+        <div className="hero-t3 mt-1 flex items-center justify-center gap-3 sm:gap-4">
           {/* Bouton principal : défile vers la section Activités */}
           <a
             href="#activites"
