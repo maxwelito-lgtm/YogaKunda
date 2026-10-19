@@ -19,13 +19,15 @@ const formules: Record<
     prix: "17",
     detail: "204 € par an, facturé annuellement",
     economie: "Vous économisez 36 € par an",
-href: "/abonnements",  },
+    href: "/connexion?next=%2Fmon-espace%3Fformule%3Dannuelle",
+  },
   mensuelle: {
     libelle: "Mensuel",
     prix: "20",
     detail: "240 € par an, facturé mensuellement",
     economie: null,
-href: "/abonnements",  },
+    href: "/connexion?next=%2Fmon-espace%3Fformule%3Dmensuelle",
+  },
 };
 
 const avantages = [
@@ -34,6 +36,7 @@ const avantages = [
   "Relaxations audio guidées, à écouter le soir pour préparer le sommeil",
   "Un espace à vous : pratiquez où que vous soyez, à votre rythme",
 ];
+
 export default function PricingSection() {
   const [formule, setFormule] = useState<Formule>("annuelle");
   const f = formules[formule];
@@ -57,7 +60,7 @@ export default function PricingSection() {
           <span className="inline-block rounded-pill bg-[#75523F] px-3 py-1 text-xs font-semibold text-white">
             7 jours offerts
           </span>
-                   <h3 className="mt-4 font-display text-3xl italic">
+          <h3 className="mt-4 font-display text-3xl italic">
             Bénéficiez en exclusivité de :
           </h3>
           <ul className="mt-6 flex flex-col gap-4">

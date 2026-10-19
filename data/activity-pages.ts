@@ -160,8 +160,7 @@ const tantra: ActivityPageData = {
       "Le Tantra Yoga est une approche globale : on ne cherche pas à dompter le corps ou le mental, mais à les écouter et à les mettre en harmonie. Postures, respiration, sons et méditation sont réunis dans une même pratique, pour vivre pleinement chaque sensation.",
       "C'est un yoga accessible, qui s'adresse aussi bien à celles et ceux qui découvrent qu'aux pratiquants réguliers. L'atelier se déroule à votre rythme, dans un cadre bienveillant, sans performance ni jugement.",
     ],
-    cta: { label: "Découvrir les abonnements", href: "#tarifs" },
-    sousCta: "À votre rythme, sans pression",
+    cta: { label: "Voir les infos pratiques", href: "#infos" },
   },
   pratique: {
     titre: "Accueillir ce qui est, et le transformer en douceur",
@@ -258,14 +257,16 @@ const nidra: ActivityPageData = {
   heroImage: "/images/yoga-n.png",
   heroAlt: "Ambiance douce et lumineuse pour un moment de relaxation",
   ctaPrincipal: { label: "Cours en ligne", href: "#tarifs" },
-ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/abonnements" },  intro: {
+  ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/#abonnement" },
+  intro: {
     titre: "Le repos profond, accessible à tous",
     paragraphes: [
       "Le Yoga Nidra, parfois appelé « sommeil yogique », est une pratique de relaxation guidée. Allongé, les yeux fermés, vous suivez la voix qui vous accompagne, entre l'état de veille et le sommeil, pendant que le corps se détend complètement.",
       "Il n'y a rien à réussir et aucune posture à tenir : il suffit de s'installer confortablement et de se laisser guider, à votre rythme, dans un cadre bienveillant et sans jugement.",
       "Le Yoga Nidra est proposé uniquement en ligne : vous le pratiquez depuis chez vous, quand vous le souhaitez, grâce aux relaxations guidées de votre espace personnel.",
     ],
-    cta: { label: "Voir les infos pratiques", href: "#infos" },
+    cta: { label: "Découvrir les abonnements", href: "#tarifs" },
+    sousCta: "À votre rythme, sans pression",
   },
   pratique: {
     titre: "Un voyage guidé à l'intérieur de soi",
@@ -308,7 +309,8 @@ ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/abonnements" },  int
           "On revient peu à peu au corps et à la pièce, pour repartir reposé et recentré.",
       },
     ],
-cta: { label: "Essayer 7 jours gratuits", href: "/abonnements" },  },
+    cta: { label: "Essayer 7 jours gratuits", href: "/#abonnement" },
+  },
   bandeau: {
     image: "https://picsum.photos/seed/nidra-bandeau/1600/600",
     alt: "Paysage apaisant",
