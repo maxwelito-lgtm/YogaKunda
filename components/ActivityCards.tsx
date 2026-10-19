@@ -72,14 +72,35 @@ const activites: Activity[] = [
   },
 ];
 
-// Durée du défilement des flèches (PC / tablette), en millisecondes.
-// Plus la valeur est grande, plus c'est lent. 450 = fluide sans être mou.
-const DUREE_ANIMATION = 450;
+// ---------------------------------------------------------------
+// RÉGLAGES DU CARROUSEL (en millisecondes)
+// ---------------------------------------------------------------
+// Durée du glissement d'une carte (flèches, points, défilement auto).
+// Plus la valeur est grande, plus c'est lent.
+const DUREE_ANIMATION = 500;
+// Durée du retour au début quand on arrive à la dernière carte.
+const DUREE_RETOUR = 900;
+// Temps d'attente entre deux défilements automatiques.
+const INTERVALLE_AUTO = 4500;
+// Temps d'attente avant que le défilement auto reprenne après une action.
+const REPRISE_APRES_ACTION = 5000;
 
 export default function ActivityCards() {
   const pisteRef = useRef<HTMLDivElement>(null);
+  const regionRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number | null>(null);
   const drag = useRef({ actif: false, startX: 0, startScroll: 0, deplace: false });
+
+  // État "pause" du défilement automatique (sans re-rendu)
+  const etat = useRef({
+    survol: false,
+    touche: false,
+    focus: false,
+    visible: true,
+    derniereAction: 0,
+    dernierAuto: 0,
+    finAnimation: 0,
+  });
 
   const [index, setIndex] = useState(0);
   const [peutReculer, setPeutReculer] = useState(false);
@@ -116,15 +137,6 @@ export default function ActivityCards() {
     );
   }, [pas]);
 
-  useEffect(() => {
-    maj();
-    window.addEventListener("resize", maj);
-    return () => {
-      window.removeEventListener("resize", maj);
-      if (animRef.current) cancelAnimationFrame(animRef.current);
-    };
-  }, [maj]);
-
   // Arrête une animation en cours et réactive l'aimantation des cartes
   const interrompre = useCallback(() => {
     if (animRef.current) {
@@ -134,52 +146,151 @@ export default function ActivityCards() {
     if (pisteRef.current) pisteRef.current.style.scrollSnapType = "";
   }, []);
 
-  // Défilement animé et fluide vers une position
-  const animerVers = useCallback((cible: number) => {
-    const piste = pisteRef.current;
-    if (!piste) return;
-    if (animRef.current) cancelAnimationFrame(animRef.current);
-
-    const max = piste.scrollWidth - piste.clientWidth;
-    const arrivee = Math.max(0, Math.min(max, cible));
-    const debut = piste.scrollLeft;
-    const delta = arrivee - debut;
-    const reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (Math.abs(delta) < 1 || reduit) {
-      piste.scrollLeft = arrivee;
-      piste.style.scrollSnapType = "";
-      return;
-    }
-
-    piste.style.scrollSnapType = "none";
-    const t0 = performance.now();
-    const etape = (t: number) => {
-      const p = Math.min(1, (t - t0) / DUREE_ANIMATION);
-      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-      piste.scrollLeft = debut + delta * e;
-      if (p < 1) {
-        animRef.current = requestAnimationFrame(etape);
-      } else {
-        animRef.current = null;
-        piste.style.scrollSnapType = "";
-      }
-    };
-    animRef.current = requestAnimationFrame(etape);
+  // Note qu'il y a eu une action de la personne : le défilement auto patiente
+  const actionUtilisateur = useCallback(() => {
+    etat.current.derniereAction = Date.now();
   }, []);
 
+  // Défilement animé et fluide vers une position
+  const animerVers = useCallback(
+    (cible: number, duree: number = DUREE_ANIMATION) => {
+      const piste = pisteRef.current;
+      if (!piste) return;
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+
+      const max = piste.scrollWidth - piste.clientWidth;
+      const arrivee = Math.max(0, Math.min(max, cible));
+      const debut = piste.scrollLeft;
+      const delta = arrivee - debut;
+      const reduit = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (Math.abs(delta) < 1 || reduit) {
+        piste.scrollLeft = arrivee;
+        piste.style.scrollSnapType = "";
+        etat.current.finAnimation = Date.now();
+        return;
+      }
+
+      piste.style.scrollSnapType = "none";
+      const t0 = performance.now();
+      const etape = (t: number) => {
+        const p = Math.min(1, (t - t0) / duree);
+        const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        piste.scrollLeft = debut + delta * e;
+        if (p < 1) {
+          animRef.current = requestAnimationFrame(etape);
+        } else {
+          animRef.current = null;
+          piste.style.scrollSnapType = "";
+          etat.current.finAnimation = Date.now();
+        }
+      };
+      animRef.current = requestAnimationFrame(etape);
+    },
+    []
+  );
+
+  // Flèches (action de la personne)
   function aller(sens: 1 | -1) {
     const piste = pisteRef.current;
     if (!piste) return;
+    actionUtilisateur();
     const p = pas() || piste.clientWidth;
     const courant = Math.round(piste.scrollLeft / p);
     animerVers((courant + sens) * p);
   }
 
-  // Glisser à la souris (PC) : le tactile utilise le défilement natif
+  // ---------------------------------------------------------------
+  // Défilement automatique
+  // ---------------------------------------------------------------
+  useEffect(() => {
+    maj();
+    window.addEventListener("resize", maj);
+
+    const s = etat.current;
+    s.dernierAuto = Date.now();
+
+    const reduit = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // Pause quand le carrousel n'est plus visible à l'écran
+    let observer: IntersectionObserver | undefined;
+    if (regionRef.current && "IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        ([entree]) => {
+          s.visible = entree.isIntersecting;
+          if (entree.isIntersecting) s.dernierAuto = Date.now();
+        },
+        { threshold: 0.3 }
+      );
+      observer.observe(regionRef.current);
+    }
+
+    // Pause quand l'onglet est caché ; on repart calmement au retour
+    const surVisibilite = () => {
+      if (!document.hidden) s.dernierAuto = Date.now();
+    };
+    document.addEventListener("visibilitychange", surVisibilite);
+
+    const minuteur = reduit
+      ? undefined
+      : window.setInterval(() => {
+          const piste = pisteRef.current;
+          if (!piste) return;
+          const maintenant = Date.now();
+
+          if (
+            document.hidden ||
+            !s.visible ||
+            s.survol ||
+            s.touche ||
+            s.focus ||
+            drag.current.actif ||
+            animRef.current
+          )
+            return;
+          if (maintenant - s.derniereAction < REPRISE_APRES_ACTION) return;
+          if (maintenant - s.dernierAuto < INTERVALLE_AUTO) return;
+
+          s.dernierAuto = maintenant;
+          const p = pas() || piste.clientWidth;
+          const max = piste.scrollWidth - piste.clientWidth;
+
+          if (piste.scrollLeft >= max - 4) {
+            animerVers(0, DUREE_RETOUR); // retour au début
+          } else {
+            const courant = Math.round(piste.scrollLeft / p);
+            animerVers((courant + 1) * p);
+          }
+        }, 500);
+
+    return () => {
+      window.removeEventListener("resize", maj);
+      document.removeEventListener("visibilitychange", surVisibilite);
+      observer?.disconnect();
+      if (minuteur) window.clearInterval(minuteur);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [maj, pas, animerVers]);
+
+  // Chaque défilement fait par la personne (doigt, inertie, molette) repousse la reprise
+  function surScroll() {
+    maj();
+    if (!animRef.current && Date.now() - etat.current.finAnimation > 250) {
+      actionUtilisateur();
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Souris : glisser pour faire défiler (le tactile utilise le natif)
+  // ---------------------------------------------------------------
   function surPointerDown(e: React.PointerEvent<HTMLDivElement>) {
     if (e.pointerType !== "mouse" || e.button !== 0 || !pisteRef.current) return;
     interrompre();
+    actionUtilisateur();
     drag.current = {
       actif: true,
       startX: e.clientX,
@@ -206,6 +317,7 @@ export default function ActivityCards() {
     const piste = pisteRef.current;
     if (!drag.current.actif || !piste) return;
     drag.current.actif = false;
+    actionUtilisateur();
     if (piste.hasPointerCapture(e.pointerId)) {
       piste.releasePointerCapture(e.pointerId);
     }
@@ -239,10 +351,29 @@ export default function ActivityCards() {
       </p>
 
       <div
+        ref={regionRef}
         className="relative"
         role="region"
         aria-roledescription="carrousel"
         aria-label="Activités"
+        onPointerEnter={(e) => {
+          if (e.pointerType === "mouse") etat.current.survol = true;
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") {
+            etat.current.survol = false;
+            actionUtilisateur();
+          }
+        }}
+        onFocus={() => {
+          etat.current.focus = true;
+        }}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+            etat.current.focus = false;
+            actionUtilisateur();
+          }
+        }}
       >
         {/* Flèches : PC et tablette */}
         <button
@@ -269,9 +400,24 @@ export default function ActivityCards() {
         {/* Piste de défilement */}
         <div
           ref={pisteRef}
-          onScroll={maj}
-          onTouchStart={interrompre}
-          onWheel={interrompre}
+          onScroll={surScroll}
+          onTouchStart={() => {
+            interrompre();
+            etat.current.touche = true;
+            actionUtilisateur();
+          }}
+          onTouchEnd={() => {
+            etat.current.touche = false;
+            actionUtilisateur();
+          }}
+          onTouchCancel={() => {
+            etat.current.touche = false;
+            actionUtilisateur();
+          }}
+          onWheel={() => {
+            interrompre();
+            actionUtilisateur();
+          }}
           onPointerDown={surPointerDown}
           onPointerMove={surPointerMove}
           onPointerUp={surPointerFin}
@@ -344,7 +490,10 @@ export default function ActivityCards() {
           <button
             key={a.titre}
             type="button"
-            onClick={() => animerVers(i * pas())}
+            onClick={() => {
+              actionUtilisateur();
+              animerVers(i * pas());
+            }}
             aria-label={`Aller à : ${a.titre}`}
             aria-current={i === index}
             className={`h-2.5 rounded-full transition-all ${
