@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import type { ActivityPageData } from "@/data/activity-pages";
 import ActivityTabs from "@/components/ActivityTabs";
+import TarifsActivite from "@/components/TarifsActivite";
 
 function CtaLink({
   href,
@@ -122,6 +123,9 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
           </CtaLink>
         </div>
       </section>
+
+      {/* Les tarifs, au centre de la page */}
+      <TarifsActivite type={data.tarifs} />
 
       {/* Bandeau photo pleine largeur */}
       <img

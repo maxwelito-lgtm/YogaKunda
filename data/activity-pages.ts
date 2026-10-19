@@ -1,6 +1,9 @@
 import { site } from "@/site.config";
 export type Cta = { label: string; href: string };
 
+// Quelle section de tarifs afficher sur la page
+export type TypeTarifs = "kundalini" | "ateliers" | "en-ligne";
+
 export type ActivityPageData = {
   slug: string;
   fond?: string;
@@ -22,14 +25,8 @@ export type ActivityPageData = {
   pourQui: string;
   pourquoi: { intro: string; points: string[] };
   programme: { titre: string; texte: string }[];
+  tarifs: TypeTarifs;
   infos: {
-    formats: {
-      titre: string;
-      texte: string;
-      duree: string;
-      tarif: string;
-      cta: Cta;
-    }[];
     lieu: string;
     contact: string;
   };
@@ -45,15 +42,18 @@ const kundalini: ActivityPageData = {
     "Réveillez votre énergie, apaisez votre mental et retrouvez votre élan intérieur.",
   heroImage: "https://picsum.photos/seed/kundalini-hero/1600/900",
   heroAlt: "Ambiance paisible et lumineuse pour une pratique de yoga",
-  ctaPrincipal: { label: "Séance collective", href: "#infos" },
-  ctaSecondaire: { label: "Séance personnalisée", href: "#infos" },
+  ctaPrincipal: { label: "Séance collective", href: "#tarifs" },
+  ctaSecondaire: {
+    label: "Séance personnalisée",
+    href: "/reserver?offre=perso",
+  },
   intro: {
     titre: "Une science de l'énergie, accessible à tous",
     paragraphes: [
       "Le Kundalini Yoga associe respiration, mouvements, sons et méditation pour mettre en circulation l'énergie présente en chacun de nous. Chaque exercice, appelé kriya, a une intention précise : se détendre, se recentrer, se dynamiser ou s'apaiser.",
       "Nul besoin d'être souple ni d'avoir déjà pratiqué : chaque posture s'adapte à votre corps, et vous avancez à votre rythme, dans un cadre bienveillant et sans jugement.",
     ],
-    cta: { label: "Voir les prochains stages", href: "#infos" },
+    cta: { label: "Voir les tarifs", href: "#tarifs" },
   },
   pratique: {
     titre: "Le souffle, le geste et le son",
@@ -91,7 +91,7 @@ const kundalini: ActivityPageData = {
           "Un temps de méditation guidée, puis un mantra de clôture pour repartir calme et recentré.",
       },
     ],
-    cta: { label: "Réserver votre place", href: "#infos" },
+    cta: { label: "Réserver votre place", href: "/reserver?offre=kundalini" },
   },
   bandeau: {
     image: "https://picsum.photos/seed/kundalini-bandeau/1600/600",
@@ -132,25 +132,8 @@ const kundalini: ActivityPageData = {
         "Explorer les chakras par des exercices simples, pour mieux sentir et faire circuler son énergie.",
     },
   ],
+  tarifs: "kundalini",
   infos: {
-    formats: [
-      {
-        titre: "Stage en groupe",
-        texte:
-          "En présentiel, en petit groupe : un temps pour pratiquer, partager et approfondir ensemble.",
-        duree: "60 min",
-        tarif: "15 € par personne",
-        cta: { label: "Voir les dates", href: "/nous-contacter" },
-      },
-      {
-        titre: "Séance personnalisée",
-        texte:
-          "Un accompagnement individuel, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "60 min",
-        tarif: "50 € par séance",
-        cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
-      },
-    ],
     lieu: site.adresse,
     contact: site.telephone,
   },
@@ -166,8 +149,11 @@ const tantra: ActivityPageData = {
     "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 à 3 heures.",
   heroImage: "/images/tantra.png",
   heroAlt: "Salle de pratique chaleureuse pour un atelier de Tantra et Kundalini Yoga",
-  ctaPrincipal: { label: "Séance collective", href: "#infos" },
-  ctaSecondaire: { label: "Séance individuelle", href: "#infos" },
+  ctaPrincipal: { label: "Séance collective", href: "#tarifs" },
+  ctaSecondaire: {
+    label: "Séance individuelle",
+    href: "/reserver?offre=perso",
+  },
   intro: {
     titre: "Un yoga qui relie le corps, le cœur et l'esprit",
     paragraphes: [
@@ -212,7 +198,7 @@ const tantra: ActivityPageData = {
           "Un temps de calme intérieur, puis un retour en douceur pour repartir apaisé.",
       },
     ],
-    cta: { label: "Réserver votre place", href: "#infos" },
+    cta: { label: "Réserver votre place", href: "/reserver?offre=tantra" },
   },
   bandeau: {
     image: "https://picsum.photos/seed/tantra-bandeau/1600/600",
@@ -253,25 +239,8 @@ const tantra: ActivityPageData = {
         "Des méditations accessibles pour cultiver la présence et la clarté intérieure.",
     },
   ],
+  tarifs: "ateliers",
   infos: {
-    formats: [
-      {
-        titre: "Atelier en groupe",
-        texte:
-          "En présentiel, en petit groupe : un atelier de Tantra Yoga ou de Kundalini Yoga pour explorer davantage, pratiquer et partager ensemble.",
-        duree: "Tantra : 2h ···· Kundalini : 3h",
-        tarif: "Tantra : 20 €/pers ···· Kundalini : 30 €/pers",
-        cta: { label: "Voir les dates", href: "/nous-contacter" },
-      },
-      {
-        titre: "Atelier personnalisé",
-        texte:
-          "Un atelier individuel de Tantra ou de Kundalini, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "2h",
-        tarif: "Tantra : 70 € · Kundalini : 80 €",
-        cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
-      },
-    ],
     lieu: site.adresse,
     contact: site.telephone,
   },
@@ -287,8 +256,8 @@ const nidra: ActivityPageData = {
     "Allongez-vous, laissez-vous guider et offrez à votre corps et à votre mental un vrai moment de repos.",
   heroImage: "https://picsum.photos/seed/nidra-hero/1600/900",
   heroAlt: "Ambiance douce et lumineuse pour un moment de relaxation",
-  ctaPrincipal: { label: "Séance collective", href: "#infos" },
-  ctaSecondaire: { label: "Séance personnalisée", href: "#infos" },
+  ctaPrincipal: { label: "Cours en ligne", href: "#tarifs" },
+  ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/mon-espace" },
   intro: {
     titre: "Le repos profond, accessible à tous",
     paragraphes: [
@@ -338,7 +307,7 @@ const nidra: ActivityPageData = {
           "On revient peu à peu au corps et à la pièce, pour repartir reposé et recentré.",
       },
     ],
-    cta: { label: "Réserver votre place", href: "#infos" },
+    cta: { label: "Essayer 7 jours gratuits", href: "/mon-espace" },
   },
   bandeau: {
     image: "https://picsum.photos/seed/nidra-bandeau/1600/600",
@@ -379,26 +348,9 @@ const nidra: ActivityPageData = {
         "Choisir une intention simple et la poser en soi, pour que la pratique continue d'agir au quotidien.",
     },
   ],
+  tarifs: "en-ligne",
   infos: {
-    formats: [
-      {
-        titre: "Séance en groupe",
-        texte:
-          "En présentiel, en petit groupe : un temps pour se détendre ensemble, allongé et guidé.",
-        duree: "[à compléter]",
-        tarif: "[à compléter]",
-        cta: { label: "Voir les dates", href: "/nous-contacter" },
-      },
-      {
-        titre: "Séance personnalisée",
-        texte:
-          "Un accompagnement individuel, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
-        duree: "[à compléter]",
-        tarif: "[à compléter]",
-        cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
-      },
-    ],
-    lieu: site.adresse,
+    lieu: "En ligne, depuis votre espace personnel",
     contact: site.telephone,
   },
 };

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import type { ActivityPageData } from "@/data/activity-pages";
 
 const onglets = ["Pour qui ?", "Pourquoi ?", "Programme", "Infos pratiques"];
@@ -9,7 +8,7 @@ const onglets = ["Pour qui ?", "Pourquoi ?", "Programme", "Infos pratiques"];
 export default function ActivityTabs({ data }: { data: ActivityPageData }) {
   const [actif, setActif] = useState(0);
 
-  // Tout lien vers #infos (hero, présentation, déroulé) ouvre l'onglet "Infos pratiques",
+  // Tout lien vers #infos ouvre l'onglet "Infos pratiques",
   // même si l'adresse contient déjà #infos.
   useEffect(() => {
     const ouvrirInfos = () => setActif(3);
@@ -97,32 +96,20 @@ export default function ActivityTabs({ data }: { data: ActivityPageData }) {
         )}
 
         {actif === 3 && (
-          <div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {data.infos.formats.map((f) => (
-                <div
-                  key={f.titre}
-                  className="flex flex-col rounded-2xl bg-white p-6 shadow-sm"
-                >
-                  <h3 className="text-xl">{f.titre}</h3>
-                  <p className="mt-2 flex-1 text-sm text-encre/70">{f.texte}</p>
-                  <p className="mt-4 text-sm text-encre/70">
-                    Durée : {f.duree}
-                    <br />
-                    Tarif : {f.tarif}
-                  </p>
-                  <Link
-                    href={f.cta.href}
-                    className="btn-bounce mt-5 inline-flex min-h-[44px] w-fit items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
-                  >
-                    {f.cta.label}
-                  </Link>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-center text-sm text-encre/70">
-              Lieu : {data.infos.lieu} · Contact : {data.infos.contact}
+          <div className="mx-auto max-w-xl rounded-2xl bg-white p-6 text-center shadow-sm">
+            <p className="text-encre/80">
+              <span className="font-semibold">Lieu :</span> {data.infos.lieu}
             </p>
+            <p className="mt-2 text-encre/80">
+              <span className="font-semibold">Contact :</span>{" "}
+              {data.infos.contact}
+            </p>
+            <a
+              href="#tarifs"
+              className="btn-bounce mt-6 inline-flex min-h-[44px] items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
+            >
+              Voir les tarifs et réserver
+            </a>
           </div>
         )}
       </div>

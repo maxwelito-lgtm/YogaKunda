@@ -119,3 +119,9 @@ export function euros(montant: number): string {
 export function enCentimes(montant: number): number {
   return Math.round(montant * 100);
 }
+// Abonnement en ligne (cours en direct, replays, relaxations audio, Yoga Nidra)
+export const ABONNEMENT = {
+  mensuel: 20, // € par mois
+  annuel: 204, // € par an
+  essaiJours: 7,
+};
