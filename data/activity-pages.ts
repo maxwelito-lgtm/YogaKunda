@@ -152,7 +152,7 @@ const kundalini: ActivityPageData = {
       },
     ],
     lieu: site.adresse,
-    contact: `${site.telephone} · ${site.email}`,
+    contact: site.telephone,
   },
 };
 
@@ -273,11 +273,138 @@ const tantra: ActivityPageData = {
       },
     ],
     lieu: site.adresse,
-    contact: `${site.telephone} · ${site.email}`,
+    contact: site.telephone,
+  },
+};
+
+const nidra: ActivityPageData = {
+  slug: "nidra",
+  fond: "#F5F3E7",
+  metaDescription:
+    "Découvrez le Yoga Nidra : une relaxation guidée, allongé et sans effort, pour relâcher les tensions, apaiser le mental et vous ressourcer en profondeur.",
+  titre: "Yoga Nidra",
+  accroche:
+    "Allongez-vous, laissez-vous guider et offrez à votre corps et à votre mental un vrai moment de repos.",
+  heroImage: "https://picsum.photos/seed/nidra-hero/1600/900",
+  heroAlt: "Ambiance douce et lumineuse pour un moment de relaxation",
+  ctaPrincipal: { label: "Séance collective", href: "#infos" },
+  ctaSecondaire: { label: "Séance personnalisée", href: "#infos" },
+  intro: {
+    titre: "Le repos profond, accessible à tous",
+    paragraphes: [
+      "Le Yoga Nidra, parfois appelé « sommeil yogique », est une pratique de relaxation guidée. Allongé, les yeux fermés, vous suivez la voix qui vous accompagne, entre l'état de veille et le sommeil, pendant que le corps se détend complètement.",
+      "Il n'y a rien à réussir et aucune posture à tenir : il suffit de s'installer confortablement et de se laisser guider, à votre rythme, dans un cadre bienveillant et sans jugement.",
+    ],
+    cta: { label: "Voir les infos pratiques", href: "#infos" },
+  },
+  pratique: {
+    titre: "Un voyage guidé à l'intérieur de soi",
+    texte:
+      "La séance conduit l'attention de façon progressive : à travers le corps, le souffle, les sensations puis les images intérieures. Peu à peu, les tensions se relâchent, le mental ralentit et une sensation de calme profond s'installe, sans effort.",
+    image: "https://picsum.photos/seed/nidra-pratique/800/600",
+    imageAlt: "Personne allongée en détente dans un espace calme",
+  },
+  deroule: {
+    titre: "Le déroulé d'une séance",
+    etapes: [
+      {
+        titre: "Installation",
+        texte:
+          "On s'allonge confortablement, couvert et bien soutenu, pour que le corps puisse se déposer complètement.",
+      },
+      {
+        titre: "L'intention",
+        texte:
+          "Un temps pour choisir une intention simple, une phrase courte qui vous accompagne pendant la séance.",
+      },
+      {
+        titre: "La rotation de conscience",
+        texte:
+          "La voix guide l'attention d'une partie du corps à l'autre, pour relâcher les tensions une à une.",
+      },
+      {
+        titre: "Le souffle et les sensations",
+        texte:
+          "On observe la respiration et les sensations, sans rien chercher à changer, pour s'enfoncer dans le calme.",
+      },
+      {
+        titre: "Les images intérieures",
+        texte:
+          "Un temps de visualisation guidée, pour laisser venir apaisement et ressourcement.",
+      },
+      {
+        titre: "Le retour en douceur",
+        texte:
+          "On revient peu à peu au corps et à la pièce, pour repartir reposé et recentré.",
+      },
+    ],
+    cta: { label: "Réserver votre place", href: "#infos" },
+  },
+  bandeau: {
+    image: "https://picsum.photos/seed/nidra-bandeau/1600/600",
+    alt: "Paysage apaisant",
+  },
+  pourQui:
+    "Le Yoga Nidra est ouvert à toutes et à tous, quels que soient votre âge, votre condition physique ou votre expérience. Il se pratique allongé, sans effort ni souplesse, et aucune croyance n'est nécessaire : seulement l'envie de vous accorder une pause.",
+  pourquoi: {
+    intro: "Le Yoga Nidra peut vous aider à :",
+    points: [
+      "relâcher le stress et les tensions accumulées",
+      "ralentir le mental et retrouver du calme",
+      "favoriser un sommeil plus profond",
+      "récupérer d'une période de fatigue",
+      "mieux écouter votre corps",
+      "vous accorder un vrai temps pour vous",
+    ],
+  },
+  programme: [
+    {
+      titre: "La relaxation profonde",
+      texte:
+        "Une détente complète du corps, guidée pas à pas, pour relâcher les tensions sans effort.",
+    },
+    {
+      titre: "La respiration",
+      texte:
+        "Observer le souffle et le laisser ralentir naturellement, pour apaiser le système nerveux.",
+    },
+    {
+      titre: "La visualisation",
+      texte:
+        "Des images guidées pour se ressourcer et laisser venir un sentiment de sécurité et de calme.",
+    },
+    {
+      titre: "L'intention",
+      texte:
+        "Choisir une intention simple et la poser en soi, pour que la pratique continue d'agir au quotidien.",
+    },
+  ],
+  infos: {
+    formats: [
+      {
+        titre: "Séance en groupe",
+        texte:
+          "En présentiel, en petit groupe : un temps pour se détendre ensemble, allongé et guidé.",
+        duree: "[à compléter]",
+        tarif: "[à compléter]",
+        cta: { label: "Voir les dates", href: "/nous-contacter" },
+      },
+      {
+        titre: "Séance personnalisée",
+        texte:
+          "Un accompagnement individuel, rien que pour vous, dont le contenu s'adapte à vos besoins du moment.",
+        duree: "[à compléter]",
+        tarif: "[à compléter]",
+        cta: { label: "Prendre rendez-vous", href: "/nous-contacter" },
+      },
+    ],
+    lieu: site.adresse,
+    contact: site.telephone,
   },
 };
 
 export const activityPages: Record<string, ActivityPageData> = {
   kundalini,
   tantra,
+  nidra,
 };

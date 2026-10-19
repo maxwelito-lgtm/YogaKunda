@@ -15,6 +15,7 @@ type FocusItem = {
   titre: string;
   souscription: string;
   icone: string;
+  href?: string; // destination du bouton "présentiel" si différente de la section Activités
   pratiques: Practice[];
 };
 
@@ -82,14 +83,15 @@ const focusItems: FocusItem[] = [
     ],
   },
   {
-    titre: "Découverte / débutant",
-    souscription: "Pour poser un premier pas, en douceur.",
-    icone: "decouverte",
+    titre: "Yoga Nidra",
+    souscription: "Pour se relaxer en profondeur, allongé et sans effort.",
+    icone: "nidra",
+    href: "/yoga/nidra",
     pratiques: [
       {
-        titre: "Tantra Yoga — Niveau 1",
+        titre: "Yoga Nidra",
         texte:
-          "Le yoga holistique par excellence, accessible dès le premier cours, sans prérequis.",
+          "Une relaxation guidée, entre veille et sommeil, pour relâcher les tensions et se ressourcer en profondeur.",
         mode: "presentiel",
       },
     ],
@@ -163,6 +165,7 @@ export default function FocusSection() {
                   pratiques={presentiel}
                   afficherTitre={mixte}
                   fermer={() => setSelected(null)}
+                  href={selected.href}
                 />
               )}
               {enLigne.length > 0 && (
@@ -187,11 +190,13 @@ function Colonne({
   pratiques,
   afficherTitre,
   fermer,
+  href,
 }: {
   mode: Mode;
   pratiques: Practice[];
   afficherTitre: boolean;
   fermer: () => void;
+  href?: string;
 }) {
   const m = modes[mode];
 
@@ -218,7 +223,7 @@ function Colonne({
       </div>
 
       <a
-        href={m.href}
+        href={href ?? m.href}
         onClick={fermer}
         className="btn-bounce mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 py-3 text-sm font-semibold text-white hover:bg-[#75523F]"
       >
@@ -241,7 +246,7 @@ const iconStyles: Record<string, { bg: string; color: string }> = {
   stress: { bg: "#FAECE7", color: "#993C1D" },
   sommeil: { bg: "#EEEDFE", color: "#534AB7" },
   energie: { bg: "#FAEEDA", color: "#854F0B" },
-  decouverte: { bg: "#E1F5EE", color: "#0F6E56" },
+  nidra: { bg: "#E1F5EE", color: "#0F6E56" },
 };
 
 // Photo de fond par catégorie (placeholders — à remplacer par tes propres images)
@@ -249,7 +254,7 @@ const bgImages: Record<string, string> = {
   stress: "https://picsum.photos/seed/focus-stress/400/400",
   sommeil: "https://picsum.photos/seed/focus-sommeil/400/400",
   energie: "https://picsum.photos/seed/focus-energie/400/400",
-  decouverte: "https://picsum.photos/seed/focus-decouverte/400/400",
+  nidra: "https://picsum.photos/seed/focus-nidra/400/400",
 };
 
 function focusContent(color: string): Record<string, JSX.Element> {
@@ -288,10 +293,21 @@ function focusContent(color: string): Record<string, JSX.Element> {
         <path d="M18 15.8a1.6 1.6 0 1 1 0-2.9 2 2 0 1 0 0 2.9z" fill="#BA7517" />
       </svg>
     ),
-    decouverte: (
-      <span style={{ fontSize: 34, color, lineHeight: 1 }} aria-hidden="true">
-        अ
-      </span>
+    nidra: (
+      <svg
+        width={36}
+        height={36}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" />
+        <path d="M17 4v3M15.5 5.5h3" />
+      </svg>
     ),
   };
 }
