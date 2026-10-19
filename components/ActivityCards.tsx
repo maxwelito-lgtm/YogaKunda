@@ -37,15 +37,16 @@ const activites: Activity[] = [
     niveau: "Niveau 2",
     duree: "60 min",
   },
-  {
+   {
     titre: "Yoga Nidra",
     sousTitre: "Le repos profond, guidé",
     texte:
-      "Une relaxation guidée, allongé et sans effort, pour relâcher les tensions et se ressourcer en profondeur.",
+      "Une relaxation guidée, allongé et sans effort, pour relâcher les tensions et se ressourcer en profondeur. Proposé uniquement en ligne.",
     image: "/images/yoga-n.png",
     cta: "En savoir plus",
     href: "/yoga/nidra",
     niveau: "Tous niveaux",
+    duree: "En ligne",
   },
   {
     titre: "Thérapie Holistique",

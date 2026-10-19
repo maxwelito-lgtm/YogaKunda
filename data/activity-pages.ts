@@ -250,11 +250,11 @@ const nidra: ActivityPageData = {
   slug: "nidra",
   fond: "#F5F3E7",
   metaDescription:
-    "Découvrez le Yoga Nidra : une relaxation guidée, allongé et sans effort, pour relâcher les tensions, apaiser le mental et vous ressourcer en profondeur.",
+    "Découvrez le Yoga Nidra, disponible uniquement en ligne : une relaxation guidée, allongé et sans effort, pour relâcher les tensions, apaiser le mental et vous ressourcer en profondeur.",
   titre: "Yoga Nidra",
   accroche:
-    "Allongez-vous, laissez-vous guider et offrez à votre corps et à votre mental un vrai moment de repos.",
-  heroImage: "https://picsum.photos/seed/nidra-hero/1600/900",
+    "Allongez-vous, laissez-vous guider et offrez à votre corps et à votre mental un vrai moment de repos, où que vous soyez, 100 % en ligne.",
+  heroImage: "/images/yoga-n.png",
   heroAlt: "Ambiance douce et lumineuse pour un moment de relaxation",
   ctaPrincipal: { label: "Cours en ligne", href: "#tarifs" },
   ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/mon-espace" },
@@ -263,6 +263,7 @@ const nidra: ActivityPageData = {
     paragraphes: [
       "Le Yoga Nidra, parfois appelé « sommeil yogique », est une pratique de relaxation guidée. Allongé, les yeux fermés, vous suivez la voix qui vous accompagne, entre l'état de veille et le sommeil, pendant que le corps se détend complètement.",
       "Il n'y a rien à réussir et aucune posture à tenir : il suffit de s'installer confortablement et de se laisser guider, à votre rythme, dans un cadre bienveillant et sans jugement.",
+      "Le Yoga Nidra est proposé uniquement en ligne : vous le pratiquez depuis chez vous, quand vous le souhaitez, grâce aux relaxations guidées de votre espace personnel.",
     ],
     cta: { label: "Voir les infos pratiques", href: "#infos" },
   },

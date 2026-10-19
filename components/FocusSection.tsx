@@ -15,7 +15,7 @@ type FocusItem = {
   titre: string;
   souscription: string;
   icone: string;
-  href?: string; // destination du bouton "présentiel" si différente de la section Activités
+  href?: string; // destination du bouton si différente de la destination par défaut du mode
   pratiques: Practice[];
 };
 
@@ -91,8 +91,8 @@ const focusItems: FocusItem[] = [
       {
         titre: "Yoga Nidra",
         texte:
-          "Une relaxation guidée, allongé et sans effort : accessible dès la première séance, sans prérequis ni souplesse.",
-        mode: "presentiel",
+          "Une relaxation guidée, allongé et sans effort : accessible dès la première séance, sans prérequis ni souplesse. Proposé uniquement en ligne.",
+        mode: "en-ligne",
       },
     ],
   },
@@ -174,6 +174,7 @@ export default function FocusSection() {
                   pratiques={enLigne}
                   afficherTitre={mixte}
                   fermer={() => setSelected(null)}
+                  href={selected.href}
                 />
               )}
             </div>
