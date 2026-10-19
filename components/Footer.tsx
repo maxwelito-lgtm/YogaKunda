@@ -24,7 +24,6 @@ export default function Footer() {
             alt={site.nom}
             className="mx-auto h-24 w-24 object-contain sm:mx-0"
           />
-          <p className="text-sm text-encre/80">{site.telephone}</p>
         </div>
 
         <NewsletterForm />
