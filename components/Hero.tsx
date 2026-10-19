@@ -17,6 +17,14 @@ export default function Hero() {
 
       {/* Contenu centré */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-5 p-5 text-center sm:gap-7 sm:p-12">
+
+        {/* Logo centré au-dessus du titre */}
+        <img
+          src="/images/logo-shantalam.png"
+          alt=""
+          aria-hidden="true"
+          className="h-24 w-24 object-contain sm:h-[120px] sm:w-[120px]"
+        />
         
         <h1 className="max-w-2xl font-display text-3xl italic text-white drop-shadow-lg sm:text-6xl">
           {site.accroche}
