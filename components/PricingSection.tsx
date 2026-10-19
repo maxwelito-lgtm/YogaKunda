@@ -31,12 +31,11 @@ const formules: Record<
 };
 
 const avantages = [
-  "Des cours de Kundalini et de Tantra Yoga en direct",
-  "Les replays, pour pratiquer quand vous voulez",
-  "Des relaxations audio guidées, à écouter le soir pour préparer le sommeil",
+  "Cours de Kundalini et de Tantra Yoga en direct",
+  "Replays, pour pratiquer quand vous voulez",
+  "Relaxations audio guidées, à écouter le soir pour préparer le sommeil",
   "Un espace à vous : pratiquez où que vous soyez, à votre rythme",
 ];
-
 export default function PricingSection() {
   const [formule, setFormule] = useState<Formule>("annuelle");
   const f = formules[formule];
@@ -60,10 +59,9 @@ export default function PricingSection() {
           <span className="inline-block rounded-pill bg-[#75523F] px-3 py-1 text-xs font-semibold text-white">
             7 jours offerts
           </span>
-          <h3 className="mt-4 font-display text-3xl italic">
-            Ce que vous gagnez
+                   <h3 className="mt-4 font-display text-3xl italic">
+            Bénéficiez en exclusivité de :
           </h3>
-
           <ul className="mt-6 flex flex-col gap-4">
             {avantages.map((a) => (
               <li key={a} className="flex items-start gap-3 text-[15px]">
