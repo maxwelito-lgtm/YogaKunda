@@ -101,7 +101,7 @@ export default function FocusSection() {
             className="group flex flex-col items-center gap-3 text-center"
           >
             <FocusPhotoTile type={item.icone} />
-            <span className="text-sm font-semibold text-encre transition-colors group-hover:text-violet-dark">
+            <span className="text-sm font-semibold text-encre transition-colors group-hover:text-[#75523F]">
               {item.titre}
             </span>
           </button>
@@ -114,7 +114,7 @@ export default function FocusSection() {
           onClick={() => setSelected(null)}
         >
           <div
-            className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-8"
+            className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-[#F5F3E7] p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -125,8 +125,8 @@ export default function FocusSection() {
               ✕
             </button>
 
-            <FocusIcon type={selected.icone} />
-            <h3 className="mt-4 font-display text-3xl italic text-violet-dark">
+            <FocusPhotoTile type={selected.icone} />
+            <h3 className="mt-4 font-display text-3xl italic text-encre">
               {selected.titre}
             </h3>
             <p className="mt-1 text-sm text-encre/70">
@@ -136,7 +136,7 @@ export default function FocusSection() {
             <div className="mt-6 flex flex-col gap-5">
               {selected.pratiques.map((p) => (
                 <div key={p.titre} className="flex gap-3">
-                  <span className="mt-1 flex h-9 w-9 flex-none items-center justify-center rounded-full bg-violet-light">
+                  <span className="mt-1 flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#75523F]/10">
                     <LotusIcon />
                   </span>
                   <div>
@@ -147,7 +147,7 @@ export default function FocusSection() {
               ))}
             </div>
 
-            <a href={selected.href} className="mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white">
+            <a href={selected.href} className="btn-bounce mt-8 flex min-h-[44px] w-full items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 py-3 text-sm font-semibold text-white hover:bg-[#75523F]">
               {selected.cta}
             </a>
           </div>
@@ -159,7 +159,7 @@ export default function FocusSection() {
 
 function LotusIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="#6B46C1" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="#75523F" aria-hidden="true">
       <path d="M12 2c1 3 1 6 0 9-1-3-1-6 0-9Zm-6 4c2 2 3.5 4.5 4 7-2.5-1-4.5-3-5-6 0 0 .5-.5 1-1Zm12 0c.5.5 1 1 1 1-.5 3-2.5 5-5 6 .5-2.5 2-5 4-7ZM4 12c2.5.5 4.5 2 6 4-2.5 0-4.5-1-6-2 0 0 0-1 0-2Zm16 0c0 1 0 2 0 2-1.5 1-3.5 2-6 2 1.5-2 3.5-3.5 6-4Zm-8 3c1.5 1.5 2.5 3.5 2 6-1.5-1-3-3-3-5 0 0 .5-.5 1-1Z" />
     </svg>
   );
@@ -225,7 +225,7 @@ function focusContent(color: string): Record<string, JSX.Element> {
   };
 }
 
-// Version "tuile photo" utilisée dans la grille cliquable
+// Tuile photo ronde : utilisée dans la grille ET dans l'en-tête de la fenêtre
 function FocusPhotoTile({ type }: { type: string }) {
   const { bg, color } = iconStyles[type];
   const content = focusContent(color);
@@ -252,21 +252,6 @@ function FocusPhotoTile({ type }: { type: string }) {
           {content[type]}
         </span>
       </span>
-    </span>
-  );
-}
-
-// Version simple (sans photo) utilisée dans l'en-tête de la modale
-function FocusIcon({ type }: { type: string }) {
-  const { bg, color } = iconStyles[type];
-  const content = focusContent(color);
-
-  return (
-    <span
-      className="flex h-24 w-24 items-center justify-center rounded-2xl"
-      style={{ backgroundColor: bg, border: "2px solid rgba(0,0,0,0.8)" }}
-    >
-      {content[type]}
     </span>
   );
 }
