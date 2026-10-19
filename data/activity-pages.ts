@@ -14,7 +14,7 @@ export type ActivityPageData = {
   heroAlt: string;
   ctaPrincipal: Cta;
   ctaSecondaire: Cta;
-  intro: { titre: string; paragraphes: string[]; cta: Cta };
+  intro: { titre: string; paragraphes: string[]; cta: Cta; sousCta?: string };
   pratique: { titre: string; texte: string; image: string; imageAlt: string };
   deroule: {
     titre: string;
@@ -160,7 +160,8 @@ const tantra: ActivityPageData = {
       "Le Tantra Yoga est une approche globale : on ne cherche pas à dompter le corps ou le mental, mais à les écouter et à les mettre en harmonie. Postures, respiration, sons et méditation sont réunis dans une même pratique, pour vivre pleinement chaque sensation.",
       "C'est un yoga accessible, qui s'adresse aussi bien à celles et ceux qui découvrent qu'aux pratiquants réguliers. L'atelier se déroule à votre rythme, dans un cadre bienveillant, sans performance ni jugement.",
     ],
-    cta: { label: "Voir les infos pratiques", href: "#infos" },
+    cta: { label: "Découvrir les abonnements", href: "#tarifs" },
+    sousCta: "À votre rythme, sans pression",
   },
   pratique: {
     titre: "Accueillir ce qui est, et le transformer en douceur",

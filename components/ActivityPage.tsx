@@ -63,7 +63,7 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         </div>
       </section>
 
-      {/* Présentation */}
+        {/* Présentation */}
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
         <h2 className="font-display text-3xl italic text-encre sm:text-4xl">
           {data.intro.titre}
@@ -79,8 +79,12 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         >
           {data.intro.cta.label}
         </CtaLink>
+        {data.intro.sousCta && (
+          <p className="mt-3 text-sm italic text-encre/60">
+            {data.intro.sousCta}
+          </p>
+        )}
       </section>
-
       {/* Texte à gauche, photo à droite */}
       <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:gap-12">
         <div>
