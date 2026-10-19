@@ -1,6 +1,6 @@
 export default function PricingSection() {
   return (
-    <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
+       <section id="abonnement" className="mx-auto max-w-4xl scroll-mt-20 px-4 py-16 sm:px-6">
       <h2 className="mb-2 text-center font-display text-3xl italic text-dark sm:text-4xl">
         Essayez gratuitement pendant 7 jours
       </h2>
