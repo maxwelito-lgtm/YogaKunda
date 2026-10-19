@@ -155,15 +155,15 @@ function TarifsEnLigne() {
           titre="Formule annuelle"
           detail={`${euros(ABONNEMENT.annuel)} par an · économisez ${euros(economie)}`}
           prix={`${euros(parMois)} / mois`}
-href="/abonnements"
-         bouton={`Essayer ${ABONNEMENT.essaiJours} jours gratuits`}
+href="/#abonnement"
+bouton={`Essayer ${ABONNEMENT.essaiJours} jours gratuits`}
         />
         <Ligne
           titre="Formule mensuelle"
           detail={`${euros(ABONNEMENT.mensuel * 12)} par an, facturé mensuellement`}
           prix={`${euros(ABONNEMENT.mensuel)} / mois`}
-href="/abonnements"
-          bouton={`Essayer ${ABONNEMENT.essaiJours} jours gratuits`}
+href="/#abonnement"
+bouton={`Essayer ${ABONNEMENT.essaiJours} jours gratuits`}
         />
       </Plan>
     </div>
