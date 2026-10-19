@@ -33,13 +33,15 @@ export default function ConnexionForm({ suivant, erreurLien }: Props) {
     setEtat("envoi");
     setErreur("");
 
-    if (mode === "motdepasse") {
+       if (mode === "motdepasse") {
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password: motDePasse,
       });
       if (error) {
-        setErreur("E-mail ou mot de passe incorrect.");
+        setErreur(
+          "E-mail ou mot de passe incorrect. [test : " + error.message + "]"
+        );
         setEtat("erreur");
         return;
       }
