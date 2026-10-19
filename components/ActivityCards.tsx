@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 type Activity = {
   titre: string;
@@ -73,214 +73,234 @@ const activites: Activity[] = [
 ];
 
 // ---------------------------------------------------------------
-// RÉGLAGES DU CARROUSEL (en millisecondes)
+// RÉGLAGES DU CARROUSEL
 // ---------------------------------------------------------------
-// Durée du glissement d'une carte (flèches, points, défilement auto).
-// Plus la valeur est grande, plus c'est lent.
-const DUREE_ANIMATION = 500;
-// Durée du retour au début quand on arrive à la dernière carte.
-const DUREE_RETOUR = 900;
-// Temps d'attente entre deux défilements automatiques.
-const INTERVALLE_AUTO = 4500;
-// Temps d'attente avant que le défilement auto reprenne après une action.
-const REPRISE_APRES_ACTION = 5000;
+// Vitesse du défilement continu, en pixels par seconde.
+// Plus la valeur est grande, plus ça défile vite.
+const VITESSE_PC = 50;
+const VITESSE_MOBILE = 35;
+// Temps d'attente (ms) avant que le défilement reparte après une action.
+const REPRISE_PC = 2000;
+const REPRISE_MOBILE = 3000;
+// Durée (ms) du glissement d'une carte quand on clique sur une flèche.
+const DUREE_FLECHE = 500;
+// Nombre de copies de la liste (pour la boucle infinie). 3 suffit.
+const COPIES = 3;
 
 export default function ActivityCards() {
   const pisteRef = useRef<HTMLDivElement>(null);
   const regionRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number | null>(null);
+  const posRef = useRef(0); // position exacte (décimale) du défilement
   const drag = useRef({ actif: false, startX: 0, startScroll: 0, deplace: false });
 
-  // État "pause" du défilement automatique (sans re-rendu)
   const etat = useRef({
     survol: false,
     touche: false,
     focus: false,
     visible: true,
-    derniereAction: 0,
-    dernierAuto: 0,
-    finAnimation: 0,
+    anim: false,
+    tactile: false,
+    reprise: 0, // pas de défilement auto avant cet instant
+    derniereEcriture: 0, // dernière position écrite par le code (pas par la personne)
+    idle: undefined as number | undefined,
   });
-
-  const [index, setIndex] = useState(0);
-  const [peutReculer, setPeutReculer] = useState(false);
-  const [peutAvancer, setPeutAvancer] = useState(true);
 
   // Distance entre le début de deux cartes consécutives (largeur + espace)
   const pas = useCallback(() => {
     const piste = pisteRef.current;
-    if (!piste) return 0;
-    const cartes = piste.children;
-    if (cartes.length < 2) return piste.clientWidth;
+    if (!piste || piste.children.length < 2) return 0;
     return (
-      (cartes[1] as HTMLElement).offsetLeft -
-      (cartes[0] as HTMLElement).offsetLeft
+      (piste.children[1] as HTMLElement).offsetLeft -
+      (piste.children[0] as HTMLElement).offsetLeft
     );
   }, []);
 
-  // Met à jour flèches et petits points selon la position
-  const maj = useCallback(() => {
+  // Largeur d'une copie complète de la liste
+  const longueurCopie = useCallback(
+    () => pas() * activites.length,
+    [pas]
+  );
+
+  // Remet la position dans la copie du milieu : invisible, car le contenu est identique
+  const normaliser = useCallback(() => {
     const piste = pisteRef.current;
     if (!piste) return;
-    const p = pas() || 1;
-    const max = piste.scrollWidth - piste.clientWidth;
-    const finDeCourse = piste.scrollLeft >= max - 4;
-    setPeutReculer(piste.scrollLeft > 4);
-    setPeutAvancer(!finDeCourse);
-    setIndex(
-      finDeCourse
-        ? activites.length - 1
-        : Math.min(
-            activites.length - 1,
-            Math.max(0, Math.round(piste.scrollLeft / p))
-          )
-    );
-  }, [pas]);
+    const L = longueurCopie();
+    if (!L) return;
+    let x = piste.scrollLeft;
+    while (x < L) x += L;
+    while (x >= 2 * L) x -= L;
+    if (Math.abs(x - piste.scrollLeft) > 0.5) piste.scrollLeft = x;
+    posRef.current = x;
+    etat.current.derniereEcriture = piste.scrollLeft;
+  }, [longueurCopie]);
 
-  // Arrête une animation en cours et réactive l'aimantation des cartes
+  // Arrête une animation de flèche en cours
   const interrompre = useCallback(() => {
     if (animRef.current) {
       cancelAnimationFrame(animRef.current);
       animRef.current = null;
     }
-    if (pisteRef.current) pisteRef.current.style.scrollSnapType = "";
+    const piste = pisteRef.current;
+    if (etat.current.anim && piste) {
+      posRef.current = piste.scrollLeft;
+      etat.current.derniereEcriture = piste.scrollLeft;
+    }
+    etat.current.anim = false;
   }, []);
 
-  // Note qu'il y a eu une action de la personne : le défilement auto patiente
-  const actionUtilisateur = useCallback(() => {
-    etat.current.derniereAction = Date.now();
-  }, []);
+  const delaiReprise = () =>
+    etat.current.tactile ? REPRISE_MOBILE : REPRISE_PC;
 
-  // Défilement animé et fluide vers une position
-  const animerVers = useCallback(
-    (cible: number, duree: number = DUREE_ANIMATION) => {
+  // Glissement animé d'un certain nombre de pixels (flèches)
+  const deplacer = useCallback(
+    (delta: number) => {
       const piste = pisteRef.current;
       if (!piste) return;
-      if (animRef.current) cancelAnimationFrame(animRef.current);
+      const s = etat.current;
+      interrompre();
+      normaliser();
 
-      const max = piste.scrollWidth - piste.clientWidth;
-      const arrivee = Math.max(0, Math.min(max, cible));
       const debut = piste.scrollLeft;
-      const delta = arrivee - debut;
       const reduit = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
-      if (Math.abs(delta) < 1 || reduit) {
-        piste.scrollLeft = arrivee;
-        piste.style.scrollSnapType = "";
-        etat.current.finAnimation = Date.now();
+      if (reduit) {
+        piste.scrollLeft = debut + delta;
+        posRef.current = piste.scrollLeft;
+        s.derniereEcriture = piste.scrollLeft;
+        normaliser();
         return;
       }
 
-      piste.style.scrollSnapType = "none";
+      s.anim = true;
       const t0 = performance.now();
       const etape = (t: number) => {
-        const p = Math.min(1, (t - t0) / duree);
+        const p = Math.min(1, (t - t0) / DUREE_FLECHE);
         const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
         piste.scrollLeft = debut + delta * e;
         if (p < 1) {
           animRef.current = requestAnimationFrame(etape);
         } else {
           animRef.current = null;
-          piste.style.scrollSnapType = "";
-          etat.current.finAnimation = Date.now();
+          s.anim = false;
+          posRef.current = piste.scrollLeft;
+          s.derniereEcriture = piste.scrollLeft;
+          normaliser();
         }
       };
       animRef.current = requestAnimationFrame(etape);
     },
-    []
+    [interrompre, normaliser]
   );
 
-  // Flèches (action de la personne)
-  function aller(sens: 1 | -1) {
-    const piste = pisteRef.current;
-    if (!piste) return;
-    actionUtilisateur();
-    const p = pas() || piste.clientWidth;
-    const courant = Math.round(piste.scrollLeft / p);
-    animerVers((courant + sens) * p);
-  }
-
   // ---------------------------------------------------------------
-  // Défilement automatique
+  // Défilement continu et infini
   // ---------------------------------------------------------------
   useEffect(() => {
-    maj();
-    window.addEventListener("resize", maj);
-
+    const piste = pisteRef.current;
+    if (!piste) return;
     const s = etat.current;
-    s.dernierAuto = Date.now();
 
     const reduit = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const requeteTactile = window.matchMedia("(pointer: coarse)");
+    s.tactile = requeteTactile.matches;
 
-    // Pause quand le carrousel n'est plus visible à l'écran
+    // Position de départ : début de la copie du milieu
+    let largeur = piste.clientWidth;
+    const initialiser = () => {
+      const L = longueurCopie();
+      if (!L) return;
+      piste.scrollLeft = L;
+      posRef.current = L;
+      s.derniereEcriture = piste.scrollLeft;
+    };
+    initialiser();
+
+    // On ne réinitialise que si la largeur change (pas quand la barre d'adresse
+    // du téléphone se masque, ce qui déclenche aussi un "resize")
+    const surResize = () => {
+      s.tactile = requeteTactile.matches;
+      if (piste.clientWidth !== largeur) {
+        largeur = piste.clientWidth;
+        initialiser();
+      }
+    };
+    window.addEventListener("resize", surResize);
+
+    // Pause quand le carrousel n'est plus à l'écran
     let observer: IntersectionObserver | undefined;
     if (regionRef.current && "IntersectionObserver" in window) {
       observer = new IntersectionObserver(
         ([entree]) => {
           s.visible = entree.isIntersecting;
-          if (entree.isIntersecting) s.dernierAuto = Date.now();
         },
-        { threshold: 0.3 }
+        { threshold: 0.1 }
       );
       observer.observe(regionRef.current);
     }
 
-    // Pause quand l'onglet est caché ; on repart calmement au retour
-    const surVisibilite = () => {
-      if (!document.hidden) s.dernierAuto = Date.now();
+    // Boucle d'animation
+    let raf = 0;
+    let dernier = performance.now();
+    const boucle = (t: number) => {
+      const dt = Math.min(0.05, (t - dernier) / 1000);
+      dernier = t;
+
+      const pause =
+        reduit ||
+        document.hidden ||
+        !s.visible ||
+        s.survol ||
+        s.touche ||
+        s.focus ||
+        drag.current.actif ||
+        s.anim ||
+        Date.now() < s.reprise;
+
+      if (!pause) {
+        const L = longueurCopie();
+        if (L) {
+          let x =
+            posRef.current + (s.tactile ? VITESSE_MOBILE : VITESSE_PC) * dt;
+          if (x >= 2 * L) x -= L; // boucle infinie, sans saut visible
+          posRef.current = x;
+          piste.scrollLeft = x;
+          s.derniereEcriture = piste.scrollLeft;
+        }
+      }
+      raf = requestAnimationFrame(boucle);
     };
-    document.addEventListener("visibilitychange", surVisibilite);
-
-    const minuteur = reduit
-      ? undefined
-      : window.setInterval(() => {
-          const piste = pisteRef.current;
-          if (!piste) return;
-          const maintenant = Date.now();
-
-          if (
-            document.hidden ||
-            !s.visible ||
-            s.survol ||
-            s.touche ||
-            s.focus ||
-            drag.current.actif ||
-            animRef.current
-          )
-            return;
-          if (maintenant - s.derniereAction < REPRISE_APRES_ACTION) return;
-          if (maintenant - s.dernierAuto < INTERVALLE_AUTO) return;
-
-          s.dernierAuto = maintenant;
-          const p = pas() || piste.clientWidth;
-          const max = piste.scrollWidth - piste.clientWidth;
-
-          if (piste.scrollLeft >= max - 4) {
-            animerVers(0, DUREE_RETOUR); // retour au début
-          } else {
-            const courant = Math.round(piste.scrollLeft / p);
-            animerVers((courant + 1) * p);
-          }
-        }, 500);
+    raf = requestAnimationFrame(boucle);
 
     return () => {
-      window.removeEventListener("resize", maj);
-      document.removeEventListener("visibilitychange", surVisibilite);
+      window.removeEventListener("resize", surResize);
       observer?.disconnect();
-      if (minuteur) window.clearInterval(minuteur);
+      cancelAnimationFrame(raf);
       if (animRef.current) cancelAnimationFrame(animRef.current);
+      if (s.idle) window.clearTimeout(s.idle);
     };
-  }, [maj, pas, animerVers]);
+  }, [longueurCopie]);
 
-  // Chaque défilement fait par la personne (doigt, inertie, molette) repousse la reprise
+  // Défilement fait par la personne (doigt, inertie, trackpad, glisser)
   function surScroll() {
-    maj();
-    if (!animRef.current && Date.now() - etat.current.finAnimation > 250) {
-      actionUtilisateur();
+    const piste = pisteRef.current;
+    const s = etat.current;
+    if (!piste || s.anim) return;
+
+    if (Math.abs(piste.scrollLeft - s.derniereEcriture) > 1.5) {
+      posRef.current = piste.scrollLeft;
+      s.reprise = Date.now() + delaiReprise();
+
+      // Quand le défilement s'arrête, on recentre la position (invisible)
+      if (s.idle) window.clearTimeout(s.idle);
+      s.idle = window.setTimeout(() => {
+        if (!s.touche && !drag.current.actif && !s.anim) normaliser();
+      }, 150);
     }
   }
 
@@ -290,14 +310,12 @@ export default function ActivityCards() {
   function surPointerDown(e: React.PointerEvent<HTMLDivElement>) {
     if (e.pointerType !== "mouse" || e.button !== 0 || !pisteRef.current) return;
     interrompre();
-    actionUtilisateur();
     drag.current = {
       actif: true,
       startX: e.clientX,
       startScroll: pisteRef.current.scrollLeft,
       deplace: false,
     };
-    pisteRef.current.style.scrollSnapType = "none";
   }
 
   function surPointerMove(e: React.PointerEvent<HTMLDivElement>) {
@@ -317,16 +335,11 @@ export default function ActivityCards() {
     const piste = pisteRef.current;
     if (!drag.current.actif || !piste) return;
     drag.current.actif = false;
-    actionUtilisateur();
     if (piste.hasPointerCapture(e.pointerId)) {
       piste.releasePointerCapture(e.pointerId);
     }
-    if (drag.current.deplace) {
-      const p = pas() || 1;
-      animerVers(Math.round(piste.scrollLeft / p) * p);
-    } else {
-      piste.style.scrollSnapType = "";
-    }
+    etat.current.reprise = Date.now() + REPRISE_PC;
+    if (drag.current.deplace) normaliser();
   }
 
   // Après un glisser à la souris, on n'ouvre pas le lien sous le curseur
@@ -337,6 +350,11 @@ export default function ActivityCards() {
       drag.current.deplace = false;
     }
   }
+
+  // Liste répétée pour la boucle infinie
+  const cartes = Array.from({ length: COPIES }).flatMap((_, copie) =>
+    activites.map((a) => ({ a, copie }))
+  );
 
   return (
     <section
@@ -362,7 +380,7 @@ export default function ActivityCards() {
         onPointerLeave={(e) => {
           if (e.pointerType === "mouse") {
             etat.current.survol = false;
-            actionUtilisateur();
+            etat.current.reprise = Date.now() + REPRISE_PC;
           }
         }}
         onFocus={() => {
@@ -371,28 +389,24 @@ export default function ActivityCards() {
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
             etat.current.focus = false;
-            actionUtilisateur();
+            etat.current.reprise = Date.now() + delaiReprise();
           }
         }}
       >
         {/* Flèches : PC et tablette */}
         <button
           type="button"
-          onClick={() => aller(-1)}
+          onClick={() => deplacer(-pas())}
           aria-label="Activités précédentes"
-          className={`absolute left-0 top-1/2 z-20 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-encre shadow-lg ring-1 ring-black/5 transition-opacity hover:bg-[#F5F3E7] sm:flex ${
-            peutReculer ? "opacity-100" : "pointer-events-none opacity-0"
-          }`}
+          className="absolute left-0 top-1/2 z-20 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-encre shadow-lg ring-1 ring-black/5 hover:bg-[#F5F3E7] sm:flex"
         >
           <Chevron sens="gauche" />
         </button>
         <button
           type="button"
-          onClick={() => aller(1)}
+          onClick={() => deplacer(pas())}
           aria-label="Activités suivantes"
-          className={`absolute right-0 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-white text-encre shadow-lg ring-1 ring-black/5 transition-opacity hover:bg-[#F5F3E7] sm:flex ${
-            peutAvancer ? "opacity-100" : "pointer-events-none opacity-0"
-          }`}
+          className="absolute right-0 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-white text-encre shadow-lg ring-1 ring-black/5 hover:bg-[#F5F3E7] sm:flex"
         >
           <Chevron sens="droite" />
         </button>
@@ -404,36 +418,33 @@ export default function ActivityCards() {
           onTouchStart={() => {
             interrompre();
             etat.current.touche = true;
-            actionUtilisateur();
           }}
           onTouchEnd={() => {
             etat.current.touche = false;
-            actionUtilisateur();
+            etat.current.reprise = Date.now() + REPRISE_MOBILE;
           }}
           onTouchCancel={() => {
             etat.current.touche = false;
-            actionUtilisateur();
+            etat.current.reprise = Date.now() + REPRISE_MOBILE;
           }}
-          onWheel={() => {
-            interrompre();
-            actionUtilisateur();
-          }}
+          onWheel={interrompre}
           onPointerDown={surPointerDown}
           onPointerMove={surPointerMove}
           onPointerUp={surPointerFin}
           onPointerCancel={surPointerFin}
           onClickCapture={surClicCapture}
           onDragStart={(e) => e.preventDefault()}
-          className="-mx-2 -my-4 flex snap-x snap-mandatory scroll-pl-2 gap-6 overflow-x-auto overscroll-x-contain px-2 py-4 select-none [scrollbar-width:none] sm:cursor-grab sm:active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+          className="-mx-2 -my-4 flex gap-6 overflow-x-auto overscroll-x-contain px-2 py-4 select-none [scrollbar-width:none] sm:cursor-grab sm:active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
         >
-          {activites.map((a) => (
+          {cartes.map(({ a, copie }) => (
             <article
-              key={a.titre}
-              className="card-bounce relative flex min-h-[440px] shrink-0 basis-[82%] snap-start flex-col justify-between overflow-hidden rounded-2xl text-left shadow-sm sm:basis-[calc((100%_-_24px)/2)] lg:basis-[calc((100%_-_72px)/4)]"
+              key={`${copie}-${a.titre}`}
+              aria-hidden={copie > 0 ? true : undefined}
+              className="card-bounce relative flex min-h-[440px] shrink-0 basis-[82%] flex-col justify-between overflow-hidden rounded-2xl text-left shadow-sm sm:basis-[calc((100%_-_24px)/2)] lg:basis-[calc((100%_-_72px)/4)]"
             >
               <img
                 src={a.image}
-                alt={a.titre}
+                alt={copie > 0 ? "" : a.titre}
                 draggable={false}
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -458,6 +469,7 @@ export default function ActivityCards() {
                 <a
                   href={a.href}
                   draggable={false}
+                  tabIndex={copie > 0 ? -1 : undefined}
                   className="btn-bounce w-fit min-h-[44px] rounded-pill bg-white px-5 py-2.5 text-sm font-semibold text-encre"
                 >
                   {a.cta}
@@ -482,25 +494,6 @@ export default function ActivityCards() {
             </article>
           ))}
         </div>
-      </div>
-
-      {/* Petits points : smartphone */}
-      <div className="mt-6 flex items-center justify-center gap-2 sm:hidden">
-        {activites.map((a, i) => (
-          <button
-            key={a.titre}
-            type="button"
-            onClick={() => {
-              actionUtilisateur();
-              animerVers(i * pas());
-            }}
-            aria-label={`Aller à : ${a.titre}`}
-            aria-current={i === index}
-            className={`h-2.5 rounded-full transition-all ${
-              i === index ? "w-6 bg-[#75523F]" : "w-2.5 bg-encre/20"
-            }`}
-          />
-        ))}
       </div>
     </section>
   );
