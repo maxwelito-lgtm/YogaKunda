@@ -1,5 +1,6 @@
 import type { JSX } from "react";
 import { site } from "@/site.config";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
   return (
@@ -27,45 +28,8 @@ export default function Footer() {
           <p className="text-sm text-encre/80">{site.telephone}</p>
         </div>
 
-        {/* Colonne newsletter */}
-        <form className="text-left">
-          <h2 className="text-2xl">Abonnez-vous à la newsletter</h2>
-          <div className="mt-4 space-y-4">
-            <label className="block">
-              <span className="mb-1 block font-display text-sm italic">Prénom</span>
-              <input
-                type="text"
-                name="prenom"
-                className="w-full min-h-[44px] rounded-md border border-encre/20 bg-white px-3 py-2"
-              />
-            </label>
-            <label className="block">
-              <span className="mb-1 block font-display text-sm italic">Nom</span>
-              <input
-                type="text"
-                name="nom"
-                className="w-full min-h-[44px] rounded-md border border-encre/20 bg-white px-3 py-2"
-              />
-            </label>
-            <label className="block">
-              <span className="mb-1 block font-display text-sm italic">
-                E-mail *
-              </span>
-              <input
-                type="email"
-                name="email"
-                required
-                className="w-full min-h-[44px] rounded-md border border-encre/20 bg-white px-3 py-2"
-              />
-            </label>
-            <button
-              type="submit"
-              className="min-h-[44px] w-full rounded-pill bg-violet px-6 py-3 text-sm font-semibold text-white sm:w-auto"
-            >
-              S&rsquo;inscrire
-            </button>
-          </div>
-        </form>
+        <NewsletterForm />
+        
       </div>
 
       <div className="border-t border-encre/10 px-4 py-6 text-center text-xs text-encre/70 sm:px-6">
