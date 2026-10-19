@@ -42,7 +42,7 @@ const activites: Activity[] = [
     sousTitre: "Le repos profond, guidé",
     texte:
       "Une relaxation guidée, allongé et sans effort, pour relâcher les tensions et se ressourcer en profondeur.",
-    image: "https://picsum.photos/seed/nidra-card/500/700",
+    image: "/images/yoga-n.png",
     cta: "En savoir plus",
     href: "/yoga/nidra",
     niveau: "Tous niveaux",
@@ -528,7 +528,7 @@ function Chevron({ sens }: { sens: "gauche" | "droite" }) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
