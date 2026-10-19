@@ -16,7 +16,7 @@ export const site = {
     instagram: "#",
   },
   nav: [
-    { label: "Espace en ligne", href: "/enseignements" },
-    { label: "Nous contacter", href: "/nous-contacter" },
+{ label: "Espace en ligne", href: "/mon-espace" },   
+{ label: "Nous contacter", href: "/nous-contacter" },
   ],
 };
