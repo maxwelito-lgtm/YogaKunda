@@ -30,8 +30,7 @@ const modes: Record<Mode, { libelle: string; cta: string; href: string }> = {
   "en-ligne": {
     libelle: "En ligne",
     cta: "Cours en ligne",
-    href: "/mon-espace",
-  },
+href: "/abonnements",  },
 };
 
 // Pour rendre une catégorie "mixte" (deux colonnes dans la fenêtre), il suffit

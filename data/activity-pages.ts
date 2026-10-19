@@ -258,8 +258,7 @@ const nidra: ActivityPageData = {
   heroImage: "/images/yoga-n.png",
   heroAlt: "Ambiance douce et lumineuse pour un moment de relaxation",
   ctaPrincipal: { label: "Cours en ligne", href: "#tarifs" },
-  ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/mon-espace" },
-  intro: {
+ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/abonnements" },  intro: {
     titre: "Le repos profond, accessible à tous",
     paragraphes: [
       "Le Yoga Nidra, parfois appelé « sommeil yogique », est une pratique de relaxation guidée. Allongé, les yeux fermés, vous suivez la voix qui vous accompagne, entre l'état de veille et le sommeil, pendant que le corps se détend complètement.",
@@ -309,8 +308,7 @@ const nidra: ActivityPageData = {
           "On revient peu à peu au corps et à la pièce, pour repartir reposé et recentré.",
       },
     ],
-    cta: { label: "Essayer 7 jours gratuits", href: "/mon-espace" },
-  },
+cta: { label: "Essayer 7 jours gratuits", href: "/abonnements" },  },
   bandeau: {
     image: "https://picsum.photos/seed/nidra-bandeau/1600/600",
     alt: "Paysage apaisant",

@@ -19,15 +19,13 @@ const formules: Record<
     prix: "17",
     detail: "204 € par an, facturé annuellement",
     economie: "Vous économisez 36 € par an",
-    href: "/mon-espace?formule=annuelle",
-  },
+href: "/abonnements",  },
   mensuelle: {
     libelle: "Mensuel",
     prix: "20",
     detail: "240 € par an, facturé mensuellement",
     economie: null,
-    href: "/mon-espace?formule=mensuelle",
-  },
+href: "/abonnements",  },
 };
 
 const avantages = [
