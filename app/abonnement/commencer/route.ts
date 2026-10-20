@@ -75,7 +75,6 @@ export async function GET(request: Request) {
       metadata: { user_id: user.id, formule },
       locale: "fr",
       allow_promotion_codes: true,
-     
       success_url: `${origin}/mon-espace?abonnement=ok`,
       cancel_url: `${origin}/#abonnement`,
     });
