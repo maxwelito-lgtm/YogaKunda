@@ -77,6 +77,29 @@ async function synchroniser(sub: Stripe.Subscription) {
   );
   if (error) throw error;
 }
+// Un paiement de cours ou d'atelier est réussi : on marque la commande comme payée.
+async function marquerCommandePayee(session: Stripe.Checkout.Session) {
+  if (session.mode !== "payment" || session.payment_status !== "paid") return;
+  const commandeId = session.metadata?.commande_id;
+  if (!commandeId) return;
+
+  const intent =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : (session.payment_intent?.id ?? null);
+
+  const { error } = await createAdminClient()
+    .from("commandes")
+    .update({
+      statut: "payee",
+      paye_le: new Date().toISOString(),
+      stripe_session_id: session.id,
+      stripe_payment_intent: intent,
+      telephone: session.customer_details?.phone ?? null,
+    })
+    .eq("id", commandeId);
+  if (error) throw error;
+}
 
 export async function POST(request: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -99,6 +122,9 @@ export async function POST(request: Request) {
       case "customer.subscription.updated":
       case "customer.subscription.deleted":
         await synchroniser(evenement.data.object as Stripe.Subscription);
+        break;
+              case "checkout.session.completed":
+        await marquerCommandePayee(evenement.data.object as Stripe.Checkout.Session);
         break;
       default:
         break;
