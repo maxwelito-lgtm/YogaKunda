@@ -6,7 +6,7 @@ import { lireOffre, lireFormule, lireRythme } from "@/data/offres";
 import { site } from "@/site.config";
 
 export const metadata: Metadata = {
-  title: `Réserver — ${site.nom}`,
+  title: `Dates & tarifs — ${site.nom}`,
   description:
     "Choisissez votre pratique et votre formule (au cours ou au trimestre), puis payez en ligne en toute sécurité.",
 };
@@ -31,18 +31,17 @@ export default async function ReserverPage({ searchParams }: Props) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-encre/80 via-encre/30 to-encre/10" />
 
-        <div className="relative z-10 flex min-h-[36vh] flex-col items-center justify-center gap-4 px-5 pb-24 pt-32 text-center sm:px-12">
+        <div className="relative z-10 flex min-h-[36vh] flex-col items-center justify-center gap-4 px-5 pb-16 pt-32 text-center sm:px-12">
           <h1 className="font-display text-4xl italic text-white drop-shadow-lg sm:text-6xl">
-            Réserver
+            Dates &amp; tarifs
           </h1>
           <p className="max-w-xl text-base text-white/90 drop-shadow-md sm:text-lg">
-            Choisissez votre pratique, votre formule, et payez en ligne en toute
-            sécurité.
+            Choisissez votre pratique et payez en ligne en toute sécurité.
           </p>
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto -mt-16 max-w-5xl px-4 pb-20 sm:px-6">
+      <section className="relative z-10 mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6">
         <ReservationForm
           offreInitiale={lireOffre(p.offre)}
           formuleInitiale={lireFormule(p.formule)}

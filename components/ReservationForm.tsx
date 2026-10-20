@@ -20,11 +20,34 @@ type Props = {
 };
 
 type Etat = "repos" | "envoi" | "erreur";
+type Onglet = "groupe" | "individuel";
 
-const choix =
-  "min-w-0 w-full rounded-xl border-[1.5px] p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#75523F]";
-const choixOff = "border-transparent bg-[#F5F3E7] hover:border-[#75523F]";
-const choixOn = "border-[#75523F] bg-white ring-4 ring-[#75523F]/15";
+const INDIVIDUELS: OffreId[] = ["perso", "therapie"];
+
+const IMAGES: Record<OffreId, string> = {
+  kundalini: "/images/kundalini.png",
+  tantra: "/images/tantra.png",
+  atelier: "/images/yoga-nature.png",
+  perso: "/images/yoga-n.png",
+  therapie: "/images/therapie.png",
+};
+
+const ETIQUETTES: Record<OffreId, string> = {
+  kundalini: "Chaque semaine",
+  tantra: "Atelier",
+  atelier: "Atelier",
+  perso: "Sur rendez-vous",
+  therapie: "Sur rendez-vous",
+};
+
+// Texte court sous le titre de chaque carte (sans répéter « En groupe » : l'onglet le dit déjà).
+const DETAILS: Record<OffreId, string> = {
+  kundalini: "Lundi et mercredi · 19 h – 20 h",
+  tantra: "Le lundi · 2 h",
+  atelier: "Le samedi · 3 h",
+  perso: "Déplacement compris",
+  therapie: "Séance individuelle",
+};
 
 export default function ReservationForm({
   offreInitiale,
@@ -32,6 +55,9 @@ export default function ReservationForm({
   rythmeInitial,
 }: Props) {
   const [offreId, setOffreId] = useState<OffreId>(offreInitiale);
+  const [onglet, setOnglet] = useState<Onglet>(
+    INDIVIDUELS.includes(offreInitiale) ? "individuel" : "groupe"
+  );
   const [formule, setFormule] = useState<Formule>(formuleInitiale);
   const [rythme, setRythme] = useState<Rythme>(rythmeInitial);
   const [etat, setEtat] = useState<Etat>("repos");
@@ -44,24 +70,34 @@ export default function ReservationForm({
   const c = calculer(offre, formuleEff, rythmeEff);
   const pourcent = Math.round(REDUCTION_TRIMESTRE * 100);
 
-  const lignes: [string, string][] = [["Pratique", offre.nom]];
-  if (offre.trimestre) lignes.push(["Formule", trim ? "Trimestre" : "Au cours"]);
-  if (offre.rythmeChoisi) {
-    lignes.push([
-      "Rythme",
-      trim ? `${rythmeEff} par semaine` : `${rythmeEff} cours`,
-    ]);
-  }
-  lignes.push(["Séances", String(c.seances)]);
-  if (trim) lignes.push([`Prix par ${offre.unite}`, euros(c.parSeance)]);
-
-  const notes = ["Paiement sécurisé par carte bancaire"];
-  notes.push(
-    trim
-      ? "Un seul paiement, sans renouvellement"
-      : "Chantal vous rappelle pour fixer la date"
+  const visibles = offres.filter((o) =>
+    onglet === "individuel" ? INDIVIDUELS.includes(o.id) : !INDIVIDUELS.includes(o.id)
   );
-  notes.push("Un compte gratuit est nécessaire pour payer");
+
+  function changerOnglet(nouveau: Onglet) {
+    setOnglet(nouveau);
+    const premier = offres.find((o) =>
+      nouveau === "individuel" ? INDIVIDUELS.includes(o.id) : !INDIVIDUELS.includes(o.id)
+    );
+    // Si la pratique choisie n'est pas dans ce groupe, on sélectionne la première.
+    const dansLeGroupe =
+      nouveau === "individuel"
+        ? INDIVIDUELS.includes(offreId)
+        : !INDIVIDUELS.includes(offreId);
+    if (!dansLeGroupe && premier) setOffreId(premier.id);
+  }
+
+  const resume = [
+    offre.nom,
+    offre.trimestre ? (trim ? "au trimestre" : "au cours") : null,
+    offre.rythmeChoisi
+      ? trim
+        ? `${rythmeEff} par semaine`
+        : `${rythmeEff} cours`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   async function payer() {
     setEtat("envoi");
@@ -98,203 +134,272 @@ export default function ReservationForm({
   }
 
   return (
-    <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-6">
-      <div className="min-w-0 space-y-6">
-        {/* Étape 1 */}
-        <Carte etape="Étape 1" titre="Votre pratique">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {offres.map((o) => (
-              <button
-                key={o.id}
-                type="button"
-                aria-pressed={offreId === o.id}
-                onClick={() => setOffreId(o.id)}
-                className={`${choix} ${offreId === o.id ? choixOn : choixOff}`}
-              >
-                <span className="block font-semibold text-encre">{o.nom}</span>
-                <span className="mt-0.5 block text-sm text-encre/70">{o.sous}</span>
-                <span className="mt-2 block text-sm font-bold text-[#75523F]">
-                  {o.trimestre
-                    ? `À partir de ${euros(o.prixUnitaire)} · trimestre −${pourcent} %`
-                    : `${euros(o.prixUnitaire)} la séance`}
+    <div className="min-w-0">
+      {/* Titre + onglets */}
+      <div className="flex flex-col items-center gap-6 text-center">
+        <div className="space-y-2">
+          <h2 className="font-display text-3xl italic text-encre sm:text-5xl">
+            Comment souhaitez-vous pratiquer ?
+          </h2>
+          <p className="text-base text-encre/70">
+            Deux choix, puis le paiement. C’est tout.
+          </p>
+        </div>
+
+        <div
+          role="tablist"
+          aria-label="Type de pratique"
+          className="inline-flex rounded-pill bg-white p-1.5 shadow-md ring-1 ring-black/5"
+        >
+          {(
+            [
+              ["groupe", "En groupe"],
+              ["individuel", "Rien que pour moi"],
+            ] as const
+          ).map(([valeur, libelle]) => (
+            <button
+              key={valeur}
+              type="button"
+              role="tab"
+              aria-selected={onglet === valeur}
+              onClick={() => changerOnglet(valeur)}
+              className={`min-h-[46px] rounded-pill px-5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#75523F] sm:px-8 sm:text-base ${
+                onglet === valeur
+                  ? "bg-encre text-[#F5F3E7]"
+                  : "text-encre hover:text-[#75523F]"
+              }`}
+            >
+              {libelle}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Cartes */}
+      <div
+        className={`mt-8 grid gap-5 sm:grid-cols-2 ${
+          onglet === "groupe" ? "lg:grid-cols-3" : "lg:mx-auto lg:max-w-3xl"
+        }`}
+      >
+        {visibles.map((o) => {
+          const choisi = offreId === o.id;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              aria-pressed={choisi}
+              onClick={() => setOffreId(o.id)}
+              className={`group flex min-w-0 flex-col overflow-hidden rounded-3xl bg-white text-left shadow-lg ring-1 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#75523F] ${
+                choisi
+                  ? "ring-2 ring-[#75523F] ring-offset-2 ring-offset-[#F5F3E7]"
+                  : "ring-black/5 hover:-translate-y-0.5"
+              }`}
+            >
+              <span className="relative block h-32 w-full overflow-hidden bg-[#D3BFA8] sm:h-36">
+                <img
+                  src={IMAGES[o.id]}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <span className="absolute left-4 top-4 rounded-pill bg-white/90 px-3 py-1 text-xs font-semibold text-encre">
+                  {ETIQUETTES[o.id]}
                 </span>
+              </span>
+
+              <span className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
+                <span>
+                  <span className="block font-display text-2xl italic leading-tight text-encre">
+                    {o.nom}
+                  </span>
+                  <span className="mt-1 block text-sm text-encre/65">
+                    {DETAILS[o.id]}
+                  </span>
+                </span>
+
+                <span className="mt-auto flex items-baseline gap-1.5">
+                  <span className="font-display text-4xl italic text-[#75523F]">
+                    {euros(o.prixUnitaire)}
+                  </span>
+                  <span className="text-sm text-encre/60">
+                    {o.unite === "cours" ? "le cours" : "la séance"}
+                  </span>
+                </span>
+
+                <span
+                  className={`mt-1 inline-flex min-h-[46px] items-center justify-center rounded-pill px-6 text-sm font-semibold transition-colors ${
+                    choisi
+                      ? "bg-encre text-[#F5F3E7]"
+                      : "bg-[#75523F] text-white group-hover:bg-[#654431]"
+                  }`}
+                >
+                  {choisi ? "✓ Choisi" : "Choisir"}
+                </span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {onglet === "groupe" && (
+        <p className="mt-5 text-center text-sm text-encre/70">
+          Au trimestre : <strong>−{pourcent} %</strong> sur tous les cours et
+          ateliers en groupe.
+        </p>
+      )}
+
+      {/* Personnalisation (seulement si la pratique le permet) */}
+      {offre.trimestre && (
+        <section
+          aria-label="Votre formule"
+          className="mx-auto mt-8 max-w-3xl rounded-3xl bg-white p-5 shadow-lg ring-1 ring-black/5 sm:p-8"
+        >
+          <h3 className="font-display text-2xl italic text-encre">
+            {offre.nom} : votre formule
+          </h3>
+
+          <div className="mt-5 grid grid-cols-2 gap-1 rounded-pill bg-[#F5F3E7] p-1">
+            {(
+              [
+                ["cours", "Au cours"],
+                ["trim", "Au trimestre"],
+              ] as const
+            ).map(([valeur, libelle]) => (
+              <button
+                key={valeur}
+                type="button"
+                aria-pressed={formuleEff === valeur}
+                onClick={() => setFormule(valeur)}
+                className={`min-h-[46px] rounded-pill px-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#75523F] ${
+                  formuleEff === valeur
+                    ? "bg-[#75523F] text-white"
+                    : "text-encre/70 hover:text-encre"
+                }`}
+              >
+                {libelle}
+                {valeur === "trim" && (
+                  <span
+                    className={`ml-2 rounded-pill px-2 py-0.5 text-xs ${
+                      formuleEff === "trim"
+                        ? "bg-white/25 text-white"
+                        : "bg-[#EFE6DA] text-[#75523F]"
+                    }`}
+                  >
+                    −{pourcent} %
+                  </span>
+                )}
               </button>
             ))}
           </div>
-        </Carte>
+          <p className="mt-3 text-sm text-encre/70">
+            {trim
+              ? `${SEMAINES_TRIMESTRE} semaines, un seul paiement, sans renouvellement automatique.`
+              : "Vous payez à la séance. Chantal vous rappelle après le paiement pour fixer la date."}
+          </p>
 
-        {/* Étape 2 : formule */}
-        {offre.trimestre && (
-          <Carte etape="Étape 2" titre="Votre formule">
-            <div className="grid grid-cols-2 gap-1 rounded-pill bg-[#F5F3E7] p-1">
-              {(
-                [
-                  ["cours", "Au cours"],
-                  ["trim", "Au trimestre"],
-                ] as const
-              ).map(([valeur, libelle]) => (
-                <button
-                  key={valeur}
-                  type="button"
-                  aria-pressed={formuleEff === valeur}
-                  onClick={() => setFormule(valeur)}
-                  className={`min-h-[44px] rounded-pill px-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#75523F] ${
-                    formuleEff === valeur
-                      ? "bg-[#75523F] text-white"
-                      : "text-encre/70 hover:text-encre"
-                  }`}
-                >
-                  {libelle}
-                  {valeur === "trim" && (
-                    <span
-                      className={`ml-2 rounded-pill px-2 py-0.5 text-xs ${
-                        formuleEff === "trim"
-                          ? "bg-white/25 text-white"
-                          : "bg-[#EFE6DA] text-[#75523F]"
+          {offre.rythmeChoisi && (
+            <div className="mt-6">
+              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#75523F]">
+                Combien de cours par semaine ?
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {([1, 2] as const).map((n) => {
+                  const cn = calculer(offre, formuleEff, n);
+                  const actif = rythmeEff === n;
+                  return (
+                    <button
+                      key={n}
+                      type="button"
+                      aria-pressed={actif}
+                      onClick={() => setRythme(n)}
+                      className={`min-w-0 rounded-2xl border-[1.5px] p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#75523F] ${
+                        actif
+                          ? "border-encre bg-encre text-[#F5F3E7]"
+                          : "border-transparent bg-[#F5F3E7] hover:border-[#75523F]"
                       }`}
                     >
-                      −{pourcent} %
-                    </span>
-                  )}
-                </button>
-              ))}
+                      <span className="block text-lg font-bold">
+                        {trim ? `${n} par semaine` : `${n} cours`}
+                      </span>
+                      <span
+                        className={`mt-0.5 block text-sm ${
+                          actif ? "text-[#F5F3E7]/80" : "text-encre/70"
+                        }`}
+                      >
+                        {trim
+                          ? `${cn.seances} cours sur le trimestre`
+                          : n === 1
+                            ? "Lundi ou mercredi, 19 h – 20 h"
+                            : "Lundi et mercredi, 19 h – 20 h"}
+                      </span>
+                      <span
+                        className={`mt-2 block font-bold ${
+                          actif ? "text-[#E0C9B5]" : "text-[#75523F]"
+                        }`}
+                      >
+                        {euros(cn.total)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <p className="mt-3 text-sm text-encre/70">
-              {trim
-                ? `${SEMAINES_TRIMESTRE} semaines, un seul paiement, sans renouvellement automatique. Vous économisez ${pourcent} %.`
-                : "Vous payez à la séance. Chantal vous rappelle après le paiement pour fixer la date."}
-            </p>
-          </Carte>
-        )}
+          )}
+        </section>
+      )}
 
-        {/* Étape 3 : rythme (cours de Kundalini) */}
-        {offre.rythmeChoisi && (
-          <Carte etape="Étape 3" titre="Votre rythme">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {([1, 2] as const).map((n) => {
-                const cn = calculer(offre, formuleEff, n);
-                return (
-                  <button
-                    key={n}
-                    type="button"
-                    aria-pressed={rythmeEff === n}
-                    onClick={() => setRythme(n)}
-                    className={`${choix} ${rythmeEff === n ? choixOn : choixOff}`}
-                  >
-                    <span className="block text-lg font-bold text-encre">
-                      {trim
-                        ? `${n} cours par semaine`
-                        : `${n} cours`}
-                    </span>
-                    <span className="mt-0.5 block text-sm text-encre/70">
-                      {trim
-                        ? `${cn.seances} cours sur le trimestre`
-                        : n === 1
-                          ? "Lundi ou mercredi, de 19 h à 20 h"
-                          : "Lundi et mercredi, de 19 h à 20 h"}
-                    </span>
-                    <span className="mt-2 block font-bold text-[#75523F]">
-                      {euros(cn.total)}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </Carte>
-        )}
-      </div>
-
-      {/* Récapitulatif : à droite sur PC, barre fixe en bas sur smartphone */}
-      <aside
-        aria-labelledby="titre-commande"
-        className="sticky bottom-2 z-20 mt-6 min-w-0 rounded-2xl bg-white p-4 shadow-[0_-4px_30px_rgba(43,31,25,0.22)] ring-1 ring-black/5 lg:bottom-auto lg:top-24 lg:mt-0 lg:p-6 lg:shadow-lg"
+      {/* Barre de paiement, toujours visible */}
+      <div
+        aria-live="polite"
+        className="sticky bottom-3 z-20 mx-auto mt-8 max-w-3xl rounded-3xl bg-encre p-4 text-[#F5F3E7] shadow-[0_-4px_30px_rgba(43,31,25,0.3)] sm:px-7 sm:py-5"
       >
-        <h2
-          id="titre-commande"
-          className="font-display text-xl italic text-encre lg:text-2xl"
-        >
-          Votre commande
-        </h2>
-
-        <ul className="mt-3 hidden gap-2 text-sm lg:grid">
-          {lignes.map(([nom, valeur]) => (
-            <li key={nom} className="flex justify-between gap-3">
-              <span className="text-encre/60">{nom}</span>
-              <span className="min-w-0 text-right font-semibold text-encre">
-                {valeur}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-2 flex items-baseline justify-between gap-3 border-t border-encre/10 pt-2 lg:mt-4 lg:pt-4">
-          <span className="font-semibold text-encre">Total</span>
-          <div className="text-right">
-            {trim && (
-              <span className="mr-2 text-sm text-encre/50 line-through">
-                {euros(c.plein)}
-              </span>
-            )}
-            <strong className="font-display text-3xl font-normal italic text-encre lg:text-4xl">
-              {euros(c.total)}
-            </strong>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <p className="truncate text-sm text-[#F5F3E7]/75">{resume}</p>
+            <p className="mt-0.5 flex flex-wrap items-baseline gap-x-3">
+              <strong className="font-display text-3xl font-normal italic sm:text-4xl">
+                {euros(c.total)}
+              </strong>
+              {trim && (
+                <>
+                  <span className="text-sm text-[#F5F3E7]/55 line-through">
+                    {euros(c.plein)}
+                  </span>
+                  <span className="rounded-pill bg-[#E6EFE8] px-2.5 py-0.5 text-xs font-semibold text-[#4E7A5B]">
+                    Vous économisez {euros(c.economie)}
+                  </span>
+                </>
+              )}
+            </p>
           </div>
+
+          <button
+            type="button"
+            onClick={payer}
+            disabled={etat === "envoi"}
+            className="btn-bounce inline-flex min-h-[50px] shrink-0 items-center justify-center rounded-pill bg-[#F5F3E7] px-8 py-3 text-base font-semibold text-encre hover:bg-white disabled:opacity-60"
+          >
+            {etat === "envoi" ? "Un instant…" : `Payer ${euros(c.total)}`}
+          </button>
         </div>
 
-        {trim && (
-          <span className="mt-2 inline-block rounded-pill bg-[#E6EFE8] px-3 py-1 text-sm font-semibold text-[#4E7A5B]">
-            Vous économisez {euros(c.economie)}
-          </span>
-        )}
-
         {etat === "erreur" && (
-          <p role="alert" className="mt-3 text-center text-sm text-alerte">
+          <p role="alert" className="mt-3 text-center text-sm text-[#FFB4A8]">
             {erreur}
           </p>
         )}
-
-        <button
-          type="button"
-          onClick={payer}
-          disabled={etat === "envoi"}
-          className="btn-bounce mt-3 inline-flex min-h-[48px] w-full items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_1px_#75523F] hover:bg-[#75523F] disabled:opacity-60 lg:mt-4"
-        >
-          {etat === "envoi" ? "Un instant…" : `Payer ${euros(c.total)}`}
-        </button>
-
-        <ul className="mt-4 hidden gap-1.5 text-sm text-encre/70 lg:grid">
-          {notes.map((n) => (
-            <li key={n} className="flex gap-2">
-              <span aria-hidden="true" className="text-[#4E7A5B]">
-                ✓
-              </span>
-              {n}
-            </li>
-          ))}
-        </ul>
-      </aside>
-    </div>
-  );
-}
-
-function Carte({
-  etape,
-  titre,
-  children,
-}: {
-  etape: string;
-  titre: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="min-w-0 rounded-2xl bg-white p-4 shadow-lg ring-1 ring-black/5 sm:p-6">
-      <div className="mb-4 flex items-baseline gap-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#75523F]">
-          {etape}
-        </span>
-        <h2 className="font-display text-2xl italic text-encre">{titre}</h2>
       </div>
-      {children}
-    </section>
+
+      <ul className="mt-6 flex flex-col items-center gap-1.5 text-center text-sm text-encre/70 sm:flex-row sm:justify-center sm:gap-6">
+        <li>✓ Paiement sécurisé par carte bancaire</li>
+        <li>✓ Un compte gratuit est nécessaire pour payer</li>
+        <li>
+          ✓{" "}
+          {trim
+            ? "Un seul paiement, sans renouvellement"
+            : "Chantal vous rappelle pour fixer la date"}
+        </li>
+      </ul>
+    </div>
   );
 }
