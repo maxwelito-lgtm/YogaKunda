@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type Mode = "motdepasse" | "lien";
@@ -16,11 +15,12 @@ const champ =
 type Props = { suivant: string; erreurLien?: boolean };
 
 export default function ConnexionForm({ suivant, erreurLien }: Props) {
-  const router = useRouter();
   const [mode, setMode] = useState<Mode>("motdepasse");
   const [etat, setEtat] = useState<Etat>("repos");
   const [erreur, setErreur] = useState(
-    erreurLien ? "Ce lien n'est plus valable. Merci de réessayer." : ""
+    erreurLien
+      ? "Ce lien n'a pas pu être utilisé dans ce navigateur. Si vous venez de confirmer votre adresse, connectez-vous simplement avec votre mot de passe."
+      : ""
   );
 
   async function envoyer(e: React.FormEvent<HTMLFormElement>) {
@@ -43,8 +43,8 @@ export default function ConnexionForm({ suivant, erreurLien }: Props) {
         setEtat("erreur");
         return;
       }
-      router.push(suivant);
-      router.refresh();
+      // Chargement complet de la page : fonctionne aussi pour aller vers le paiement.
+      window.location.assign(suivant);
       return;
     }
 
@@ -177,7 +177,7 @@ export default function ConnexionForm({ suivant, erreurLien }: Props) {
       <p className="mt-6 text-center text-sm text-encre/70">
         Pas encore de compte ?{" "}
         <Link
-          href="/inscription"
+          href={`/inscription?next=${encodeURIComponent(suivant)}`}
           className="font-semibold text-[#75523F] underline underline-offset-2"
         >
           Créer un compte

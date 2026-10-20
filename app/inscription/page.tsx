@@ -9,7 +9,19 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-export default function InscriptionPage() {
+type Props = {
+  searchParams: Promise<{ next?: string }>;
+};
+
+export default async function InscriptionPage({ searchParams }: Props) {
+  const { next } = await searchParams;
+
+  // On n'accepte que des chemins internes au site.
+  const suivant =
+    next && next.startsWith("/") && !next.startsWith("//")
+      ? next
+      : "/mon-espace";
+
   return (
     <main style={{ backgroundColor: "#F5F3E7" }}>
       <Header />
@@ -36,7 +48,7 @@ export default function InscriptionPage() {
 
       <section className="relative z-10 mx-auto -mt-14 max-w-lg px-4 pb-20 sm:px-6">
         <div className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-black/5 sm:p-8">
-          <InscriptionForm />
+          <InscriptionForm suivant={suivant} />
         </div>
       </section>
 

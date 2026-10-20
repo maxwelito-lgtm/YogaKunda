@@ -19,14 +19,14 @@ const formules: Record<
     prix: "17",
     detail: "204 € par an, facturé annuellement",
     economie: "Vous économisez 36 € par an",
-    href: "/connexion?next=%2Fmon-espace%3Fformule%3Dannuelle",
+    href: "/abonnement/commencer?formule=annuelle",
   },
   mensuelle: {
     libelle: "Mensuel",
     prix: "20",
     detail: "240 € par an, facturé mensuellement",
     economie: null,
-    href: "/connexion?next=%2Fmon-espace%3Fformule%3Dmensuelle",
+    href: "/abonnement/commencer?formule=mensuelle",
   },
 };
 
@@ -125,7 +125,9 @@ export default function PricingSection() {
           >
             Essayer 7 jours gratuits
           </a>
-          <p className="mt-3 text-xs text-encre/60">7 jours d&rsquo;essai gratuit</p>
+          <p className="mt-3 text-xs text-encre/60">
+            Sans engagement · résiliable à tout moment
+          </p>
         </div>
       </div>
     </section>

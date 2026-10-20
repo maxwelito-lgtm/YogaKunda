@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type Etat = "repos" | "envoi" | "confirmer" | "erreur";
@@ -12,8 +11,9 @@ const bouton =
 const champ =
   "w-full min-h-[44px] rounded-md border border-encre/20 bg-[#F5F3E7]/60 px-3 py-2 focus:border-[#75523F] focus:outline-none focus:ring-1 focus:ring-[#75523F]";
 
-export default function InscriptionForm() {
-  const router = useRouter();
+type Props = { suivant: string };
+
+export default function InscriptionForm({ suivant }: Props) {
   const [etat, setEtat] = useState<Etat>("repos");
   const [erreur, setErreur] = useState("");
 
@@ -46,7 +46,9 @@ export default function InscriptionForm() {
       password: motDePasse,
       options: {
         data: { prenom, nom },
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/mon-espace`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(
+          suivant
+        )}`,
       },
     });
 
@@ -62,10 +64,10 @@ export default function InscriptionForm() {
       return;
     }
 
-    // Si la confirmation par e-mail est désactivée, la personne est déjà connectée.
+    // Si la confirmation par e-mail est désactivée, la personne est déjà connectée :
+    // on l'envoie directement à sa destination (par exemple le paiement de l'abonnement).
     if (resultat.session) {
-      router.push("/mon-espace");
-      router.refresh();
+      window.location.assign(suivant);
       return;
     }
 
@@ -188,7 +190,7 @@ export default function InscriptionForm() {
       <p className="text-center text-sm text-encre/70">
         Déjà un compte ?{" "}
         <Link
-          href="/connexion"
+          href={`/connexion?next=${encodeURIComponent(suivant)}`}
           className="font-semibold text-[#75523F] underline underline-offset-2"
         >
           Se connecter

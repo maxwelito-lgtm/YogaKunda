@@ -18,7 +18,22 @@ async function deconnexion() {
   redirect("/connexion");
 }
 
-export default async function MonEspacePage() {
+function dateFr(iso: string | null | undefined): string {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+type Props = {
+  searchParams: Promise<{ abonnement?: string }>;
+};
+
+export default async function MonEspacePage({ searchParams }: Props) {
+  const { abonnement } = await searchParams;
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -30,11 +45,12 @@ export default async function MonEspacePage() {
 
   const { data: abo } = await supabase
     .from("abonnements")
-    .select("statut, formule, fin_periode")
+    .select("statut, formule, fin_periode, stripe_customer_id")
     .eq("user_id", user.id)
     .maybeSingle();
 
   const abonne = estAbonne(abo);
+  const enEssai = abonne && abo?.statut === "essai";
 
   const { data: lignes } = await supabase
     .from("cours")
@@ -45,6 +61,17 @@ export default async function MonEspacePage() {
 
   const cours = (lignes ?? []) as Cours[];
 
+  const prenom =
+    typeof user.user_metadata?.prenom === "string"
+      ? user.user_metadata.prenom
+      : "";
+
+  const etiquette = abonne
+    ? enEssai
+      ? `Essai gratuit · jusqu'au ${dateFr(abo?.fin_periode)}`
+      : `Abonné(e) · formule ${abo?.formule === "mensuelle" ? "mensuelle" : "annuelle"}`
+    : "Compte gratuit · aucun abonnement";
+
   return (
     <main style={{ backgroundColor: "#F5F3E7" }}>
       <Header />
@@ -54,22 +81,52 @@ export default async function MonEspacePage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="font-display text-4xl italic text-encre sm:text-5xl">
-              Bonjour
+              Bonjour{prenom ? ` ${prenom}` : ""}
             </h1>
             <p className="mt-1 text-sm text-encre/70">{user.email}</p>
           </div>
-          <span
-            className={`inline-flex self-start rounded-pill px-4 py-2 text-[13px] font-semibold sm:self-auto ${
-              abonne
-                ? "bg-[#75523F] text-white"
-                : "bg-white text-encre ring-1 ring-black/10"
-            }`}
-          >
-            {abonne
-              ? `Abonné(e) · formule ${abo?.formule === "mensuelle" ? "mensuelle" : "annuelle"}`
-              : "Compte gratuit · aucun abonnement"}
-          </span>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <span
+              className={`inline-flex rounded-pill px-4 py-2 text-[13px] font-semibold ${
+                abonne
+                  ? "bg-[#75523F] text-white"
+                  : "bg-white text-encre ring-1 ring-black/10"
+              }`}
+            >
+              {etiquette}
+            </span>
+            {abo?.stripe_customer_id && (
+              <a
+                href="/api/portail"
+                className="text-[13px] font-semibold text-[#75523F] hover:underline"
+              >
+                Gérer mon abonnement
+              </a>
+            )}
+          </div>
         </div>
+
+        {/* Messages après le paiement */}
+        {abonnement === "ok" && (
+          <p
+            role="status"
+            className="mt-6 rounded-2xl bg-white px-5 py-4 text-sm text-encre ring-1 ring-black/10"
+          >
+            Merci ! Votre abonnement est en cours d&apos;activation. Si vos
+            cours ne se débloquent pas dans quelques secondes, rechargez la
+            page.
+          </p>
+        )}
+        {abonnement === "erreur" && (
+          <p
+            role="alert"
+            className="mt-6 rounded-2xl bg-white px-5 py-4 text-sm text-alerte ring-1 ring-black/10"
+          >
+            Le paiement n&apos;a pas pu démarrer. Merci de réessayer dans un
+            instant.
+          </p>
+        )}
 
         {/* Bandeau d'abonnement (non abonnés seulement) */}
         {!abonne && (
