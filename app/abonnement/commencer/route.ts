@@ -75,12 +75,7 @@ export async function GET(request: Request) {
       metadata: { user_id: user.id, formule },
       locale: "fr",
       allow_promotion_codes: true,
-      custom_text: {
-        submit: {
-          message:
-            "Sans engagement : vous pouvez résilier à tout moment depuis votre espace.",
-        },
-      },
+     
       success_url: `${origin}/mon-espace?abonnement=ok`,
       cancel_url: `${origin}/#abonnement`,
     });
