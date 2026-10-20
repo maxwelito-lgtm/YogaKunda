@@ -40,7 +40,7 @@ const kundalini: ActivityPageData = {
   titre: "Kundalini Yoga",
   accroche:
     "Réveillez votre énergie, apaisez votre mental et retrouvez votre élan intérieur.",
-  heroImage: "https://picsum.photos/seed/kundalini-hero/1600/900",
+  heroImage: "/images/kundalini.png",  
   heroAlt: "Ambiance paisible et lumineuse pour une pratique de yoga",
   ctaPrincipal: { label: "Séance collective", href: "#tarifs" },
   ctaSecondaire: {
