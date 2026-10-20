@@ -28,24 +28,10 @@ function dateFr(iso: string | null | undefined): string {
   });
 }
 
-const STYLES: Record<
-  CategorieId,
-  { fond: string; texte: string; halo: string; bouton: string; fleche: string }
-> = {
-  replays: {
-    fond: "#2B1F19",
-    texte: "#F5F3E7",
-    halo: "rgba(117,82,63,0.55)",
-    bouton: "#F5F3E7",
-    fleche: "#2B1F19",
-  },
-  podcasts: {
-    fond: "#75523F",
-    texte: "#FFFFFF",
-    halo: "rgba(255,255,255,0.12)",
-    bouton: "#FFFFFF",
-    fleche: "#75523F",
-  },
+// Image de chaque tuile (dans public/images) et couleur de secours si l'image manque.
+const STYLES: Record<CategorieId, { image: string; fond: string }> = {
+  replays: { image: "/images/replay.png", fond: "#2B1F19" },
+  podcasts: { image: "/images/podcast.png", fond: "#75523F" },
 };
 
 const DETAILS: Record<CategorieId, string> = {
@@ -177,7 +163,7 @@ export default async function MonEspacePage({ searchParams }: Props) {
           </div>
         )}
 
-        {/* Grandes tuiles */}
+        {/* Grandes tuiles avec photo */}
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {CATEGORIES.map((cat, i) => {
             const s = STYLES[cat.id];
@@ -186,24 +172,31 @@ export default async function MonEspacePage({ searchParams }: Props) {
               <Link
                 key={cat.id}
                 href={`/mon-espace/${cat.id}`}
-                className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[28px] p-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75523F] sm:min-h-[280px] sm:px-8"
-                style={{ backgroundColor: s.fond, color: s.texte }}
+                className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[28px] p-7 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75523F] sm:min-h-[280px] sm:px-8"
+                style={{ backgroundColor: s.fond }}
               >
+                <img
+                  src={s.image}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                />
+                {/* Voile sombre pour garder le texte lisible sur n'importe quelle photo */}
                 <span
                   aria-hidden="true"
-                  className="absolute -right-12 -top-12 h-64 w-64 rounded-full"
-                  style={{ backgroundColor: s.halo }}
+                  className="absolute inset-0 bg-gradient-to-t from-encre/85 via-encre/40 to-encre/15"
                 />
-                <span className="relative font-display text-xl italic opacity-75">
+
+                <span className="relative font-display text-xl italic opacity-90">
                   0{i + 1}
                 </span>
                 <span className="relative flex items-end justify-between gap-4">
                   <span className="flex flex-col gap-1.5">
-                    <span className="font-display text-3xl italic leading-tight sm:text-4xl">
+                    <span className="font-display text-3xl italic leading-tight drop-shadow-md sm:text-4xl">
                       {cat.titre}
                     </span>
-                    <span className="text-sm opacity-80">{DETAILS[cat.id]}</span>
-                    <span className="mt-1 flex items-center gap-2 text-sm opacity-80">
+                    <span className="text-sm text-white/90">{DETAILS[cat.id]}</span>
+                    <span className="mt-1 flex items-center gap-2 text-sm text-white/90">
                       {!abonne && (
                         <svg
                           width="14"
@@ -225,16 +218,13 @@ export default async function MonEspacePage({ searchParams }: Props) {
                         : `${n} contenu${n > 1 ? "s" : ""}`}
                     </span>
                   </span>
-                  <span
-                    className="flex h-12 w-12 flex-none items-center justify-center rounded-full transition-transform group-hover:translate-x-1"
-                    style={{ backgroundColor: s.bouton }}
-                  >
+                  <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-white transition-transform group-hover:translate-x-1">
                     <svg
                       width="20"
                       height="20"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke={s.fleche}
+                      stroke="#2B1F19"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
