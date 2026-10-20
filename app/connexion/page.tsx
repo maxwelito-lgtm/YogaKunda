@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ConnexionForm from "@/components/ConnexionForm";
+import { createClient } from "@/lib/supabase/server";
 import { site } from "@/site.config";
 
 export const metadata: Metadata = {
@@ -21,6 +23,13 @@ export default async function ConnexionPage({ searchParams }: Props) {
     next && next.startsWith("/") && !next.startsWith("//")
       ? next
       : "/mon-espace";
+
+  // Déjà connecté : inutile de se reconnecter.
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) redirect(suivant);
 
   return (
     <main style={{ backgroundColor: "#F5F3E7" }}>

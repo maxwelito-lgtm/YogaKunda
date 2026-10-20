@@ -3,17 +3,43 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { site } from "@/site.config";
+import { createClient } from "@/lib/supabase/client";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [atTop, setAtTop] = useState(true); // tout en haut de la page
   const [hidden, setHidden] = useState(false); // header caché (scroll vers le bas)
+  const [connecte, setConnecte] = useState(false);
   const lastY = useRef(0);
   const openRef = useRef(false);
 
   useEffect(() => {
     openRef.current = open;
   }, [open]);
+
+  // Savoir si la personne est connectée (pour afficher « Déconnexion »)
+  useEffect(() => {
+    let desabonner: (() => void) | undefined;
+    try {
+      const supabase = createClient();
+      supabase.auth.getUser().then(({ data }) => setConnecte(!!data.user));
+      const { data } = supabase.auth.onAuthStateChange((_evenement, session) => {
+        setConnecte(!!session?.user);
+      });
+      desabonner = () => data.subscription.unsubscribe();
+    } catch {
+      // Sans configuration, on n'affiche simplement pas le bouton.
+    }
+    return () => desabonner?.();
+  }, []);
+
+  async function deconnexion() {
+    try {
+      await createClient().auth.signOut();
+    } finally {
+      window.location.assign("/");
+    }
+  }
 
   useEffect(() => {
     let ticking = false;
@@ -92,7 +118,7 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Droite (desktop) : nav + panier, tout sur la même ligne */}
+        {/* Droite (desktop) : navigation */}
         <div className="hidden items-center gap-8 md:flex">
           <nav>
             <ul className="flex items-center gap-8 text-[15px] lg:text-base">
@@ -106,27 +132,23 @@ export default function Header() {
                   </Link>
                 </li>
               ))}
+              {connecte && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={deconnexion}
+                    className="text-white drop-shadow-md hover:text-violet-light"
+                  >
+                    Déconnexion
+                  </button>
+                </li>
+              )}
             </ul>
           </nav>
-
-          <Link
-            href="/panier"
-            aria-label="Panier"
-            className="text-white drop-shadow-md hover:text-violet-light"
-          >
-            <CartIcon />
-          </Link>
         </div>
 
-        {/* Droite (mobile) : panier + burger */}
+        {/* Droite (mobile) : burger */}
         <div className="flex items-center gap-2 md:hidden">
-          <Link
-            href="/panier"
-            aria-label="Panier"
-            className="p-2 text-white drop-shadow-md"
-          >
-            <CartIcon />
-          </Link>
           <button
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
@@ -153,24 +175,21 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            {connecte && (
+              <li>
+                <button
+                  type="button"
+                  onClick={deconnexion}
+                  className="block min-h-[44px] w-full py-3 text-left text-base text-white"
+                >
+                  Déconnexion
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       )}
     </header>
-  );
-}
-
-function CartIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M6 8h12l-1 11H7L6 8Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
   );
 }
 

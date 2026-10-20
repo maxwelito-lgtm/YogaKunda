@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { createClient } from "@/lib/supabase/server";
+import MessageAbonnement from "@/components/MessageAbonnement";
 import { CATEGORIES, estAbonne, type CategorieId } from "@/lib/espace";
 
 export const metadata: Metadata = {
@@ -145,16 +146,7 @@ export default async function MonEspacePage({ searchParams }: Props) {
         </div>
 
         {/* Messages après le paiement */}
-        {abonnement === "ok" && (
-          <p
-            role="status"
-            className="mt-8 rounded-2xl bg-white px-5 py-4 text-sm text-encre ring-1 ring-black/10"
-          >
-            Merci ! Votre abonnement est en cours d&apos;activation. Si vos
-            cours ne se débloquent pas dans quelques secondes, rechargez la
-            page.
-          </p>
-        )}
+        {abonnement === "ok" && <MessageAbonnement actif={abonne} />}
         {abonnement === "erreur" && (
           <p
             role="alert"
