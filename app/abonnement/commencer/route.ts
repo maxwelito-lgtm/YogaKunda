@@ -75,6 +75,8 @@ export async function GET(request: Request) {
       metadata: { user_id: user.id, formule },
       locale: "fr",
       allow_promotion_codes: true,
+            // Chantal reste la vendeuse (micro-entreprise) : on désactive Managed Payments.
+      ...({ managed_payments: { enabled: false } } as object),
       success_url: `${origin}/mon-espace?abonnement=ok`,
       cancel_url: `${origin}/#abonnement`,
     });
