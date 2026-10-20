@@ -2,7 +2,7 @@ import { site } from "@/site.config";
 export type Cta = { label: string; href: string };
 
 // Quelle section de tarifs afficher sur la page
-export type TypeTarifs = "kundalini" | "ateliers" | "en-ligne";
+export type TypeTarifs = "kundalini" | "ateliers" | "en-ligne" | "therapie";
 
 export type ActivityPageData = {
   slug: string;
@@ -27,7 +27,7 @@ export type ActivityPageData = {
   programme: { titre: string; texte: string }[];
   tarifs: TypeTarifs;
   infos: {
-    lieu: string;
+    lieu?: string; // facultatif : non affiché s'il est absent
     contact: string;
   };
 };
@@ -355,6 +355,109 @@ const nidra: ActivityPageData = {
     contact: site.telephone,
   },
 };
+
+const therapie: ActivityPageData = {
+  slug: "therapie-holistique",
+  fond: "#F5F3E7",
+  metaDescription:
+    "Thérapie holistique : un accompagnement personnel qui prend en compte toutes les dimensions de l'être, physique, psychique et émotionnelle. Séance de 60 minutes sur rendez-vous.",
+  titre: "Thérapie Holistique",
+  accroche:
+    "Un accompagnement personnel, pensé pour vous, qui prend en compte toutes les dimensions de l'être : physique, psychique et émotionnelle.",
+  heroImage: "/images/therapie.jpeg",
+  heroAlt: "Moment d'écoute et d'accompagnement",
+  ctaPrincipal: {
+    label: "Réserver une séance",
+    href: "/reserver?offre=therapie",
+  },
+  ctaSecondaire: { label: "Voir le tarif", href: "#tarifs" },
+  intro: {
+    titre: "Un accompagnement sur mesure",
+    paragraphes: [
+      "Dans un cadre bienveillant, chaque séance s'adapte à ce que vous traversez et à ce dont vous avez besoin.",
+      "Découvrez comment cet accompagnement peut vous aider à avancer, à votre rythme.",
+    ],
+    cta: { label: "Réserver une séance", href: "/reserver?offre=therapie" },
+  },
+  pratique: {
+    titre: "Une séance adaptée à vous",
+    texte:
+      "Chaque séance est adaptée à vous : à votre histoire, à votre rythme et à ce que vous souhaitez traverser. Que vous souhaitiez apaiser votre stress, mieux comprendre vos émotions, retrouver de l'énergie ou simplement prendre un temps pour vous, l'accompagnement s'ajuste à votre demande.",
+    image: "https://picsum.photos/seed/therapie-approche/800/600",
+    imageAlt: "Ambiance douce et lumineuse",
+  },
+  deroule: {
+    titre: "Une approche globale",
+    etapes: [
+      {
+        titre: "Le corps",
+        texte:
+          "L'écoute des tensions, de la fatigue et des signaux qu'il vous envoie.",
+      },
+      {
+        titre: "Le mental",
+        texte:
+          "Prendre du recul sur les pensées qui tournent et retrouver de la clarté.",
+      },
+      {
+        titre: "Les émotions",
+        texte:
+          "Les reconnaître, les accueillir et leur laisser de la place sans être submergé.",
+      },
+      {
+        titre: "Un équilibre durable",
+        texte:
+          "Ces trois dimensions sont reliées : en prendre soin ensemble favorise un équilibre durable.",
+      },
+    ],
+    cta: { label: "Prendre rendez-vous", href: "/reserver?offre=therapie" },
+  },
+  bandeau: {
+    image: "https://picsum.photos/seed/therapie-hero/1600/600",
+    alt: "Paysage apaisant et lumineux",
+  },
+  pourQui:
+    "Que vous souhaitiez apaiser votre stress, mieux comprendre vos émotions, retrouver de l'énergie ou simplement prendre un temps pour vous, l'accompagnement s'ajuste à votre demande. Un espace d'écoute sans jugement, où vous avancez à votre rythme.",
+  pourquoi: {
+    intro: "L'accompagnement peut vous aider à :",
+    points: [
+      "apaiser votre stress",
+      "mieux comprendre vos émotions",
+      "retrouver de l'énergie",
+      "prendre du recul sur les pensées qui tournent",
+      "retrouver de la clarté",
+      "vous accorder un temps pour vous",
+    ],
+  },
+  programme: [
+    {
+      titre: "Une séance adaptée à vous",
+      texte:
+        "À votre histoire, à votre rythme et à ce que vous souhaitez traverser.",
+    },
+    {
+      titre: "Une approche globale",
+      texte:
+        "Le corps, le mental et les émotions sont pris en compte, sans les séparer.",
+    },
+    {
+      titre: "Un espace d'écoute",
+      texte: "Sans jugement, où vous avancez à votre rythme.",
+    },
+    {
+      titre: "Un cadre bienveillant",
+      texte:
+        "Chaque séance s'adapte à ce que vous traversez et à ce dont vous avez besoin.",
+    },
+  ],
+  tarifs: "therapie",
+  infos: {
+    contact: site.telephone,
+  },
+};
+
+// Page de la thérapie holistique : affichée sur /therapie-holistique (et non dans /yoga/...).
+export const therapiePage = therapie;
 
 export const activityPages: Record<string, ActivityPageData> = {
   kundalini,

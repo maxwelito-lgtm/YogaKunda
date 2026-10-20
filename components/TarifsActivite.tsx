@@ -26,7 +26,9 @@ function lienReservation(
 const introParType: Record<TypeTarifs, string> = {
   kundalini: `Deux cours par semaine sont possibles. Payez à l’unité ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
   ateliers: `Un atelier le lundi (Tantra) et un le samedi (Kundalini). Payez à la séance ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
-  "en-ligne": `Le Yoga Nidra fait partie des cours en ligne : essayez gratuitement pendant ${ABONNEMENT.essaiJours} jours.`,
+   "en-ligne": `Le Yoga Nidra fait partie des cours en ligne : essayez gratuitement pendant ${ABONNEMENT.essaiJours} jours.`,
+  therapie:
+    "Un tarif unique par séance. Chantal vous rappelle après le paiement pour fixer le rendez-vous.",
 };
 
 export default function TarifsActivite({ type }: { type: TypeTarifs }) {
@@ -43,6 +45,7 @@ export default function TarifsActivite({ type }: { type: TypeTarifs }) {
         {type === "kundalini" && <TarifsKundalini />}
         {type === "ateliers" && <TarifsAteliers />}
         {type === "en-ligne" && <TarifsEnLigne />}
+        {type === "therapie" && <TarifsTherapie />}
       </div>
     </section>
   );
@@ -169,7 +172,30 @@ bouton={`Essayer ${ABONNEMENT.essaiJours} jours gratuits`}
     </div>
   );
 }
+/* ---------- Thérapie holistique : un seul tarif ---------- */
+function TarifsTherapie() {
+  const o = getOffre("therapie");
+  const c = calculer(o, "cours", 1);
 
+  return (
+    <div className="mx-auto max-w-2xl">
+      <Plan
+        meilleur
+        badge="Sur rendez-vous"
+        titre="Séance d'accompagnement"
+        sous="Un accompagnement personnel, adapté à ce que vous traversez. Chantal vous rappelle après le paiement pour fixer la date."
+      >
+        <Ligne
+          titre="1 séance"
+          detail="60 minutes"
+          prix={euros(c.total)}
+          href={lienReservation("therapie")}
+          bouton="Réserver"
+        />
+      </Plan>
+    </div>
+  );
+}
 /* ---------- Séance personnalisée (commune aux pages présentiel) ---------- */
 function Perso() {
   const o = getOffre("perso");
