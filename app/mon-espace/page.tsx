@@ -111,14 +111,22 @@ export default async function MonEspacePage({ searchParams }: Props) {
             >
               {etiquette}
             </span>
-            {abo?.stripe_subscription_id && (
-              <a
-                href="/api/portail"
+            <div className="flex items-center gap-4">
+              <Link
+                href="/mon-espace/historique"
                 className="text-[13px] font-semibold text-[#75523F] hover:underline"
               >
-                Gérer mon abonnement
-              </a>
-            )}
+                Mes achats
+              </Link>
+              {abo?.stripe_subscription_id && (
+                <a
+                  href="/api/portail"
+                  className="text-[13px] font-semibold text-[#75523F] hover:underline"
+                >
+                  Gérer mon abonnement
+                </a>
+              )}
+            </div>
           </div>
         </div>
 
