@@ -81,11 +81,11 @@ export default function TherapieHolistiquePage() {
               Un espace d&rsquo;écoute <strong>sans jugement</strong>, où vous
               avancez à votre rythme.
             </li>
-            <li>TARIF : [à compléter].</li>
+            <li>TARIF : 60&nbsp;€ la séance de 60 minutes.</li>
           </ul>
           <div className="mt-10 text-center">
-            <a href="/nous-contacter" className={bouton}>
-              Nous contacter
+            <a href="/reserver?offre=therapie" className={bouton}>
+              Réserver une séance
             </a>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function TherapieHolistiquePage() {
             </li>
           </ul>
           <div className="mt-10 text-center">
-            <a href="/nous-contacter" className={bouton}>
+            <a href="/reserver?offre=therapie" className={bouton}>
               Prendre rendez-vous
             </a>
           </div>
@@ -145,14 +145,14 @@ export default function TherapieHolistiquePage() {
             </h3>
             <ul className="mt-3 list-disc space-y-2 pl-5 font-serif text-[15px] leading-7 text-encre">
               <li>Durée : 60 min</li>
-              <li>Prix : [à compléter]</li>
-              <li>Disponibilités : [à compléter]</li>
+              <li>Prix : 60&nbsp;€</li>
+              <li>Sur rendez-vous : Chantal vous rappelle pour fixer la date</li>
               <li>Lieu : {site.adresse}</li>
             </ul>
           </div>
           <div className="mt-8">
-            <a href="/nous-contacter" className={bouton}>
-              Nous contacter
+            <a href="/reserver?offre=therapie" className={bouton}>
+              Réserver une séance
             </a>
           </div>
         </div>

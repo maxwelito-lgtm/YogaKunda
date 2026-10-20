@@ -20,12 +20,12 @@ type FocusItem = {
 };
 
 // Libellé de colonne, bouton et destination selon le mode.
-// "Réserver un cours" pointera vers la page de réservation quand elle existera.
+// "Réserver un cours" mène à la page de réservation.
 const modes: Record<Mode, { libelle: string; cta: string; href: string }> = {
   presentiel: {
     libelle: "Présentiel",
     cta: "Réserver un cours",
-    href: "#activites",
+    href: "/reserver",
   },
   "en-ligne": {
     libelle: "En ligne",

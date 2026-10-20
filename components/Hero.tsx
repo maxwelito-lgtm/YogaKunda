@@ -36,9 +36,9 @@ export default function Hero() {
         </p>
 
         <div className="hero-t3 mt-1 flex items-center justify-center gap-3 sm:gap-4">
-          {/* Bouton principal : défile vers la section Activités */}
+          {/* Bouton principal : mène à la page de réservation */}
           <a
-            href="#activites"
+            href="/reserver"
             className="btn-bounce inline-flex min-h-[44px] min-w-[210px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-7 py-3 text-sm font-semibold text-white backdrop-blur-md hover:bg-[#75523F]"
           >
             Trouver votre séance

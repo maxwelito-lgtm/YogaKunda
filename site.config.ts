@@ -16,7 +16,8 @@ export const site = {
     instagram: "#",
   },
   nav: [
-{ label: "Espace en ligne", href: "/mon-espace" },   
-{ label: "Nous contacter", href: "/nous-contacter" },
+    { label: "Les tarifs", href: "/reserver" },
+    { label: "Espace en ligne", href: "/mon-espace" },
+    { label: "Nous contacter", href: "/nous-contacter" },
   ],
 };
