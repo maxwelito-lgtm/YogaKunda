@@ -364,7 +364,7 @@ const therapie: ActivityPageData = {
   titre: "Thérapie Holistique",
   accroche:
     "Un accompagnement personnel, pensé pour vous, qui prend en compte toutes les dimensions de l'être : physique, psychique et émotionnelle.",
-  heroImage: "/images/therapie.jpeg",
+  heroImage: "/images/therapie.png",
   heroAlt: "Moment d'écoute et d'accompagnement",
   ctaPrincipal: {
     label: "Réserver une séance",
