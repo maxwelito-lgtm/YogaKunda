@@ -190,8 +190,8 @@ export default function ReservationForm({
                       {trim
                         ? `${cn.seances} cours sur le trimestre`
                         : n === 1
-                          ? "60 minutes"
-                          : "2 × 60 minutes"}
+                          ? "Lundi ou mercredi, de 19 h à 20 h"
+                          : "Lundi et mercredi, de 19 h à 20 h"}
                     </span>
                     <span className="mt-2 block font-bold text-[#75523F]">
                       {euros(cn.total)}

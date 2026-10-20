@@ -16,7 +16,7 @@ export const site = {
     instagram: "#",
   },
   nav: [
-    { label: "Les tarifs", href: "/reserver" },
+    { label: "Dates & tarifs", href: "/reserver" },
     { label: "Espace en ligne", href: "/mon-espace" },
     { label: "Nous contacter", href: "/nous-contacter" },
   ],

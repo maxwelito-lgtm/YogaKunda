@@ -26,7 +26,7 @@ function lienReservation(
 const introParType: Record<TypeTarifs, string> = {
   kundalini: `Deux cours par semaine sont possibles. Payez à l’unité ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
   ateliers: `Un atelier le lundi (Tantra) et un le samedi (Kundalini). Payez à la séance ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
-   "en-ligne": `Le Yoga Nidra fait partie des cours en ligne : essayez gratuitement pendant ${ABONNEMENT.essaiJours} jours.`,
+  "en-ligne": `Le Yoga Nidra fait partie des cours en ligne : essayez gratuitement pendant ${ABONNEMENT.essaiJours} jours.`,
   therapie:
     "Un tarif unique par séance. Chantal vous rappelle après le paiement pour fixer le rendez-vous.",
 };
@@ -68,13 +68,13 @@ function TarifsKundalini() {
         >
           <Ligne
             titre="1 cours"
-            detail="60 minutes"
+            detail="Lundi ou mercredi, de 19 h à 20 h"
             prix={euros(c1.total)}
             href={lienReservation("kundalini", "cours", 1)}
           />
           <Ligne
             titre="2 cours"
-            detail="2 × 60 minutes"
+            detail="Lundi et mercredi, de 19 h à 20 h"
             prix={euros(c2.total)}
             href={lienReservation("kundalini", "cours", 2)}
           />
@@ -172,6 +172,7 @@ bouton={`Essayer ${ABONNEMENT.essaiJours} jours gratuits`}
     </div>
   );
 }
+
 /* ---------- Thérapie holistique : un seul tarif ---------- */
 function TarifsTherapie() {
   const o = getOffre("therapie");
@@ -196,6 +197,7 @@ function TarifsTherapie() {
     </div>
   );
 }
+
 /* ---------- Séance personnalisée (commune aux pages présentiel) ---------- */
 function Perso() {
   const o = getOffre("perso");
