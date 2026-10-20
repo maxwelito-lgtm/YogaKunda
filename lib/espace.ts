@@ -1,15 +1,22 @@
-export type CategorieId = "direct" | "replays" | "podcasts" | "nidra";
+export type CategorieId = "replays" | "podcasts";
+export type SousCategorieId = "nidra" | "kundalini" | "divers";
 
 export const CATEGORIES: { id: CategorieId; titre: string }[] = [
-  { id: "direct", titre: "Cours en direct" },
-  { id: "replays", titre: "Replays" },
-  { id: "podcasts", titre: "Podcasts Enseignements" },
+  { id: "replays", titre: "Replays des cours" },
+  { id: "podcasts", titre: "Podcasts" },
+];
+
+// Filtres des replays
+export const SOUS_CATEGORIES: { id: SousCategorieId; titre: string }[] = [
   { id: "nidra", titre: "Yoga Nidra" },
+  { id: "kundalini", titre: "Kundalini Yoga" },
+  { id: "divers", titre: "Divers" },
 ];
 
 export type Cours = {
   id: string;
   categorie: CategorieId;
+  sous_categorie: SousCategorieId | null;
   titre: string;
   description: string | null;
   type: "video" | "audio";

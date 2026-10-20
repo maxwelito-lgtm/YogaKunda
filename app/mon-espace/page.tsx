@@ -3,8 +3,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { createClient } from "@/lib/supabase/server";
 import MessageAbonnement from "@/components/MessageAbonnement";
+import { createClient } from "@/lib/supabase/server";
 import { CATEGORIES, estAbonne, type CategorieId } from "@/lib/espace";
 
 export const metadata: Metadata = {
@@ -32,34 +32,25 @@ const STYLES: Record<
   CategorieId,
   { fond: string; texte: string; halo: string; bouton: string; fleche: string }
 > = {
-  direct: {
+  replays: {
     fond: "#2B1F19",
     texte: "#F5F3E7",
     halo: "rgba(117,82,63,0.55)",
     bouton: "#F5F3E7",
     fleche: "#2B1F19",
   },
-  replays: {
+  podcasts: {
     fond: "#75523F",
     texte: "#FFFFFF",
     halo: "rgba(255,255,255,0.12)",
     bouton: "#FFFFFF",
     fleche: "#75523F",
   },
-  podcasts: {
-    fond: "#E3D5C4",
-    texte: "#2B1F19",
-    halo: "rgba(117,82,63,0.18)",
-    bouton: "#2B1F19",
-    fleche: "#F5F3E7",
-  },
-  nidra: {
-    fond: "#D3BFA8",
-    texte: "#2B1F19",
-    halo: "rgba(255,255,255,0.3)",
-    bouton: "#2B1F19",
-    fleche: "#F5F3E7",
-  },
+};
+
+const DETAILS: Record<CategorieId, string> = {
+  replays: "Yoga Nidra, Kundalini Yoga et divers",
+  podcasts: "Enseignements à écouter",
 };
 
 type Props = {
@@ -168,8 +159,8 @@ export default async function MonEspacePage({ searchParams }: Props) {
                 Débloquez tous les cours en ligne
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-[#F5F3E7]/85">
-                Cours en direct, replays, podcasts et Yoga Nidra : à votre
-                rythme, sans pression.
+                Replays des cours, podcasts et Yoga Nidra : à votre rythme,
+                sans pression.
               </p>
             </div>
             <div className="flex flex-col items-start gap-2 sm:items-center">
@@ -195,12 +186,12 @@ export default async function MonEspacePage({ searchParams }: Props) {
               <Link
                 key={cat.id}
                 href={`/mon-espace/${cat.id}`}
-                className="group relative flex min-h-[200px] flex-col justify-between overflow-hidden rounded-[28px] p-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75523F] sm:min-h-[230px] sm:px-8"
+                className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[28px] p-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75523F] sm:min-h-[280px] sm:px-8"
                 style={{ backgroundColor: s.fond, color: s.texte }}
               >
                 <span
                   aria-hidden="true"
-                  className="absolute -right-12 -top-12 h-60 w-60 rounded-full"
+                  className="absolute -right-12 -top-12 h-64 w-64 rounded-full"
                   style={{ backgroundColor: s.halo }}
                 />
                 <span className="relative font-display text-xl italic opacity-75">
@@ -211,7 +202,8 @@ export default async function MonEspacePage({ searchParams }: Props) {
                     <span className="font-display text-3xl italic leading-tight sm:text-4xl">
                       {cat.titre}
                     </span>
-                    <span className="flex items-center gap-2 text-sm opacity-80">
+                    <span className="text-sm opacity-80">{DETAILS[cat.id]}</span>
+                    <span className="mt-1 flex items-center gap-2 text-sm opacity-80">
                       {!abonne && (
                         <svg
                           width="14"
