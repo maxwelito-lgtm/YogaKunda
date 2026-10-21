@@ -189,8 +189,10 @@ export default function Header() {
       />
 
       <div
-        className={`relative mx-auto flex max-w-[1800px] items-center justify-between px-6 transition-all duration-300 sm:px-10 lg:px-14 ${
-          atTop ? "py-4" : "py-2"
+        className={`relative flex items-center justify-between transition-all duration-300 ${
+          atTop
+            ? "px-6 py-4 sm:px-10 md:mx-7 md:my-5 md:rounded-[26px] md:border md:border-white/40 md:bg-white/15 md:px-6 md:py-2 md:backdrop-blur-xl md:backdrop-saturate-150 lg:px-7"
+            : "mx-auto max-w-[1800px] px-6 py-2 sm:px-10 lg:px-14"
         }`}
       >
         {/* Gauche : logo + nom du site */}
