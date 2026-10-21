@@ -2,14 +2,35 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { site } from "@/site.config";
 import { createClient } from "@/lib/supabase/client";
+import { estAbonne } from "@/lib/espace";
+
+// Activités qui ont une page dédiée (affichées dans le menu mobile)
+const ACTIVITES = [
+  { label: "Kundalini Yoga", href: "/yoga/kundalini" },
+  { label: "Tantra Yoga", href: "/yoga/tantra" },
+  { label: "Yoga Nidra", href: "/yoga/nidra" },
+  { label: "Thérapie holistique", href: "/therapie-holistique" },
+];
+
+type Compte = { id: string; prenom: string } | null;
+type Abo = { statut: string; fin_periode: string | null } | null;
+
+function dateCourte(iso: string | null | undefined): string {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [atTop, setAtTop] = useState(true); // tout en haut de la page
   const [hidden, setHidden] = useState(false); // header caché (scroll vers le bas)
-  const [connecte, setConnecte] = useState(false);
+  const [compte, setCompte] = useState<Compte>(null);
+  const [abo, setAbo] = useState<Abo>(null);
+  const connecte = !!compte;
+  const pathname = usePathname();
   const lastY = useRef(0);
   const openRef = useRef(false);
 
@@ -17,14 +38,22 @@ export default function Header() {
     openRef.current = open;
   }, [open]);
 
-  // Savoir si la personne est connectée (pour afficher « Déconnexion »)
+  // Savoir si la personne est connectée (pour afficher « Déconnexion » et son compte)
   useEffect(() => {
     let desabonner: (() => void) | undefined;
+    const versCompte = (u: { id: string; user_metadata?: Record<string, unknown> } | null | undefined): Compte =>
+      u
+        ? {
+            id: u.id,
+            prenom:
+              typeof u.user_metadata?.prenom === "string" ? u.user_metadata.prenom : "",
+          }
+        : null;
     try {
       const supabase = createClient();
-      supabase.auth.getUser().then(({ data }) => setConnecte(!!data.user));
+      supabase.auth.getUser().then(({ data }) => setCompte(versCompte(data.user)));
       const { data } = supabase.auth.onAuthStateChange((_evenement, session) => {
-        setConnecte(!!session?.user);
+        setCompte(versCompte(session?.user));
       });
       desabonner = () => data.subscription.unsubscribe();
     } catch {
@@ -32,6 +61,51 @@ export default function Header() {
     }
     return () => desabonner?.();
   }, []);
+
+  // État de l'abonnement (affiché dans le menu mobile)
+  const compteId = compte?.id;
+  useEffect(() => {
+    if (!compteId) {
+      setAbo(null);
+      return;
+    }
+    let annule = false;
+    try {
+      createClient()
+        .from("abonnements")
+        .select("statut, fin_periode")
+        .eq("user_id", compteId)
+        .maybeSingle()
+        .then(({ data }) => {
+          if (!annule) setAbo(data ?? null);
+        });
+    } catch {
+      // pas bloquant
+    }
+    return () => {
+      annule = true;
+    };
+  }, [compteId]);
+
+  // Le menu se ferme quand on change de page
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Touche Échap + page figée derrière le menu
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    const avant = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = avant;
+    };
+  }, [open]);
 
   async function deconnexion() {
     try {
@@ -77,7 +151,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const abonne = estAbonne(abo);
+  const enEssai = abonne && abo?.statut === "essai";
+  const actif = (href: string) =>
+    pathname === href || (href !== "/" && !href.includes("#") && pathname.startsWith(href + "/"));
+
   return (
+    <>
     <header
       className={`fixed inset-x-0 top-0 z-50 text-white transition-all duration-300 motion-reduce:transition-none ${
         hidden ? "-translate-y-full" : "translate-y-0"
@@ -152,6 +232,7 @@ export default function Header() {
           <button
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
+            aria-controls="menu-mobile"
             onClick={() => setOpen(!open)}
             className="flex h-11 w-11 items-center justify-center rounded-pill drop-shadow-md"
           >
@@ -160,36 +241,173 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Navigation mobile (menu burger) */}
-      {open && (
-        <nav className="relative border-t border-white/10 bg-black/30 backdrop-blur-md md:hidden">
-          <ul className="flex flex-col px-4 py-2">
+    </header>
+
+    {/* Menu mobile : tiroir qui glisse depuis la droite */}
+    <div
+      className={`fixed inset-0 z-[60] md:hidden ${open ? "" : "pointer-events-none"}`}
+      aria-hidden={!open}
+    >
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-label="Fermer le menu"
+        onClick={() => setOpen(false)}
+        className={`absolute inset-0 bg-[#241C18]/55 transition-opacity duration-300 motion-reduce:transition-none ${
+          open ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      <nav
+        id="menu-mobile"
+        aria-label="Menu principal"
+        onClick={(e) => {
+          // Un clic sur n'importe quel lien referme le menu (y compris « /#abonnement » sur l'accueil)
+          if ((e.target as HTMLElement).closest("a")) setOpen(false);
+        }}
+        className={`absolute inset-y-0 right-0 flex w-[min(86vw,340px)] flex-col bg-[#F5F3E7] text-encre shadow-[-12px_0_40px_rgba(0,0,0,0.25)] transition-transform duration-300 ease-out motion-reduce:transition-none ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{
+          paddingTop: "env(safe-area-inset-top)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
+        {/* Logo + nom + fermer */}
+        <div className="flex items-center justify-between py-3 pl-6 pr-3">
+          <Link
+            href="/"
+            tabIndex={open ? 0 : -1}
+            className="flex items-center gap-2.5"
+            aria-label="Accueil"
+          >
+            <img src="/images/logo-shantalam.png" alt="" className="h-9 w-9 object-contain" />
+            <span className="font-display text-xl italic">{site.nom}</span>
+          </Link>
+          <button
+            type="button"
+            tabIndex={open ? 0 : -1}
+            aria-label="Fermer le menu"
+            onClick={() => setOpen(false)}
+            className="flex h-11 w-11 items-center justify-center rounded-pill hover:bg-black/5"
+          >
+            <BurgerIcon open />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-6 pb-2">
+          {/* État du compte */}
+          <div className="rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-black/5">
+            {connecte ? (
+              <>
+                <p className="font-display text-xl italic leading-tight">
+                  Bonjour{compte?.prenom ? ` ${compte.prenom}` : ""}
+                </p>
+                <p className="mt-0.5 text-[13px] text-encre/70">
+                  {enEssai
+                    ? `Essai gratuit · jusqu'au ${dateCourte(abo?.fin_periode)}`
+                    : abonne
+                      ? "Abonnement actif"
+                      : "Compte gratuit · aucun abonnement"}
+                </p>
+                <Link
+                  href="/mon-espace/historique"
+                  tabIndex={open ? 0 : -1}
+                  className="mt-1.5 inline-block text-[13px] font-semibold text-[#75523F]"
+                >
+                  Mes achats
+                </Link>
+              </>
+            ) : (
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[13px] text-encre/70">Vous avez déjà un compte ?</p>
+                <Link
+                  href="/connexion"
+                  tabIndex={open ? 0 : -1}
+                  className="shrink-0 rounded-pill border border-encre/25 px-4 py-2 text-[13px] font-semibold"
+                >
+                  Se connecter
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Activités */}
+          <p className="mb-1 mt-5 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#75523F]">
+            Activités
+          </p>
+          <ul>
+            {ACTIVITES.map((a) => (
+              <li key={a.href} className="border-b border-encre/10 last:border-0">
+                <Link
+                  href={a.href}
+                  tabIndex={open ? 0 : -1}
+                  aria-current={actif(a.href) ? "page" : undefined}
+                  className={`block min-h-[44px] py-2.5 text-[17px] ${
+                    actif(a.href) ? "font-semibold text-[#75523F]" : ""
+                  }`}
+                >
+                  {a.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Pages du site */}
+          <p className="mb-1 mt-5 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#75523F]">
+            Le site
+          </p>
+          <ul>
             {site.nav.map((item) => (
-              <li key={item.href}>
+              <li key={item.href} className="border-b border-encre/10 last:border-0">
                 <Link
                   href={item.href}
-                  className="block min-h-[44px] py-3 text-base text-white"
-                  onClick={() => setOpen(false)}
+                  tabIndex={open ? 0 : -1}
+                  aria-current={actif(item.href) ? "page" : undefined}
+                  className={`block min-h-[44px] py-2.5 text-[17px] ${
+                    actif(item.href) ? "font-semibold text-[#75523F]" : ""
+                  }`}
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
-            {connecte && (
-              <li>
-                <button
-                  type="button"
-                  onClick={deconnexion}
-                  className="block min-h-[44px] w-full py-3 text-left text-base text-white"
-                >
-                  Déconnexion
-                </button>
-              </li>
-            )}
           </ul>
-        </nav>
-      )}
-    </header>
+        </div>
+
+        {/* Bouton principal + déconnexion */}
+        <div className="flex flex-col gap-2 px-6 pb-5 pt-3">
+          {abonne ? (
+            <Link
+              href="/mon-espace"
+              tabIndex={open ? 0 : -1}
+              className="btn-bounce inline-flex min-h-[48px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 text-[15px] font-semibold text-white shadow-[0_0_0_1px_#75523F]"
+            >
+              Mon espace
+            </Link>
+          ) : (
+            <Link
+              href="/#abonnement"
+              tabIndex={open ? 0 : -1}
+              className="btn-bounce inline-flex min-h-[48px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-6 text-[15px] font-semibold text-white shadow-[0_0_0_1px_#75523F]"
+            >
+              Essayer 7 jours gratuits
+            </Link>
+          )}
+          {connecte && (
+            <button
+              type="button"
+              tabIndex={open ? 0 : -1}
+              onClick={deconnexion}
+              className="min-h-[40px] text-[13px] font-semibold text-encre/65"
+            >
+              Se déconnecter
+            </button>
+          )}
+        </div>
+      </nav>
+    </div>
+    </>
   );
 }
 
