@@ -40,22 +40,16 @@ export default function LocationSection() {
           </p>
         </div>
 
-        {/* Photo de Chantal : cadre arrondi avec liseré décalé */}
-        <div className="relative mb-4 mr-4 aspect-[340/540] w-[min(72vw,340px)] self-center lg:self-auto">
-          <div
-            aria-hidden="true"
-            className="absolute left-4 top-4 h-full w-full rounded-[36px] border border-[#F5F3E7]/70"
+        {/* Photo de Chantal : cadre arrondi avec bordure noire */}
+        <div className="relative aspect-[340/540] w-[min(72vw,340px)] self-center overflow-hidden rounded-[36px] border-[4px] border-[#141118] bg-[#D3BFA8] lg:self-auto">
+          <Image
+            src="/images/lieu1.jpg"
+            alt="Chantal assise en tailleur dans la salle de pratique"
+            fill
+            loading="lazy"
+            sizes="340px"
+            className="object-cover"
           />
-          <div className="relative h-full w-full overflow-hidden rounded-[36px] bg-[#D3BFA8]">
-            <Image
-              src="/images/lieu1.jpg"
-              alt="Chantal assise en tailleur dans la salle de pratique"
-              fill
-              loading="lazy"
-              sizes="340px"
-              className="object-cover"
-            />
-          </div>
         </div>
       </div>
     </section>
