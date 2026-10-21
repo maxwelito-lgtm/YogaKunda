@@ -1,46 +1,63 @@
 import Image from "next/image";
-import PresentationVideo from "@/components/PresentationVideo";
-import { site } from "@/site.config";
-
-const PHOTOS = [
-  { src: "/images/lieu1.jpg", alt: "Façade du studio de yoga" },
-  { src: "/images/lieu2.png", alt: "Salle de pratique avec tapis de yoga" },
-  { src: "/images/lieu3.png", alt: "Salle de pratique avec coussins colorés" },
-];
+import VideoDialog from "@/components/VideoDialog";
 
 export default function LocationSection() {
   return (
-    <section className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6">
-      <h2 className="text-encre text-4xl">L&rsquo;espace {site.nom}</h2>
-      <p className="mx-auto mt-4 max-w-2xl text-encre/80">
-        Découvrez un espace chaleureux et
-        intimiste pour vos activités hebdomadaires, vos ateliers ou vos
-        événements.
-      </p>
-      <PresentationVideo />
+    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <div className="relative flex min-h-[640px] flex-col items-start justify-between gap-10 overflow-hidden rounded-[40px] bg-[#2B1F19] p-8 text-[#F5F3E7] sm:p-12 lg:flex-row lg:items-center lg:p-16">
+        {/* Fond : la salle */}
+        <Image
+          src="/images/lieu2.png"
+          alt="Salle de pratique avec tapis de yoga"
+          fill
+          loading="lazy"
+          sizes="(min-width: 1152px) 1152px, 100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-b from-[#2B1F19]/85 via-[#2B1F19]/55 to-[#2B1F19]/40 lg:bg-gradient-to-r lg:from-[#2B1F19]/85 lg:via-[#2B1F19]/45 lg:to-[#2B1F19]/30"
+        />
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {PHOTOS.map((p) => (
+        {/* Texte */}
+        <div className="relative flex max-w-[520px] flex-col gap-5">
+          <span className="text-[13px] font-semibold uppercase tracking-[0.14em] opacity-85">
+            Le lieu
+          </span>
+          <h2 className="font-display text-5xl italic leading-[1.02] sm:text-6xl lg:text-7xl">
+            L&rsquo;espace Shantalam vous accueille
+          </h2>
+          <p className="text-[17px] leading-relaxed opacity-90">
+            Un espace chaleureux et intimiste pour vos activités
+            hebdomadaires, vos ateliers ou vos événements.
+          </p>
+          <div className="mt-2">
+            <VideoDialog />
+          </div>
+          <p className="mt-2 text-sm opacity-80">
+            Une localisation des plus avantageuses, facilement accessible en
+            train et en voiture.
+          </p>
+        </div>
+
+        {/* Photo de Chantal : cadre arrondi avec liseré décalé */}
+        <div className="relative mb-4 mr-4 aspect-[340/540] w-[min(72vw,340px)] self-center lg:self-auto">
           <div
-            key={p.src}
-            className="relative h-56 w-full overflow-hidden rounded-xl sm:col-span-1"
-          >
+            aria-hidden="true"
+            className="absolute left-4 top-4 h-full w-full rounded-[36px] border border-[#F5F3E7]/70"
+          />
+          <div className="relative h-full w-full overflow-hidden rounded-[36px] bg-[#D3BFA8]">
             <Image
-              src={p.src}
-              alt={p.alt}
+              src="/images/lieu1.jpg"
+              alt="Chantal assise en tailleur dans la salle de pratique"
               fill
               loading="lazy"
-              sizes="(min-width: 1024px) 336px, (min-width: 640px) 33vw, 100vw"
+              sizes="340px"
               className="object-cover"
             />
           </div>
-        ))}
+        </div>
       </div>
-
-      <p className="mt-8 text-sm text-encre/70">
-        Une localisation des plus avantageuses — facilement accessible en
-        train et en voiture.
-      </p>
     </section>
   );
 }
