@@ -214,9 +214,10 @@ export default function Header() {
                 <li key={b.href} className="hidden lg:block">
                   <Link
                     href={b.href}
-                    className="text-white drop-shadow-md hover:text-violet-light"
+                    className="inline-flex items-center gap-1.5 text-white drop-shadow-md hover:text-violet-light"
                   >
                     {b.label}
+                    <ChevronBas />
                   </Link>
                 </li>
               ))}
@@ -447,6 +448,21 @@ function BurgerIcon({ open }: { open: boolean }) {
           strokeLinecap="round"
         />
       )}
+    </svg>
+  );
+}
+
+// Petite flèche vers le bas (à côté des liens rapides du menu PC)
+function ChevronBas() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M5 9l7 7 7-7"
+        stroke="currentColor"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
