@@ -18,6 +18,7 @@ const ACTIVITES = [
 
 // Accès rapide (PC) : un clic pour voir l'activité
 const BOUTONS_PC = [
+  { label: "Accueil", href: "/" },
   { label: "Kundalini", href: "/yoga/kundalini" },
   { label: "Nidra", href: "/yoga/nidra" },
   { label: "Ateliers", href: "/reserver?offre=atelier" },
@@ -213,8 +214,8 @@ export default function Header() {
         {/* Droite (desktop) : navigation */}
         <div className="hidden items-center gap-8 md:flex">
           <nav>
-            <ul className="flex items-center gap-8 text-[15px] lg:text-base">
-              {BOUTONS_PC.map((b) => (
+            <ul className="flex items-center gap-5 text-[15px] xl:gap-8 lg:text-base">
+                            {BOUTONS_PC.map((b) => (
                 <li key={b.href} className="hidden lg:block">
                   <Link
                     href={b.href}
@@ -361,8 +362,22 @@ export default function Header() {
             )}
           </div>
 
+          {/* Accueil */}
+          <div className="mt-3 border-b border-encre/10">
+            <Link
+              href="/"
+              tabIndex={open ? 0 : -1}
+              aria-current={actif("/") ? "page" : undefined}
+              className={`block min-h-[44px] py-2.5 text-[17px] ${
+                actif("/") ? "font-semibold text-[#75523F]" : ""
+              }`}
+            >
+              Accueil
+            </Link>
+          </div>
+
           {/* Activités */}
-          <p className="mb-1 mt-5 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#75523F]">
+          <p className="mb-1 mt-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#75523F]">
             Activités
           </p>
           <ul>
