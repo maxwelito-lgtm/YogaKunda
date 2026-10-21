@@ -15,6 +15,14 @@ const ACTIVITES = [
   { label: "Thérapie holistique", href: "/therapie-holistique" },
 ];
 
+// Accès rapide (PC) : un clic pour voir l'activité
+const BOUTONS_PC = [
+  { label: "Kundalini", href: "/yoga/kundalini" },
+  { label: "Nidra", href: "/yoga/nidra" },
+  { label: "Ateliers", href: "/reserver?offre=atelier" },
+  { label: "Thérapies", href: "/therapie-holistique" },
+];
+
 type Compte = { id: string; prenom: string } | null;
 type Abo = { statut: string; fin_periode: string | null } | null;
 
@@ -202,6 +210,16 @@ export default function Header() {
         <div className="hidden items-center gap-8 md:flex">
           <nav>
             <ul className="flex items-center gap-8 text-[15px] lg:text-base">
+              {BOUTONS_PC.map((b) => (
+                <li key={b.href} className="hidden lg:block">
+                  <Link
+                    href={b.href}
+                    className="inline-flex min-h-[38px] items-center rounded-pill border border-white/70 px-4 text-sm font-semibold text-white drop-shadow-md transition-colors hover:bg-white hover:text-encre"
+                  >
+                    {b.label}
+                  </Link>
+                </li>
+              ))}
               {site.nav.map((item) => (
                 <li key={item.href}>
                   <Link
