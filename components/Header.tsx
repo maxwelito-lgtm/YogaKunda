@@ -214,7 +214,7 @@ export default function Header() {
                 <li key={b.href} className="hidden lg:block">
                   <Link
                     href={b.href}
-                    className="inline-flex min-h-[38px] items-center rounded-pill border border-white/70 px-4 text-sm font-semibold text-white drop-shadow-md transition-colors hover:bg-white hover:text-encre"
+                    className="text-white drop-shadow-md hover:text-violet-light"
                   >
                     {b.label}
                   </Link>
