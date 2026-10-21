@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { site } from "@/site.config";
 
 export default function Hero() {
@@ -6,10 +7,13 @@ export default function Hero() {
     <section className="relative min-h-screen w-full overflow-hidden">
       
       {/* Image */}
-      <img
+      <Image
         src="/images/yoga-nature.png"
         alt="Silhouette en posture de l'arbre sur un rocher, face à des montagnes au coucher du soleil"
-        className="absolute inset-0 h-full w-full object-cover object-[10%_center] md:object-center"
+        fill
+        loading="eager"
+        sizes="100vw"
+        className="object-cover object-[10%_center] md:object-center"
       />
 
       {/* Dégradé sombre pour améliorer la lisibilité du texte */}
@@ -19,10 +23,13 @@ export default function Hero() {
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-5 p-5 text-center sm:gap-7 sm:p-12">
 
         {/* Logo centré au-dessus du titre : apparition douce puis respiration lente */}
-        <img
+        <Image
           src="/images/logo-shantalam.png"
           alt=""
           aria-hidden="true"
+          width={120}
+          height={120}
+          loading="eager"
           className="hero-logo h-24 w-24 object-contain sm:h-[120px] sm:w-[120px]"
         />
         

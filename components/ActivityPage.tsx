@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { ActivityPageData } from "@/data/activity-pages";
 import ActivityTabs from "@/components/ActivityTabs";
 import TarifsActivite from "@/components/TarifsActivite";
@@ -32,10 +33,13 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
     <>
       {/* Hero */}
       <section className="relative min-h-[80vh] w-full overflow-hidden">
-        <img
+        <Image
           src={data.heroImage}
           alt={data.heroAlt}
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          loading="eager"
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-encre/80 via-encre/30 to-encre/10" />
 
@@ -96,6 +100,8 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         <img
           src={data.pratique.image}
           alt={data.pratique.imageAlt}
+          loading="lazy"
+          decoding="async"
           className="h-64 w-full rounded-2xl object-cover sm:h-80"
         />
       </section>
@@ -135,6 +141,8 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
       <img
         src={data.bandeau.image}
         alt={data.bandeau.alt}
+        loading="lazy"
+        decoding="async"
         className="h-48 w-full object-cover sm:h-80"
       />
 

@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import Image from "next/image";
 import { site } from "@/site.config";
 import NewsletterForm from "@/components/NewsletterForm";
 
@@ -19,9 +20,11 @@ export default function Footer() {
               <SocialIcon type="instagram" />
             </a>
           </div>
-                    <img
+          <Image
             src="/images/logo-shantalam.png"
             alt={site.nom}
+            width={96}
+            height={96}
             className="mx-auto h-24 w-24 object-contain sm:mx-0"
           />
         </div>

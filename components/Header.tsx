@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { site } from "@/site.config";
 import { createClient } from "@/lib/supabase/client";
@@ -195,9 +196,12 @@ export default function Header() {
               atTop ? "h-14 w-14 sm:h-16 sm:w-16" : "h-11 w-11 sm:h-12 sm:w-12"
             }`}
           >
-            <img
+            <Image
               src="/images/logo-shantalam.png"
               alt=""
+              width={64}
+              height={64}
+              loading="eager"
               className="h-full w-full object-contain"
             />
           </span>
@@ -300,7 +304,13 @@ export default function Header() {
             className="flex items-center gap-2.5"
             aria-label="Accueil"
           >
-            <img src="/images/logo-shantalam.png" alt="" className="h-9 w-9 object-contain" />
+            <Image
+              src="/images/logo-shantalam.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-9 w-9 object-contain"
+            />
             <span className="font-display text-xl italic">{site.nom}</span>
           </Link>
           <button

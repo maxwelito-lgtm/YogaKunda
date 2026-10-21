@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -183,11 +184,14 @@ export default async function MonEspacePage({ searchParams }: Props) {
                 className="group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[28px] p-7 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75523F] sm:min-h-[280px] sm:px-8"
                 style={{ backgroundColor: s.fond }}
               >
-                <img
+                <Image
                   src={s.image}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                  fill
+                  loading={i === 0 ? "eager" : "lazy"}
+                  sizes="(min-width: 1152px) 576px, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
                 />
                 {/* Voile sombre pour garder le texte lisible sur n'importe quelle photo */}
                 <span

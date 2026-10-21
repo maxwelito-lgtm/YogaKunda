@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   offres,
   getOffre,
@@ -196,11 +197,13 @@ export default function ReservationForm({
               }`}
             >
               <span className="relative block h-32 w-full overflow-hidden bg-[#D3BFA8] sm:h-36">
-                <img
+                <Image
                   src={IMAGES[o.id]}
                   alt=""
                   aria-hidden="true"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <span className="absolute left-4 top-4 rounded-pill bg-white/90 px-3 py-1 text-xs font-semibold text-encre">
                   {ETIQUETTES[o.id]}

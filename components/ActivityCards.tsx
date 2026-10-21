@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
+import Image from "next/image";
 
 type Activity = {
   titre: string;
@@ -464,12 +465,25 @@ export default function ActivityCards() {
               aria-hidden={copie > 0 ? true : undefined}
               className="card-bounce relative flex min-h-[440px] shrink-0 basis-[82%] flex-col justify-between overflow-hidden rounded-2xl text-left shadow-sm sm:basis-[calc((100%_-_24px)/2)] lg:basis-[calc((100%_-_72px)/4)]"
             >
-              <img
-                src={a.image}
-                alt={copie > 0 ? "" : a.titre}
-                draggable={false}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+              {a.image.startsWith("/") ? (
+                <Image
+                  src={a.image}
+                  alt={copie > 0 ? "" : a.titre}
+                  fill
+                  draggable={false}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 82vw"
+                  className="object-cover"
+                />
+              ) : (
+                <img
+                  src={a.image}
+                  alt={copie > 0 ? "" : a.titre}
+                  draggable={false}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
 
               {a.badge && (
