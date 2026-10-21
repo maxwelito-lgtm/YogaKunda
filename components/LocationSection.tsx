@@ -3,7 +3,10 @@ import VideoDialog from "@/components/VideoDialog";
 
 export default function LocationSection() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <section
+      id="espace"
+      className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6"
+    >
       <div className="relative flex min-h-[640px] flex-col items-start justify-between gap-10 overflow-hidden rounded-[40px] bg-[#2B1F19] p-8 text-[#F5F3E7] sm:p-12 lg:flex-row lg:items-center lg:p-16">
         {/* Fond : la salle */}
         <Image

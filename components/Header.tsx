@@ -166,6 +166,9 @@ export default function Header() {
   const actif = (href: string) =>
     pathname === href || (href !== "/" && !href.includes("#") && pathname.startsWith(href + "/"));
 
+  // « Accueil » : retour à l'accueil, ou descente vers « L'espace Shantalam » si on y est déjà
+  const hrefAccueil = pathname === "/" ? "/#espace" : "/";
+
   return (
     <>
     <header
@@ -218,7 +221,7 @@ export default function Header() {
                             {BOUTONS_PC.map((b) => (
                 <li key={b.href} className="hidden lg:block">
                   <Link
-                    href={b.href}
+                    href={b.href === "/" ? hrefAccueil : b.href}
                     className="inline-flex items-center gap-1.5 text-white drop-shadow-md hover:text-violet-light"
                   >
                     {b.label}
@@ -365,7 +368,7 @@ export default function Header() {
           {/* Accueil */}
           <div className="mt-3 border-b border-encre/10">
             <Link
-              href="/"
+              href={hrefAccueil}
               tabIndex={open ? 0 : -1}
               aria-current={actif("/") ? "page" : undefined}
               className={`block min-h-[44px] py-2.5 text-[17px] ${
