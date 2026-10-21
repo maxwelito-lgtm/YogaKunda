@@ -25,6 +25,12 @@ const BOUTONS_PC = [
   { label: "Thérapies", href: "/therapie-holistique" },
 ];
 
+// Liens du menu PC : forme de base, et pastille de verre sur la page active
+const LIEN_PC =
+  "inline-flex items-center rounded-pill px-3.5 py-2 text-white drop-shadow-md transition-colors hover:text-violet-light";
+const PASTILLE =
+  "bg-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),inset_0_0_0_1px_rgba(255,255,255,0.18)]";
+
 type Compte = { id: string; prenom: string } | null;
 type Abo = { statut: string; fin_periode: string | null } | null;
 
@@ -184,14 +190,14 @@ export default function Header() {
       {/* Voile sombre en haut de page uniquement (disparaît quand la barre foncée s'affiche) */}
       <div
         className={`pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent transition-opacity duration-300 sm:h-40 ${
-          atTop ? "opacity-100" : "opacity-0"
+          atTop ? "opacity-100 md:opacity-40" : "opacity-0"
         }`}
       />
 
       <div
         className={`relative flex items-center justify-between transition-all duration-300 ${
           atTop
-            ? "px-6 py-4 sm:px-10 md:mx-7 md:my-5 md:rounded-[26px] md:border md:border-white/40 md:bg-white/15 md:px-6 md:py-2 md:backdrop-blur-xl md:backdrop-saturate-150 lg:px-7"
+            ? "px-6 py-4 sm:px-10 md:border-b md:border-white/30 md:bg-white/10 md:px-8 md:py-2 md:shadow-[0_10px_30px_rgba(0,0,0,0.12)] md:backdrop-blur-[20px] md:backdrop-saturate-[1.8] lg:px-10"
             : "mx-auto max-w-[1800px] px-6 py-2 sm:px-10 lg:px-14"
         }`}
       >
@@ -219,12 +225,13 @@ export default function Header() {
         {/* Droite (desktop) : navigation */}
         <div className="hidden items-center gap-8 md:flex">
           <nav>
-            <ul className="flex items-center gap-5 text-[15px] xl:gap-8 lg:text-base">
-                            {BOUTONS_PC.map((b) => (
+            <ul className="flex items-center gap-0.5 text-[15px] lg:text-base">
+              {BOUTONS_PC.map((b) => (
                 <li key={b.href} className="hidden lg:block">
                   <Link
                     href={b.href === "/" ? hrefAccueil : b.href}
-                    className="inline-flex items-center gap-1.5 text-white drop-shadow-md hover:text-violet-light"
+                    aria-current={actif(b.href) ? "page" : undefined}
+                    className={`${LIEN_PC} gap-1.5 ${actif(b.href) ? PASTILLE : ""}`}
                   >
                     {b.label}
                     <ChevronBas />
@@ -235,7 +242,8 @@ export default function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-white drop-shadow-md hover:text-violet-light"
+                    aria-current={actif(item.href) ? "page" : undefined}
+                    className={`${LIEN_PC} ${actif(item.href) ? PASTILLE : ""}`}
                   >
                     {item.label}
                   </Link>
@@ -243,11 +251,7 @@ export default function Header() {
               ))}
               {connecte && (
                 <li>
-                  <button
-                    type="button"
-                    onClick={deconnexion}
-                    className="text-white drop-shadow-md hover:text-violet-light"
-                  >
+                  <button type="button" onClick={deconnexion} className={LIEN_PC}>
                     Déconnexion
                   </button>
                 </li>
