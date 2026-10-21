@@ -97,13 +97,26 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
           </h2>
           <p className="mt-4 text-encre/80">{data.pratique.texte}</p>
         </div>
-        <img
-          src={data.pratique.image}
-          alt={data.pratique.imageAlt}
-          loading="lazy"
-          decoding="async"
-          className="h-64 w-full rounded-2xl object-cover sm:h-80"
-        />
+        {data.pratique.image.startsWith("/") ? (
+          <div className="relative h-64 w-full overflow-hidden rounded-2xl sm:h-80">
+            <Image
+              src={data.pratique.image}
+              alt={data.pratique.imageAlt}
+              fill
+              loading="lazy"
+              sizes="(min-width: 1152px) 552px, (min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        ) : (
+          <img
+            src={data.pratique.image}
+            alt={data.pratique.imageAlt}
+            loading="lazy"
+            decoding="async"
+            className="h-64 w-full rounded-2xl object-cover sm:h-80"
+          />
+        )}
       </section>
 
       {/* Déroulé d'une séance */}

@@ -59,8 +59,8 @@ const kundalini: ActivityPageData = {
     titre: "Le souffle, le geste et le son",
     texte:
       "Ici, tout se pratique ensemble. La respiration guide le mouvement, le mouvement ouvre le corps, et les mantras, ces sons que l'on chante ou que l'on murmure, aident à apaiser le flot des pensées. Peu à peu, une sensation de calme et de clarté s'installe.",
-    image: "https://picsum.photos/seed/kundalini-pratique/800/600",
-    imageAlt: "Personne en pratique de yoga dans un espace calme",
+    image: "/images/lieu2.png",
+    imageAlt: "Salle de pratique lumineuse avec tapis de yoga",
   },
   deroule: {
     titre: "Le déroulé d'une séance",
@@ -271,8 +271,8 @@ const nidra: ActivityPageData = {
     titre: "Un voyage guidé à l'intérieur de soi",
     texte:
       "La séance conduit l'attention de façon progressive : à travers le corps, le souffle, les sensations puis les images intérieures. Peu à peu, les tensions se relâchent, le mental ralentit et une sensation de calme profond s'installe, sans effort.",
-    image: "https://picsum.photos/seed/nidra-pratique/800/600",
-    imageAlt: "Personne allongée en détente dans un espace calme",
+    image: "/images/lieu3.png",
+    imageAlt: "Groupe en méditation dans la salle de pratique",
   },
   deroule: {
     titre: "Le déroulé d'une séance",
@@ -383,8 +383,8 @@ const therapie: ActivityPageData = {
     titre: "Une séance adaptée à vous",
     texte:
       "Chaque séance est adaptée à vous : à votre histoire, à votre rythme et à ce que vous souhaitez traverser. Que vous souhaitiez apaiser votre stress, mieux comprendre vos émotions, retrouver de l'énergie ou simplement prendre un temps pour vous, l'accompagnement s'ajuste à votre demande.",
-    image: "https://picsum.photos/seed/therapie-approche/800/600",
-    imageAlt: "Ambiance douce et lumineuse",
+    image: "/images/lieu1.jpg",
+    imageAlt: "Chantal assise en tailleur dans la salle de pratique",
   },
   deroule: {
     titre: "Une approche globale",
