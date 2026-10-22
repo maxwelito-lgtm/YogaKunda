@@ -10,7 +10,7 @@ export default function Separateur({ compact = false }: { compact?: boolean }) {
     <div
       aria-hidden="true"
       className={`flex flex-col items-center px-4 ${
-        compact ? "pb-0 pt-10 sm:pt-12 lg:pt-14" : "py-16 sm:py-20 lg:py-24"
+        compact ? "pb-0 pt-10 sm:pt-12 lg:pt-14" : "py-10 sm:py-12 lg:py-14"
       }`}
     >
       <div className="flex w-full max-w-5xl items-center gap-4 sm:gap-8">
@@ -23,7 +23,7 @@ export default function Separateur({ compact = false }: { compact?: boolean }) {
           className={`flex-none object-contain ${
             compact
               ? "h-16 w-16 sm:h-20 sm:w-20"
-              : "h-24 w-24 sm:h-32 sm:w-32 lg:h-[140px] lg:w-[140px]"
+              : "h-20 w-20 sm:h-24 sm:w-24 lg:h-[104px] lg:w-[104px]"
           }`}
         />
         <Fil sens="droite" />
