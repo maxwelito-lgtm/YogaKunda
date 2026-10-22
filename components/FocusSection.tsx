@@ -107,7 +107,9 @@ export default function FocusSection() {
   const mixte = presentiel.length > 0 && enLigne.length > 0;
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <section className="relative z-10 -mt-[50px] bg-[linear-gradient(to_bottom,transparent_50px,#F5F3E7_50px)] sm:-mt-[100px] sm:bg-[linear-gradient(to_bottom,transparent_100px,#F5F3E7_100px)]">
+     <div className="relative mx-auto mt-[50px] max-w-[1144px] bg-[#F5F3E7] px-4 pb-12 pt-16 sm:mt-[100px] sm:px-6 sm:pt-20">
+      <LotusDessin />
       <h2 className="mb-2 text-center font-display text-3xl italic text-encre sm:text-4xl">
         Explorez selon votre besoin
       </h2>
@@ -180,7 +182,39 @@ export default function FocusSection() {
           </div>
         </div>
       )}
+     </div>
     </section>
+  );
+}
+
+// Dessin au trait (lotus) posé sur le bord du panneau, par-dessus la bande sombre
+function LotusDessin() {
+  return (
+    <svg
+      viewBox="0 0 340 152"
+      aria-hidden="true"
+      className="pointer-events-none absolute left-1/2 z-20 h-auto w-[220px] -translate-x-1/2 -top-[86px] sm:w-[340px] sm:-top-[140px]"
+    >
+      <g
+        fill="none"
+        stroke="#F5F3E7"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M170 128 C138 98 138 44 170 8 C202 44 202 98 170 128 Z" />
+        <path d="M170 118 L170 34" strokeWidth={1.2} />
+        <circle cx="170" cy="62" r="9" />
+        <path d="M170 128 C122 120 98 86 104 44 C138 56 162 90 170 128" />
+        <path d="M170 128 C218 120 242 86 236 44 C202 56 178 90 170 128" />
+        <path d="M170 128 C108 136 60 118 40 76 C86 76 140 94 170 128" />
+        <path d="M170 128 C232 136 280 118 300 76 C254 76 200 94 170 128" />
+        <path
+          d="M20 152 C70 152 110 126 170 126 C230 126 270 152 320 152"
+          fill="#F5F3E7"
+        />
+      </g>
+    </svg>
   );
 }
 

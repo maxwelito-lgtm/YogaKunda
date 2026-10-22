@@ -5,7 +5,7 @@ export default function LocationSection() {
   return (
     <section
       id="espace"
-      className="relative scroll-mt-20 bg-[#2B1F19] pb-12 text-encre lg:min-h-[700px] lg:pb-0"
+      className="relative scroll-mt-20 bg-[#2B1F19] pb-[140px] text-encre lg:min-h-[800px] lg:pb-0"
     >
       {/* Photo de la salle : colle au bord gauche de l'écran */}
       <div className="relative h-56 sm:h-72 lg:absolute lg:left-0 lg:top-0 lg:h-[560px] lg:w-[60%]">
@@ -32,7 +32,6 @@ export default function LocationSection() {
           Un espace chaleureux et intimiste pour vos activités hebdomadaires,
           vos ateliers ou vos événements.
         </p>
-      
 
         <ul className="mt-5 flex flex-col gap-4 border-t border-encre/20 pt-4 sm:flex-row sm:gap-8">
           {lieux.map((l) => (
