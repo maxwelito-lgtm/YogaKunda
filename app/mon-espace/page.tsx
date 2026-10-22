@@ -6,7 +6,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MessageAbonnement from "@/components/MessageAbonnement";
 import { createClient } from "@/lib/supabase/server";
-import { lienAdminVisible } from "@/lib/admin";import { CATEGORIES, estAbonne, type CategorieId } from "@/lib/espace";
+import { lienAdminVisible } from "@/lib/admin";
+import { CATEGORIES, estAbonne, type CategorieId } from "@/lib/espace";
 
 export const metadata: Metadata = {
   title: "Mon espace — Shantalam",
@@ -62,7 +63,11 @@ export default async function MonEspacePage({ searchParams }: Props) {
     .eq("user_id", user.id)
     .maybeSingle();
 
-  const abonne = estAbonne(abo);
+  // La propriétaire du site (Chantal) gère son site : pas de publicité d'abonnement
+  // pour elle, et elle voit tous les contenus comme une abonnée.
+  const gestionnaire = lienAdminVisible(user);
+
+  const abonne = estAbonne(abo) || gestionnaire;
   const enEssai = abonne && abo?.statut === "essai";
 
   const { data: lignes } = await supabase
@@ -98,35 +103,39 @@ export default async function MonEspacePage({ searchParams }: Props) {
               Bonjour{prenom ? ` ${prenom}` : ""}
             </h1>
             <p className="mt-3 text-[17px] text-encre/75">
-              Que souhaitez-vous pratiquer aujourd&apos;hui&nbsp;?
+              {gestionnaire
+                ? "Voici votre espace."
+                : "Que souhaitez-vous pratiquer aujourd'hui ?"}
             </p>
           </div>
 
           <div className="flex flex-col items-start gap-2 sm:items-end">
-            <span
-              className={`inline-flex rounded-pill px-4 py-2 text-[13px] font-semibold ${
-                abonne
-                  ? "bg-[#75523F] text-white"
-                  : "bg-white text-encre ring-1 ring-black/10"
-              }`}
-            >
-              {etiquette}
-            </span>
+            {!gestionnaire && (
+              <span
+                className={`inline-flex rounded-pill px-4 py-2 text-[13px] font-semibold ${
+                  abonne
+                    ? "bg-[#75523F] text-white"
+                    : "bg-white text-encre ring-1 ring-black/10"
+                }`}
+              >
+                {etiquette}
+              </span>
+            )}
             <div className="flex items-center gap-4">
+              {lienAdminVisible(user) && (
+                <Link
+                  href="/admin"
+                  className="rounded-pill bg-[#75523F] px-4 py-2 text-[14px] font-semibold text-white"
+                >
+                  Gérer mon site
+                </Link>
+              )}
               <Link
                 href="/mon-espace/historique"
                 className="text-[13px] font-semibold text-[#75523F] hover:underline"
               >
                 Mes achats
               </Link>
-                {lienAdminVisible(user) && (
-                <Link
-                  href="/admin"
-                  className="rounded-pill bg-[#75523F] px-3 py-1 text-[13px] font-semibold text-white"
-                >
-                  Gérer mon site
-                </Link>
-              )}
               {abo?.stripe_subscription_id && (
                 <a
                   href="/api/portail"
