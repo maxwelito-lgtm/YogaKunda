@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CredibilityStats from "@/components/CredibilityStats";
 import ActivityBands from "@/components/ActivityBands";
+import Separateur from "@/components/Separateur";
 import LocationSection from "@/components/LocationSection";
 import OnlineBanner from "@/components/OnlineBanner";
 import FocusSection from "@/components/FocusSection";
@@ -16,6 +17,7 @@ export default function HomePage() {
       <Hero />
       <CredibilityStats />
       <ActivityBands />
+      <Separateur />
       <LocationSection />
       <OnlineBanner />
       <FocusSection />
