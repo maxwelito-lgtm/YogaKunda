@@ -45,7 +45,7 @@ export default function InscriptionForm({ suivant }: Props) {
       email,
       password: motDePasse,
       options: {
-        data: { prenom, nom },
+        data: { prenom, nom, cgv_acceptees_le: new Date().toISOString() },
         emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(
           suivant
         )}`,
@@ -174,6 +174,34 @@ export default function InscriptionForm({ suivant }: Props) {
         <span>
           J&apos;accepte que mes données soient utilisées pour gérer mon compte
           et mon accès à l&apos;espace en ligne. *
+        </span>
+      </label>
+
+      <label className="flex items-start gap-3 text-sm text-encre/80">
+        <input
+          type="checkbox"
+          name="cgv"
+          required
+          className="mt-1 h-4 w-4 shrink-0 accent-[#75523F]"
+        />
+        <span>
+          J&apos;ai lu et j&apos;accepte les{" "}
+          <Link
+            href="/cgv"
+            target="_blank"
+            className="font-semibold text-[#75523F] underline underline-offset-2"
+          >
+            conditions générales de vente
+          </Link>{" "}
+          et la{" "}
+          <Link
+            href="/confidentialite"
+            target="_blank"
+            className="font-semibold text-[#75523F] underline underline-offset-2"
+          >
+            politique de confidentialité
+          </Link>
+          . *
         </span>
       </label>
 

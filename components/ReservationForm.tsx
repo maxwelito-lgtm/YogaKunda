@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   offres,
   getOffre,
@@ -63,6 +64,7 @@ export default function ReservationForm({
   const [rythme, setRythme] = useState<Rythme>(rythmeInitial);
   const [etat, setEtat] = useState<Etat>("repos");
   const [erreur, setErreur] = useState("");
+  const [cgv, setCgv] = useState(false);
 
   const offre = getOffre(offreId);
   const formuleEff: Formule = offre.trimestre ? formule : "cours";
@@ -111,6 +113,7 @@ export default function ReservationForm({
           offre: offreId,
           formule: formuleEff,
           rythme: rythmeEff,
+          cgv: true,
         }),
       });
 
@@ -379,12 +382,37 @@ export default function ReservationForm({
           <button
             type="button"
             onClick={payer}
-            disabled={etat === "envoi"}
+            disabled={etat === "envoi" || !cgv}
             className="btn-bounce inline-flex min-h-[50px] shrink-0 items-center justify-center rounded-pill bg-[#F5F3E7] px-8 py-3 text-base font-semibold text-encre hover:bg-white disabled:opacity-60"
           >
             {etat === "envoi" ? "Un instant…" : `Payer ${euros(c.total)}`}
           </button>
         </div>
+        {!cgv && (
+          <p className="mt-2 text-xs text-[#F5F3E7]/55">
+            Cochez la case ci-dessous pour activer le paiement.
+          </p>
+        )}
+
+        <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-[#F5F3E7]/85">
+          <input
+            type="checkbox"
+            checked={cgv}
+            onChange={(e) => setCgv(e.target.checked)}
+            className="mt-0.5 h-5 w-5 shrink-0 accent-[#F5F3E7]"
+          />
+          <span>
+            J’ai lu et j’accepte les{" "}
+            <Link
+              href="/cgv"
+              target="_blank"
+              className="underline underline-offset-2 hover:text-white"
+            >
+              conditions générales de vente
+            </Link>
+            .
+          </span>
+        </label>
 
         {etat === "erreur" && (
           <p role="alert" className="mt-3 text-center text-sm text-[#FFB4A8]">

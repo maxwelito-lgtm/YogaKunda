@@ -29,11 +29,22 @@ function cleStripe(offre: OffreId, formule: Formule, rythme: Rythme): string {
 }
 
 export async function POST(request: Request) {
-  let corps: { offre?: unknown; formule?: unknown; rythme?: unknown };
-  try {
+  let corps: {
+    offre?: unknown;
+    formule?: unknown;
+    rythme?: unknown;
+    cgv?: unknown;
+  };  try {
     corps = await request.json();
   } catch {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
+  }
+  // Les CGV doivent avoir été acceptées (case cochée sur la page de réservation).
+  if (corps.cgv !== true) {
+    return NextResponse.json(
+      { error: "Merci d'accepter les conditions générales de vente pour payer." },
+      { status: 400 }
+    );
   }
 
   // On ne fait confiance à rien : tout est revérifié ici.
@@ -146,6 +157,7 @@ export async function POST(request: Request) {
         offre: offre.id,
         formule,
         rythme: String(rythme),
+        cgv_acceptees_le: new Date().toISOString(),
       },
       payment_intent_data: {
         description: libelle,
