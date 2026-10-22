@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MessageAbonnement from "@/components/MessageAbonnement";
 import { createClient } from "@/lib/supabase/server";
+import { estAdmin } from "@/lib/admin";
 import { CATEGORIES, estAbonne, type CategorieId } from "@/lib/espace";
 
 export const metadata: Metadata = {
@@ -119,6 +120,14 @@ export default async function MonEspacePage({ searchParams }: Props) {
               >
                 Mes achats
               </Link>
+              {estAdmin(user) && (
+                <Link
+                  href="/admin"
+                  className="rounded-pill bg-[#75523F] px-3 py-1 text-[13px] font-semibold text-white"
+                >
+                  Gérer mon site
+                </Link>
+              )}
               {abo?.stripe_subscription_id && (
                 <a
                   href="/api/portail"

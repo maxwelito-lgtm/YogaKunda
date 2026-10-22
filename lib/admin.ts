@@ -32,3 +32,12 @@ export async function exigerAdmin(chemin: string) {
   const meta = (user.user_metadata ?? {}) as { prenom?: string };
   return { user, prenom: meta.prenom?.trim() ?? "" };
 }
+
+// Vrai si cette personne a le droit d'entrer dans l'espace de Chantal.
+export function estAdmin(user: {
+  email?: string | null;
+  email_confirmed_at?: string | null;
+}): boolean {
+  const email = user.email?.toLowerCase() ?? "";
+  return Boolean(user.email_confirmed_at) && adressesAutorisees().includes(email);
+}
