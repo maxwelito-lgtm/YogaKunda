@@ -46,7 +46,10 @@ export default function CarteCours({
     .join(" · ");
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+    <Link
+      href={`/mon-espace/${cours.categorie}/${cours.id}`}
+      className="block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#75523F]"
+    >
       <div
         className="relative h-28 overflow-hidden"
         style={{ backgroundColor: teintes[index % teintes.length] }}
@@ -73,6 +76,6 @@ export default function CarteCours({
         <p className="text-[15px] font-semibold text-encre">{cours.titre}</p>
         <p className="mt-0.5 text-[13px] text-encre/70">{meta}</p>
       </div>
-    </div>
+    </Link>
   );
 }

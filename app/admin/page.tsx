@@ -16,8 +16,10 @@ export const dynamic = "force-dynamic";
 export default async function AdminAccueil() {
   const { prenom } = await exigerAdmin("/admin");
 
+  const admin = createAdminClient();
+
   // Nombre de personnes qui ont payé et qu'il reste à rappeler.
-  const { count, error } = await createAdminClient()
+  const { count, error } = await admin
     .from("commandes")
     .select("id", { count: "exact", head: true })
     .eq("statut", "payee")
@@ -26,7 +28,7 @@ export default async function AdminAccueil() {
   const aRappeler = error ? null : (count ?? 0);
 
   // Nombre d'abonnés en cours (essai gratuit ou abonnement actif).
-  const { count: nbAbonnes } = await createAdminClient()
+  const { count: nbAbonnes } = await admin
     .from("abonnements")
     .select("user_id", { count: "exact", head: true })
     .in("statut", ["essai", "actif"]);
@@ -93,19 +95,18 @@ export default async function AdminAccueil() {
 
         {/* Les autres rubriques */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-                      <Tuile titre="Replays et podcasts" aide="Ajouter un contenu" bientot>
+          <Tuile titre="Replays et podcasts" aide="Ajouter un contenu" href="/admin/contenus">
             <path d="M8 5v14l11-7L8 5Z" />
+          </Tuile>
+          <Tuile titre="Mes abonnés" aide={`${nbAbonnes ?? 0} en cours`} href="/admin/abonnes">
+            <circle cx="9" cy="9" r="3.2" />
+            <path d="M3.5 19c.6-3 3-4.5 5.5-4.5s4.9 1.5 5.5 4.5" />
+            <path d="M16 7.5a3 3 0 0 1 0 5.5M18 15c1.6.6 2.6 1.9 3 4" />
           </Tuile>
           <Tuile titre="Textes et photos" aide="Modifier mon site" bientot>
             <rect x="3" y="4" width="18" height="16" rx="3" />
             <circle cx="9" cy="10" r="1.6" />
             <path d="m4 17 5-4 4 3 3-2 4 3" />
-          </Tuile>
-          
-          <Tuile titre="Mes abonnés" aide={`${nbAbonnes ?? 0} en cours`} href="/admin/abonnes">
-            <circle cx="9" cy="9" r="3.2" />
-            <path d="M3.5 19c.6-3 3-4.5 5.5-4.5s4.9 1.5 5.5 4.5" />
-            <path d="M16 7.5a3 3 0 0 1 0 5.5M18 15c1.6.6 2.6 1.9 3 4" />
           </Tuile>
         </div>
 
