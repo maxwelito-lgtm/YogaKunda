@@ -21,7 +21,7 @@ const BOUTONS_PC = [
   { label: "Accueil", href: "/" },
   { label: "Kundalini", href: "/yoga/kundalini" },
   { label: "Nidra", href: "/yoga/nidra" },
-  { label: "Ateliers", href: "/reserver?offre=atelier" },
+  { label: "Ateliers", href: "/yoga/tantra" },
   { label: "Thérapies", href: "/therapie-holistique" },
 ];
 
