@@ -143,10 +143,10 @@ const tantra: ActivityPageData = {
   slug: "tantra",
   fond: "#F5F3E7",
   metaDescription:
-    "Ateliers Tantra & Kundalini en présentiel : des ateliers de 2 à 3 heures pour lâcher prise, apaiser le mental et explorer plus profondément votre pratique, en groupe ou en séance personnalisée.",
+    "Ateliers Tantra & Kundalini en présentiel : des ateliers de 2 heures pour lâcher prise, apaiser le mental et explorer plus profondément votre pratique, en groupe ou en séance personnalisée.",
   titre: "Ateliers Tantra & Kundalini",
   accroche:
-    "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 à 3 heures.",
+    "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 heures.",
   heroImage: "/images/tantra.png",
   heroAlt: "Salle de pratique chaleureuse pour un atelier de Tantra et Kundalini Yoga",
   ctaPrincipal: { label: "Séance collective", href: "#tarifs" },

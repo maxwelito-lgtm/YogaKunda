@@ -30,7 +30,7 @@ const bandes: Bande[] = [
     titre: "Ateliers Tantra & Kundalini",
     sousTitre: "Prendre le temps d'approfondir",
     texte:
-      "Des ateliers de 2 à 3 heures pour explorer davantage le Tantra Yoga et le Kundalini Yoga, ressentir plus profondément et enrichir votre pratique.",
+      "Des ateliers de 2 heures pour explorer davantage le Tantra Yoga et le Kundalini Yoga, ressentir plus profondément et enrichir votre pratique.",
     image: "/images/tantra.png",
     position: "center 40%",
     href: "/yoga/tantra",

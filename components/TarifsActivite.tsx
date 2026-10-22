@@ -8,13 +8,11 @@ import {
   pourcentEconomie,
   ABONNEMENT,
   SEMAINES_TRIMESTRE,
-  REDUCTION_TRIMESTRE,
   type OffreId,
   type Formule,
   type Rythme,
 } from "@/data/offres";
 
-const pourcent = Math.round(REDUCTION_TRIMESTRE * 100);
 
 function lienReservation(
   offre: OffreId,
@@ -26,7 +24,7 @@ function lienReservation(
 
 const introParType: Record<TypeTarifs, string> = {
   kundalini: `Un ou deux cours par semaine. Payez à l’unité, au trimestre ou pour toute l’année scolaire : plus la durée est longue, plus le cours revient moins cher.`,
-  ateliers: `Un atelier le lundi (Tantra) et un le samedi (Kundalini). Payez à la séance ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
+  ateliers: "Des ateliers de 2 heures, à des jours et dates variables, annoncés au fil de l'année. Réservez votre place : Chantal vous rappelle pour convenir de la date avec vous.",
   "en-ligne": `Le Yoga Nidra fait partie des cours en ligne : essayez gratuitement pendant ${ABONNEMENT.essaiJours} jours.`,
   therapie:
     "Un tarif unique par séance. Chantal vous rappelle après le paiement pour fixer le rendez-vous.",
@@ -127,37 +125,30 @@ function TarifsKundalini() {
   );
 }
 
-/* ---------- Ateliers Tantra (lundi) et Kundalini (samedi) ---------- */
+/* ---------- Ateliers Tantra et Kundalini (2 h, dates variables) ---------- */
 function TarifsAteliers() {
   return (
     <>
       <div className="grid gap-8 md:grid-cols-2">
-        <PlanAtelier id="tantra" jours="lundis" />
-        <PlanAtelier id="atelier" jours="samedis" />
+        <PlanAtelier id="tantra" />
+        <PlanAtelier id="atelier" />
       </div>
       <Perso />
     </>
   );
 }
 
-function PlanAtelier({ id, jours }: { id: "tantra" | "atelier"; jours: string }) {
+function PlanAtelier({ id }: { id: "tantra" | "atelier" }) {
   const o = getOffre(id);
   const seance = calculer(o, "cours", 1);
-  const trim = calculer(o, "trim", 1);
 
   return (
     <Plan titre={o.nom} sous={o.sous}>
       <Ligne
-        titre="À la séance"
-        detail="Chantal vous rappelle pour fixer la date"
+        titre="1 atelier · 2 h"
+        detail="Après le paiement, Chantal vous rappelle pour fixer la date"
         prix={euros(seance.total)}
         href={lienReservation(id, "cours", 1)}
-      />
-      <Ligne
-        titre="Au trimestre"
-        detail={`−${pourcent} % · ${trim.seances} ${jours} · un seul paiement`}
-        prix={euros(trim.total)}
-        href={lienReservation(id, "trim", 1)}
       />
     </Plan>
   );

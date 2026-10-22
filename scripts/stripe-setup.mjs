@@ -33,19 +33,17 @@ const CATALOGUE = [
     ],
   },
   {
-    produit: "Atelier Tantra Yoga (lundi, 2 h)",
+    produit: "Atelier Tantra Yoga (2 h)",
     description: "Atelier collectif en présentiel.",
     prix: [
       { cle: "tantra_cours", nom: "Un atelier", montant: 2000 },
-      { cle: "tantra_trim", nom: "Trimestre", montant: 21600 },
     ],
   },
   {
-    produit: "Atelier Kundalini (samedi, 3 h)",
+    produit: "Atelier Kundalini (2 h)",
     description: "Atelier collectif en présentiel.",
     prix: [
       { cle: "atelier_cours", nom: "Un atelier", montant: 3000 },
-      { cle: "atelier_trim", nom: "Trimestre", montant: 32400 },
     ],
   },
   {

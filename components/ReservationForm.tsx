@@ -51,8 +51,8 @@ const ETIQUETTES: Record<OffreId, string> = {
 // Texte court sous le titre de chaque carte (sans répéter « En groupe » : l'onglet le dit déjà).
 const DETAILS: Record<OffreId, string> = {
   kundalini: "Lundi à Géronce · mercredi à Oloron · 18 h 30 – 20 h",
-  tantra: "Le lundi · 2 h",
-  atelier: "Le samedi · 3 h",
+  tantra: "Atelier de 2 h · date fixée avec Chantal",
+  atelier: "Atelier de 2 h · date fixée avec Chantal",
   perso: "Déplacement compris",
   therapie: "Séance individuelle",
 };
