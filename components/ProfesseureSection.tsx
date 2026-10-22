@@ -16,36 +16,36 @@ export default function ProfesseureSection() {
   return (
     <section
       id="professeure"
-      className="scroll-mt-20 bg-[#E6DCC6] py-10 sm:py-14 md:py-16"
+      className="scroll-mt-20 bg-[#E6DCC6] py-10 sm:py-14 md:py-16 lg:relative lg:flex lg:min-h-[820px] lg:items-center lg:py-0"
     >
-      <div className="mx-auto grid max-w-5xl items-center gap-6 px-4 sm:px-6 md:grid-cols-[minmax(0,420px)_minmax(0,1fr)] md:gap-0 lg:px-8">
+      <div className="mx-auto grid max-w-5xl items-center gap-6 px-4 sm:px-6 md:grid-cols-[minmax(0,420px)_minmax(0,1fr)] md:gap-0 lg:contents">
         {/* Photo : portrait entier, jamais coupé sur mobile */}
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] md:aspect-[11/16] md:max-w-none">
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] md:aspect-[11/16] md:max-w-none lg:absolute lg:inset-y-0 lg:left-0 lg:aspect-auto lg:w-[40%]">
           <Image
             src="/images/lieu1.jpg"
             alt="Chantal assise en tailleur dans la salle de pratique"
             fill
             loading="lazy"
-            sizes="(min-width: 768px) 40vw, 340px"
+            sizes="(min-width: 1024px) 40vw, (min-width: 768px) 420px, 340px"
             className="object-cover [object-position:center_20%] md:[object-position:center_58%]"
           />
         </div>
 
         {/* Fiche : compacte, chevauche légèrement la photo sur écran large */}
-        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-16 md:py-9 md:pl-12 md:pr-9">
+        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-16 md:py-9 md:pl-12 md:pr-9 lg:my-16 lg:ml-[36%] lg:w-full lg:max-w-[740px] lg:p-12 lg:pl-14">
           <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#75523F]">
             Votre professeure
           </span>
-          <h2 className="mt-1.5 font-display text-4xl italic leading-none sm:text-5xl">
+          <h2 className="mt-1.5 font-display text-4xl italic leading-none sm:text-5xl lg:text-[56px]">
             Chantal Lassier
           </h2>
-          <p className="mt-2 font-display text-lg italic text-encre/80">
+          <p className="mt-2 font-display text-lg italic text-encre/80 lg:text-xl">
             Professeure de yoga et thérapeute diplômée
           </p>
 
-          <ol className="mt-5">
+          <ol className="mt-5 lg:mt-7">
             {parcours.map((p, i) => (
-              <li key={p.titre} className="relative pb-3.5 pl-7 last:pb-0">
+              <li key={p.titre} className="relative pb-3.5 pl-7 last:pb-0 lg:pb-5">
                 <span
                   aria-hidden="true"
                   className="absolute left-0 top-1.5 h-3 w-3 rounded-full bg-[#75523F]"
@@ -59,14 +59,14 @@ export default function ProfesseureSection() {
                 <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#75523F]">
                   {p.titre}
                 </span>
-                <span className="block font-display text-lg italic leading-tight sm:text-xl">
+                <span className="block font-display text-lg italic leading-tight sm:text-xl lg:text-2xl">
                   {p.texte}
                 </span>
               </li>
             ))}
           </ol>
 
-          <div className="mt-5 border-t border-encre/15 pt-4">
+          <div className="mt-5 border-t border-encre/15 pt-4 lg:mt-7 lg:pt-6">
             <VideoDialog label="Voir la vidéo de présentation" />
           </div>
         </div>
