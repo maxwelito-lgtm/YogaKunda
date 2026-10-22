@@ -98,6 +98,10 @@ export default async function AdminAccueil() {
           <Tuile titre="Replays et podcasts" aide="Ajouter un contenu" href="/admin/contenus">
             <path d="M8 5v14l11-7L8 5Z" />
           </Tuile>
+                    <Tuile titre="Calendrier des cours" aide="Annuler, déplacer, ajouter" href="/admin/calendrier">
+            <rect x="4" y="5" width="16" height="15" rx="2.5" />
+            <path d="M8 3v4M16 3v4M4 10h16" />
+          </Tuile>
           <Tuile titre="Mes abonnés" aide={`${nbAbonnes ?? 0} en cours`} href="/admin/abonnes">
             <circle cx="9" cy="9" r="3.2" />
             <path d="M3.5 19c.6-3 3-4.5 5.5-4.5s4.9 1.5 5.5 4.5" />
