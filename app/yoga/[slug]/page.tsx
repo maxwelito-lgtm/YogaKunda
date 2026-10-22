@@ -10,6 +10,9 @@ type Props = { params: Promise<{ slug: string }> };
 
 export const dynamicParams = false;
 
+// La page se rafraîchit toute seule (calendrier des cours) au plus tard toutes les heures.
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return Object.keys(activityPages).map((slug) => ({ slug }));
 }

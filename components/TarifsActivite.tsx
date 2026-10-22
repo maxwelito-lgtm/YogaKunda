@@ -68,13 +68,13 @@ function TarifsKundalini() {
         >
           <Ligne
             titre="1 cours"
-            detail="Lundi ou mercredi, de 19 h à 20 h"
+            detail="Lundi (Géronce) ou mercredi (Oloron), de 18 h 30 à 20 h"
             prix={euros(c1.total)}
             href={lienReservation("kundalini", "cours", 1)}
           />
           <Ligne
             titre="2 cours"
-            detail="Lundi et mercredi, de 19 h à 20 h"
+            detail="Lundi et mercredi, de 18 h 30 à 20 h"
             prix={euros(c2.total)}
             href={lienReservation("kundalini", "cours", 2)}
           />

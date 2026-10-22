@@ -134,7 +134,7 @@ const kundalini: ActivityPageData = {
   ],
   tarifs: "kundalini",
   infos: {
-    lieu: site.adresse,
+    lieu: "Le lundi à Géronce (salle municipale, centre bourg) et le mercredi à Oloron (Cèdre Bleu, 5 rue du Gouverneur Général Bordes), de 18 h 30 à 20 h.",
     contact: site.telephone,
   },
 };

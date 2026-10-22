@@ -44,7 +44,7 @@ const ETIQUETTES: Record<OffreId, string> = {
 
 // Texte court sous le titre de chaque carte (sans répéter « En groupe » : l'onglet le dit déjà).
 const DETAILS: Record<OffreId, string> = {
-  kundalini: "Lundi et mercredi · 19 h – 20 h",
+  kundalini: "Lundi à Géronce · mercredi à Oloron · 18 h 30 – 20 h",
   tantra: "Le lundi · 2 h",
   atelier: "Le samedi · 3 h",
   perso: "Déplacement compris",
@@ -335,8 +335,8 @@ export default function ReservationForm({
                         {trim
                           ? `${cn.seances} cours sur le trimestre`
                           : n === 1
-                            ? "Lundi ou mercredi, 19 h – 20 h"
-                            : "Lundi et mercredi, 19 h – 20 h"}
+                            ? "Lundi (Géronce) ou mercredi (Oloron), 18 h 30 – 20 h"
+                            : "Lundi et mercredi, 18 h 30 – 20 h"}
                       </span>
                       <span
                         className={`mt-2 block font-bold ${

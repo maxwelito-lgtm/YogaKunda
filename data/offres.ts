@@ -22,8 +22,8 @@ export const offres: Offre[] = [
   {
     id: "kundalini",
     nom: "Cours de Kundalini",
-    sous: "En groupe · lundi et mercredi, de 19 h à 20 h",
-    prixUnitaire: 15,
+    sous: "En groupe · lundi à Géronce, mercredi à Oloron, de 18 h 30 à 20 h",
+        prixUnitaire: 15,
     rythmeChoisi: true,
     trimestre: true,
     unite: "cours",

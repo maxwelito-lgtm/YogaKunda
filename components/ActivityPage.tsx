@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { ActivityPageData } from "@/data/activity-pages";
 import ActivityTabs from "@/components/ActivityTabs";
 import TarifsActivite from "@/components/TarifsActivite";
+import ProchainsCours from "@/components/ProchainsCours";
 
 function CtaLink({
   href,
@@ -146,6 +147,9 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
           </CtaLink>
         </div>
       </section>
+
+      {/* Le calendrier des cours (page Kundalini seulement) */}
+      {data.slug === "kundalini" && <ProchainsCours />}
 
       {/* Les tarifs, au centre de la page */}
       <TarifsActivite type={data.tarifs} />
