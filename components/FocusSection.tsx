@@ -107,7 +107,7 @@ export default function FocusSection() {
   const mixte = presentiel.length > 0 && enLigne.length > 0;
 
   return (
-    <section className="relative z-10 -mt-[50px] bg-[linear-gradient(to_bottom,transparent_50px,#F5F3E7_50px)] sm:-mt-[100px] sm:bg-[linear-gradient(to_bottom,transparent_100px,#F5F3E7_100px)]">
+    <section className="relative -mt-[50px] bg-[linear-gradient(to_bottom,transparent_50px,#F5F3E7_50px)] sm:-mt-[100px] sm:bg-[linear-gradient(to_bottom,transparent_100px,#F5F3E7_100px)]">
      <div className="relative mx-auto mt-[50px] max-w-[1144px] bg-[#F5F3E7] px-4 pb-12 pt-16 sm:mt-[100px] sm:px-6 sm:pt-20">
       <LotusDessin />
       <h2 className="mb-2 text-center font-display text-3xl italic text-encre sm:text-4xl">
