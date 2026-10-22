@@ -43,7 +43,10 @@ async function lireClient(userId: string) {
 }
 
 // Renvoie true si l'abonnement vient d'être enregistré pour la première fois.
-async function synchroniser(sub: Stripe.Subscription): Promise<{
+async function synchroniser(
+  sub: Stripe.Subscription,
+  estCreation: boolean
+): Promise<{
   nouveau: boolean;
   userId: string | null;
   statut: string;
@@ -92,13 +95,8 @@ async function synchroniser(sub: Stripe.Subscription): Promise<{
         ? new Date(finTimestamp * 1000).toISOString()
         : null;
 
-  // Cet abonnement est-il déjà connu ? Sinon, c'est un nouvel abonné.
-  const { data: existant } = await admin
-    .from("abonnements")
-    .select("stripe_subscription_id")
-    .eq("user_id", userId)
-    .maybeSingle();
-  const nouveau = existant?.stripe_subscription_id !== sub.id;
+  // Seul l'événement « création » annonce un nouvel abonné.
+  const nouveau = estCreation;
 
   const { error } = await admin.from("abonnements").upsert(
     {
@@ -220,8 +218,10 @@ export async function POST(request: Request) {
       case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.deleted": {
-        const resultat = await synchroniser(evenement.data.object as Stripe.Subscription);
-        // Les e-mails ne doivent jamais faire échouer le traitement.
+        const resultat = await synchroniser(
+          evenement.data.object as Stripe.Subscription,
+          evenement.type === "customer.subscription.created"
+        );        // Les e-mails ne doivent jamais faire échouer le traitement.
         try {
           await prevenirAbonnement(resultat, origine);
         } catch (erreur) {
