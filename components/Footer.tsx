@@ -27,6 +27,15 @@ export default function Footer() {
             height={96}
             className="mx-auto h-24 w-24 object-contain sm:mx-0"
           />
+          <p className="mt-3 font-display text-xl italic text-encre">
+            {site.association.nom} Association
+          </p>
+          <a
+            href={`mailto:${site.email}`}
+            className="mt-1 block text-xs text-encre/70 hover:text-encre"
+          >
+            {site.email}
+          </a>
         </div>
 
         <NewsletterForm />
