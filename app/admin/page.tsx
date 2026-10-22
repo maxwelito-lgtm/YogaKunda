@@ -86,8 +86,8 @@ export default async function AdminAccueil() {
         </section>
 
         {/* Les autres rubriques */}
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          <Tuile titre="Replays et podcasts" aide="Ajouter un contenu" bientot>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                      <Tuile titre="Replays et podcasts" aide="Ajouter un contenu" bientot>
             <path d="M8 5v14l11-7L8 5Z" />
           </Tuile>
           <Tuile titre="Textes et photos" aide="Modifier mon site" bientot>
@@ -95,10 +95,7 @@ export default async function AdminAccueil() {
             <circle cx="9" cy="10" r="1.6" />
             <path d="m4 17 5-4 4 3 3-2 4 3" />
           </Tuile>
-          <Tuile titre="Tarifs et horaires" aide="Prix, jours, dates" bientot>
-            <circle cx="12" cy="12" r="8.5" />
-            <path d="M12 7v5l3 2" />
-          </Tuile>
+          
           <Tuile titre="Mes abonnés" aide="Qui a accès" bientot>
             <circle cx="9" cy="9" r="3.2" />
             <path d="M3.5 19c.6-3 3-4.5 5.5-4.5s4.9 1.5 5.5 4.5" />
