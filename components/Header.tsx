@@ -16,13 +16,11 @@ const ACTIVITES = [
   { label: "Thérapie holistique", href: "/therapie-holistique" },
 ];
 
-// Accès rapide (PC) : un clic pour voir l'activité
-const BOUTONS_PC = [
-  { label: "Accueil", href: "/" },
-  { label: "Kundalini", href: "/yoga/kundalini" },
-  { label: "Nidra", href: "/yoga/nidra" },
-  { label: "Ateliers", href: "/yoga/tantra" },
-  { label: "Thérapies", href: "/therapie-holistique" },
+// Menu PC : les cours sont regroupés dans un sous-menu « Cours »
+const COURS_PC = [
+  { label: "Kundalini Yoga", href: "/yoga/kundalini" },
+  { label: "Yoga Nidra", href: "/yoga/nidra" },
+  { label: "Ateliers Tantra & Kundalini", href: "/yoga/tantra" },
 ];
 
 type Compte = { id: string; prenom: string } | null;
@@ -43,6 +41,8 @@ export default function Header() {
   const pathname = usePathname();
   const lastY = useRef(0);
   const openRef = useRef(false);
+  const [coursOuvert, setCoursOuvert] = useState(false); // sous-menu « Cours » (PC)
+  const coursRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     openRef.current = open;
@@ -100,7 +100,32 @@ export default function Header() {
   // Le menu se ferme quand on change de page
   useEffect(() => {
     setOpen(false);
+    setCoursOuvert(false);
   }, [pathname]);
+
+  // Le sous-menu « Cours » se ferme si le header se cache
+  useEffect(() => {
+    if (hidden) setCoursOuvert(false);
+  }, [hidden]);
+
+  // ... et au clic en dehors ou avec la touche Échap
+  useEffect(() => {
+    if (!coursOuvert) return;
+    const dehors = (e: PointerEvent) => {
+      if (coursRef.current && !coursRef.current.contains(e.target as Node)) {
+        setCoursOuvert(false);
+      }
+    };
+    const touche = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCoursOuvert(false);
+    };
+    document.addEventListener("pointerdown", dehors);
+    window.addEventListener("keydown", touche);
+    return () => {
+      document.removeEventListener("pointerdown", dehors);
+      window.removeEventListener("keydown", touche);
+    };
+  }, [coursOuvert]);
 
   // Touche Échap + page figée derrière le menu
   useEffect(() => {
@@ -218,17 +243,63 @@ export default function Header() {
         <div className="hidden items-center gap-8 md:flex">
           <nav>
             <ul className="flex items-center gap-5 text-[15px] xl:gap-8 lg:text-base">
-              {BOUTONS_PC.map((b) => (
-                <li key={b.href} className="hidden lg:block">
-                  <Link
-                    href={b.href === "/" ? hrefAccueil : b.href}
-                    className="inline-flex items-center gap-1.5 text-white drop-shadow-md hover:text-violet-light"
+              <li className="hidden lg:block">
+                <Link
+                  href={hrefAccueil}
+                  className="text-white drop-shadow-md hover:text-violet-light"
+                >
+                  Accueil
+                </Link>
+              </li>
+
+              {/* Sous-menu « Cours » : s'ouvre au clic */}
+              <li ref={coursRef} className="relative hidden lg:block">
+                <button
+                  type="button"
+                  aria-expanded={coursOuvert}
+                  aria-haspopup="true"
+                  aria-controls="menu-cours"
+                  onClick={() => setCoursOuvert((v) => !v)}
+                  className={`inline-flex items-center gap-1.5 drop-shadow-md hover:text-violet-light ${
+                    COURS_PC.some((c) => actif(c.href))
+                      ? "font-semibold text-white"
+                      : "text-white"
+                  }`}
+                >
+                  Cours
+                  <ChevronBas ouvert={coursOuvert} />
+                </button>
+                {coursOuvert && (
+                  <ul
+                    id="menu-cours"
+                    className="absolute left-1/2 top-full z-10 mt-4 w-64 -translate-x-1/2 overflow-hidden rounded-2xl bg-[rgba(36,28,24,0.96)] py-2 shadow-xl ring-1 ring-white/10 backdrop-blur-md"
                   >
-                    {b.label}
-                    <ChevronBas />
-                  </Link>
-                </li>
-              ))}
+                    {COURS_PC.map((c) => (
+                      <li key={c.href}>
+                        <Link
+                          href={c.href}
+                          onClick={() => setCoursOuvert(false)}
+                          aria-current={actif(c.href) ? "page" : undefined}
+                          className={`block px-5 py-3 text-[15px] hover:bg-white/10 ${
+                            actif(c.href) ? "font-semibold" : ""
+                          }`}
+                        >
+                          {c.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+
+              <li className="hidden lg:block">
+                <Link
+                  href="/therapie-holistique"
+                  className="text-white drop-shadow-md hover:text-violet-light"
+                >
+                  Thérapies
+                </Link>
+              </li>
               {site.nav.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -480,10 +551,19 @@ function BurgerIcon({ open }: { open: boolean }) {
   );
 }
 
-// Petite flèche vers le bas (à côté des liens rapides du menu PC)
-function ChevronBas() {
+// Petite flèche du sous-menu « Cours » (se retourne quand il est ouvert)
+function ChevronBas({ ouvert = false }: { ouvert?: boolean }) {
   return (
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={`transition-transform duration-200 motion-reduce:transition-none ${
+        ouvert ? "rotate-180" : ""
+      }`}
+    >
       <path
         d="M5 9l7 7 7-7"
         stroke="currentColor"
