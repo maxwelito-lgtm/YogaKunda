@@ -16,24 +16,23 @@ export default function ProfesseureSection() {
   return (
     <section
       id="professeure"
-      className="scroll-mt-20 bg-[#E6DCC6] py-10 sm:py-14"
+      className="scroll-mt-20 bg-[#E6DCC6] py-10 sm:py-14 md:py-16"
     >
-      <div className="mx-auto grid max-w-5xl items-center gap-6 px-4 sm:px-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:gap-0 lg:px-8">
+      <div className="mx-auto grid max-w-5xl items-center gap-6 px-4 sm:px-6 md:grid-cols-[minmax(0,420px)_minmax(0,1fr)] md:gap-0 lg:px-8">
         {/* Photo : portrait entier, jamais coupé sur mobile */}
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] md:max-w-none">
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] md:aspect-[11/16] md:max-w-none">
           <Image
             src="/images/lieu1.jpg"
             alt="Chantal assise en tailleur dans la salle de pratique"
             fill
             loading="lazy"
             sizes="(min-width: 768px) 40vw, 340px"
-            className="object-cover"
-            style={{ objectPosition: "center 20%" }}
+            className="object-cover [object-position:center_20%] md:[object-position:center_58%]"
           />
         </div>
 
         {/* Fiche : compacte, chevauche légèrement la photo sur écran large */}
-        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-10 md:py-8 md:pl-10 md:pr-8 lg:p-9 lg:pl-12">
+        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-16 md:py-9 md:pl-12 md:pr-9">
           <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#75523F]">
             Votre professeure
           </span>
