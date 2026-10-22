@@ -1,5 +1,4 @@
 import Image from "next/image";
-import VideoDialog from "@/components/VideoDialog";
 import { lieux } from "@/data/lieux";
 
 export default function LocationSection() {
@@ -33,9 +32,7 @@ export default function LocationSection() {
           Un espace chaleureux et intimiste pour vos activités hebdomadaires,
           vos ateliers ou vos événements.
         </p>
-        <div className="mt-4">
-          <VideoDialog />
-        </div>
+      
 
         <ul className="mt-5 flex flex-col gap-4 border-t border-encre/20 pt-4 sm:flex-row sm:gap-8">
           {lieux.map((l) => (

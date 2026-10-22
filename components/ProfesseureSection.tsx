@@ -1,4 +1,5 @@
 import Image from "next/image";
+import VideoDialog from "@/components/VideoDialog";
 
 const parcours = [
   { titre: "Formation", texte: "Diplômée de l’École du Tantra" },
@@ -64,6 +65,11 @@ export default function ProfesseureSection() {
             </li>
           ))}
         </ol>
+
+        {/* Vidéo de présentation : en bas de la fiche */}
+        <div className="mt-8 border-t border-encre/15 pt-6">
+          <VideoDialog label="Voir la vidéo de présentation" />
+        </div>
       </div>
     </section>
   );
