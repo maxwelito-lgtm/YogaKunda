@@ -20,19 +20,19 @@ export default function ProfesseureSection() {
     >
       <div className="mx-auto grid max-w-5xl items-center gap-6 px-4 sm:px-6 md:grid-cols-[minmax(0,420px)_minmax(0,1fr)] md:gap-0 lg:contents">
         {/* Photo : portrait entier, jamais coupé sur mobile */}
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] md:aspect-[11/16] md:max-w-none lg:absolute lg:inset-y-0 lg:left-0 lg:aspect-auto lg:w-[40%]">
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] md:aspect-[11/16] md:max-w-none lg:absolute lg:inset-y-0 lg:left-auto lg:right-0 lg:aspect-auto lg:w-[43%]">
           <Image
             src="/images/lieu1.jpg"
             alt="Chantal assise en tailleur dans la salle de pratique"
             fill
             loading="lazy"
-            sizes="(min-width: 1024px) 40vw, (min-width: 768px) 420px, 340px"
+            sizes="(min-width: 1024px) 43vw, (min-width: 768px) 420px, 340px"
             className="object-cover [object-position:center_20%] md:[object-position:center_58%]"
           />
         </div>
 
         {/* Fiche : compacte, chevauche légèrement la photo sur écran large */}
-        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-16 md:py-9 md:pl-12 md:pr-9 lg:my-16 lg:ml-[36%] lg:w-full lg:max-w-[740px] lg:p-12 lg:pl-14">
+        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-16 md:py-9 md:pl-12 md:pr-9 lg:my-16 lg:ml-[7.5%] lg:w-[54%] lg:max-w-[780px] lg:p-12">
           <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#75523F]">
             Votre professeure
           </span>
