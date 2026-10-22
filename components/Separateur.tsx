@@ -3,12 +3,15 @@ import Image from "next/image";
 /**
  * Pause entre deux sections : un espace crème avec le logo au centre,
  * deux fils fins terracotta de chaque côté (un petit point à chaque bout).
+ * « compact » : version plus petite, pour juste sous le Hero.
  */
-export default function Separateur() {
+export default function Separateur({ compact = false }: { compact?: boolean }) {
   return (
     <div
       aria-hidden="true"
-      className="flex flex-col items-center px-4 py-16 sm:py-20 lg:py-24"
+      className={`flex flex-col items-center px-4 ${
+        compact ? "pb-0 pt-10 sm:pt-12 lg:pt-14" : "py-16 sm:py-20 lg:py-24"
+      }`}
     >
       <div className="flex w-full max-w-5xl items-center gap-4 sm:gap-8">
         <Fil sens="gauche" />
@@ -17,11 +20,19 @@ export default function Separateur() {
           alt=""
           width={140}
           height={140}
-          className="h-24 w-24 flex-none object-contain sm:h-32 sm:w-32 lg:h-[140px] lg:w-[140px]"
+          className={`flex-none object-contain ${
+            compact
+              ? "h-16 w-16 sm:h-20 sm:w-20"
+              : "h-24 w-24 sm:h-32 sm:w-32 lg:h-[140px] lg:w-[140px]"
+          }`}
         />
         <Fil sens="droite" />
       </div>
-      <span className="mt-3 text-[11px] uppercase tracking-[0.38em] text-[#75523F]">
+      <span
+        className={`${
+          compact ? "mt-2" : "mt-3"
+        } text-[11px] uppercase tracking-[0.38em] text-[#75523F]`}
+      >
         Shantalam
       </span>
     </div>

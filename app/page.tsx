@@ -14,7 +14,7 @@ export default function HomePage() {
     <main>
       <Header />
       <Hero />
-      <Separateur />
+      <Separateur compact />
       <ActivityBands />
       <Separateur />
       <LocationSection />
