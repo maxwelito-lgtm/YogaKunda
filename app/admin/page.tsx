@@ -25,6 +25,12 @@ export default async function AdminAccueil() {
   if (error) console.error("Admin : comptage des réservations", error);
   const aRappeler = error ? null : (count ?? 0);
 
+  // Nombre d'abonnés en cours (essai gratuit ou abonnement actif).
+  const { count: nbAbonnes } = await createAdminClient()
+    .from("abonnements")
+    .select("user_id", { count: "exact", head: true })
+    .in("statut", ["essai", "actif"]);
+
   return (
     <main className="min-h-screen bg-[#F5F3E7] text-encre">
       <div className="mx-auto flex max-w-3xl flex-col gap-6 px-5 pb-12 pt-7 sm:px-6">
@@ -96,7 +102,7 @@ export default async function AdminAccueil() {
             <path d="m4 17 5-4 4 3 3-2 4 3" />
           </Tuile>
           
-          <Tuile titre="Mes abonnés" aide="Qui a accès" bientot>
+          <Tuile titre="Mes abonnés" aide={`${nbAbonnes ?? 0} en cours`} href="/admin/abonnes">
             <circle cx="9" cy="9" r="3.2" />
             <path d="M3.5 19c.6-3 3-4.5 5.5-4.5s4.9 1.5 5.5 4.5" />
             <path d="M16 7.5a3 3 0 0 1 0 5.5M18 15c1.6.6 2.6 1.9 3 4" />
@@ -127,20 +133,17 @@ function Tuile({
   titre,
   aide,
   bientot,
+  href,
   children,
 }: {
   titre: string;
   aide: string;
   bientot?: boolean;
+  href?: string;
   children: ReactNode;
 }) {
-  return (
-    <div
-      aria-disabled={bientot ? "true" : undefined}
-      className={`flex min-h-[132px] flex-col gap-3 rounded-3xl bg-white p-4 shadow-sm ${
-        bientot ? "opacity-70" : ""
-      }`}
-    >
+  const contenu = (
+    <>
       <svg
         width="28"
         height="28"
@@ -163,6 +166,22 @@ function Tuile({
           Bientôt
         </span>
       )}
+    </>
+  );
+
+  const base = "flex min-h-[132px] flex-col gap-3 rounded-3xl bg-white p-4 shadow-sm";
+
+  if (href && !bientot) {
+    return (
+      <Link href={href} className={`${base} transition-shadow hover:shadow-md`}>
+        {contenu}
+      </Link>
+    );
+  }
+
+  return (
+    <div aria-disabled={bientot ? "true" : undefined} className={`${base} ${bientot ? "opacity-70" : ""}`}>
+      {contenu}
     </div>
   );
 }
