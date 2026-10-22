@@ -1,5 +1,6 @@
 import Image from "next/image";
 import VideoDialog from "@/components/VideoDialog";
+import { lieux } from "@/data/lieux";
 
 export default function LocationSection() {
   return (
@@ -37,10 +38,26 @@ export default function LocationSection() {
           <div className="mt-2">
             <VideoDialog />
           </div>
-          <p className="mt-2 text-sm opacity-80">
-            Une localisation des plus avantageuses, facilement accessible en
-            train et en voiture.
-          </p>
+          <ul className="mt-2 flex flex-col gap-4 border-t border-[#F5F3E7]/25 pt-5 sm:flex-row sm:gap-10">
+            {lieux.map((l) => (
+              <li key={l.id}>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    `${l.salle}, ${l.adresse}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block text-sm leading-snug"
+                >
+                  <span className="font-display text-xl italic">{l.ville}</span>
+                  <span className="opacity-75"> · le {l.jourNom}</span>
+                  <span className="mt-1 block opacity-85 group-hover:underline">
+                    {l.salle}, {l.adresse}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Photo de Chantal : cadre arrondi avec bordure noire */}
