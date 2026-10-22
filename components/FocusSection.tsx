@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { JSX } from "react";
+import Image from "next/image";
 
 type Mode = "presentiel" | "en-ligne";
 
@@ -283,12 +284,12 @@ const iconStyles: Record<string, { bg: string; color: string }> = {
   decouverte: { bg: "#E1F5EE", color: "#0F6E56" },
 };
 
-// Photo de fond par catégorie (placeholders — à remplacer par tes propres images)
+// Photo de fond par catégorie
 const bgImages: Record<string, string> = {
-  stress: "https://picsum.photos/seed/focus-stress/400/400",
-  sommeil: "https://picsum.photos/seed/focus-sommeil/400/400",
-  energie: "https://picsum.photos/seed/focus-energie/400/400",
-  decouverte: "https://picsum.photos/seed/focus-decouverte/400/400",
+  stress: "/images/therapie.jpeg",
+  sommeil: "/images/yoga-n.png",
+  energie: "/images/kundalini.png",
+  decouverte: "/images/yoga-nature.png",
 };
 
 function focusContent(color: string): Record<string, JSX.Element> {
@@ -342,11 +343,13 @@ function FocusPhotoTile({ type }: { type: string }) {
 
   return (
     <span className="relative block h-28 w-28 overflow-hidden rounded-3xl shadow-md ring-1 ring-black/5 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl sm:h-32 sm:w-32">
-      <img
+      <Image
         src={bgImages[type]}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full scale-110 object-cover blur-[2px] brightness-75 transition-transform duration-500 group-hover:scale-125"
+        fill
+        sizes="128px"
+        className="scale-110 object-cover blur-[2px] brightness-75 transition-transform duration-500 group-hover:scale-125"
       />
       <span
         className="absolute inset-0"

@@ -94,8 +94,8 @@ const kundalini: ActivityPageData = {
     cta: { label: "Réserver votre place", href: "/reserver?offre=kundalini" },
   },
   bandeau: {
-    image: "https://picsum.photos/seed/kundalini-bandeau/1600/600",
-    alt: "Paysage apaisant",
+    image: "/images/yoga-nature.png",
+    alt: "Lever de soleil sur la montagne",
   },
   pourQui:
     "Le Kundalini Yoga est ouvert à toutes et à tous, quels que soient votre âge, votre condition physique ou votre expérience. Les exercices s'adaptent à chacun, et aucune croyance ni appartenance n'est nécessaire : seulement l'envie d'essayer.",
@@ -165,8 +165,8 @@ const tantra: ActivityPageData = {
     titre: "Accueillir ce qui est, et le transformer en douceur",
     texte:
       "Dans le Tantra, rien n'est à rejeter : ni la fatigue, ni la tension, ni les émotions du moment. On les accueille, on respire avec elles, et la pratique aide peu à peu à les apaiser. Le lâcher-prise ne s'impose pas, il s'installe naturellement, séance après séance.",
-    image: "https://picsum.photos/seed/tantra-pratique/800/600",
-    imageAlt: "Personnes en pratique de yoga dans un espace chaleureux",
+    image: "/images/lieu3.png",
+    imageAlt: "Groupe en méditation dans la salle de pratique",
   },
   deroule: {
     titre: "Le déroulé d'un atelier",
@@ -200,8 +200,8 @@ const tantra: ActivityPageData = {
     cta: { label: "Réserver votre place", href: "/reserver?offre=tantra" },
   },
   bandeau: {
-    image: "https://picsum.photos/seed/tantra-bandeau/1600/600",
-    alt: "Ambiance apaisante",
+    image: "/images/lieu2.png",
+    alt: "La salle de pratique, lumineuse et chaleureuse",
   },
   pourQui:
     "Les ateliers s'adressent à toute personne désireuse de ralentir, de mieux se connaître et de traverser les moments chargés avec plus de sérénité. Aucun prérequis n'est nécessaire : ni souplesse, ni expérience, ni croyance particulière. L'atelier accueille les débutants, tout en restant riche pour les pratiquants plus avancés.",
@@ -311,8 +311,8 @@ const nidra: ActivityPageData = {
     cta: { label: "Essayer 7 jours gratuits", href: "/#abonnement" },
   },
   bandeau: {
-    image: "https://picsum.photos/seed/nidra-bandeau/1600/600",
-    alt: "Paysage apaisant",
+    image: "/images/replay.png",
+    alt: "Pratiquer chez soi, en ligne",
   },
   pourQui:
     "Le Yoga Nidra est ouvert à toutes et à tous, quels que soient votre âge, votre condition physique ou votre expérience. Il se pratique allongé, sans effort ni souplesse, et aucune croyance n'est nécessaire : seulement l'envie de vous accorder une pause.",
@@ -413,8 +413,8 @@ const therapie: ActivityPageData = {
     cta: { label: "Prendre rendez-vous", href: "/reserver?offre=therapie" },
   },
   bandeau: {
-    image: "https://picsum.photos/seed/therapie-hero/1600/600",
-    alt: "Paysage apaisant et lumineux",
+    image: "/images/therapie.jpeg",
+    alt: "Un temps d'écoute et d'échange",
   },
   pourQui:
     "Que vous souhaitiez apaiser votre stress, mieux comprendre vos émotions, retrouver de l'énergie ou simplement prendre un temps pour vous, l'accompagnement s'ajuste à votre demande. Un espace d'écoute sans jugement, où vous avancez à votre rythme.",

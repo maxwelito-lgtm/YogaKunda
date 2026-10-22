@@ -155,13 +155,16 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
       <TarifsActivite type={data.tarifs} />
 
       {/* Bandeau photo pleine largeur */}
-      <img
-        src={data.bandeau.image}
-        alt={data.bandeau.alt}
-        loading="lazy"
-        decoding="async"
-        className="h-48 w-full object-cover sm:h-80"
-      />
+      <div className="relative h-48 w-full sm:h-80">
+        <Image
+          src={data.bandeau.image}
+          alt={data.bandeau.alt}
+          fill
+          loading="lazy"
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
 
       {/* Onglets : pour qui, pourquoi, programme, infos pratiques */}
       <section

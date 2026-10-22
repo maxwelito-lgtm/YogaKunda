@@ -7,7 +7,7 @@ export const site = {
   nom: "Shantalam",
   accroche: "Retrouvez l'harmonie intérieure",
   ville: "", // TODO
-  adresse: "[adresse du studio]", // TODO
+  adresse: "Lieu précisé lors de la réservation",
   email: "shantalam-yoga@outlook.fr",
   association: {
     nom: "Shantalam",

@@ -10,15 +10,23 @@ export default function Footer() {
         {/* Colonne identité */}
         <div className="text-center sm:text-left">
           <div className="mb-4 flex justify-center gap-4 sm:justify-start">
-            <a href={site.reseaux.youtube} aria-label="YouTube" className="p-2">
-              <SocialIcon type="youtube" />
-            </a>
-            <a href={site.reseaux.facebook} aria-label="Facebook" className="p-2">
-              <SocialIcon type="facebook" />
-            </a>
-            <a href={site.reseaux.instagram} aria-label="Instagram" className="p-2">
-              <SocialIcon type="instagram" />
-            </a>
+            {(["youtube", "facebook", "instagram"] as const).map((type) => {
+              const lien = site.reseaux[type];
+              // Réseau sans adresse renseignée : on n'affiche pas l'icône
+              if (!lien || lien === "#") return null;
+              return (
+                <a
+                  key={type}
+                  href={lien}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={type}
+                  className="p-2"
+                >
+                  <SocialIcon type={type} />
+                </a>
+              );
+            })}
           </div>
           <Image
             src="/images/logo-shantalam.png"
