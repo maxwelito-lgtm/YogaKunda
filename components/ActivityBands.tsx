@@ -69,7 +69,7 @@ export default function ActivityBands() {
     <section id="activites" className="scroll-mt-20 pb-16 pt-12 sm:pt-16">
       <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
         <h2 className="font-display text-4xl italic text-encre sm:text-5xl">
-          Activités
+          Au programme
         </h2>
         <p className="mt-3 font-display italic text-encre/80">
           Explorez votre bien-être au travers de nos activités
