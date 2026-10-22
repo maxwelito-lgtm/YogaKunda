@@ -9,6 +9,17 @@ export const site = {
   ville: "", // TODO
   adresse: "[adresse du studio]", // TODO
   email: "shantalam-yoga@outlook.fr",
+  association: {
+    nom: "Shantalam",
+    forme: "association déclarée, régie par la loi du 1er juillet 1901",
+    rna: "W642006218",
+    siege: "4 chemin de Boulau, 64570 Féas",
+    declaration: "6 juin 2024",
+    prefecture: "sous-préfecture d’Oloron-Sainte-Marie",
+    responsable: "Chantal Lassier",
+    tva: "",
+    mediateur: "",
+  },
   telephone: "06 74 15 76 78",
   reseaux: {
     youtube: "#",
