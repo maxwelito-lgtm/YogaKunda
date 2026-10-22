@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Cours } from "@/lib/espace";
 
 function Cadenas({ taille = 20 }: { taille?: number }) {
