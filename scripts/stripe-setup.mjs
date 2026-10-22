@@ -26,8 +26,10 @@ const CATALOGUE = [
     description: "Cours collectif en présentiel.",
     prix: [
       { cle: "kundalini_cours", nom: "Un cours", montant: 1500 },
-      { cle: "kundalini_trim_1", nom: "Trimestre, 1 cours par semaine", montant: 16200 },
-      { cle: "kundalini_trim_2", nom: "Trimestre, 2 cours par semaine", montant: 32400 },
+      { cle: "kundalini_trim_1", nom: "Trimestre, 1 cours par semaine", montant: 11000 },
+      { cle: "kundalini_trim_2", nom: "Trimestre, 2 cours par semaine", montant: 16500 },
+      { cle: "kundalini_annee_1", nom: "Année scolaire, 1 cours par semaine", montant: 30500 },
+      { cle: "kundalini_annee_2", nom: "Année scolaire, 2 cours par semaine", montant: 45000 },
     ],
   },
   {
@@ -82,7 +84,26 @@ for (const bloc of CATALOGUE) {
       limit: 1,
     });
     if (existants.data.length > 0) {
-      console.log(`   déjà présent : ${p.cle} (${existants.data[0].id})`);
+      const ancien = existants.data[0];
+      if (ancien.unit_amount === p.montant) {
+        console.log(`   déjà présent : ${p.cle} (${ancien.id})`);
+        continue;
+      }
+      // Un prix Stripe ne peut pas être modifié : on en crée un nouveau (il reprend le nom
+      // interne), puis on archive l'ancien. Les achats déjà faits ne changent pas.
+      const nouveau = await stripe.prices.create({
+        product: produit.id,
+        currency: "eur",
+        unit_amount: p.montant,
+        nickname: p.nom,
+        lookup_key: p.cle,
+        transfer_lookup_key: true,
+        ...(p.intervalle ? { recurring: { interval: p.intervalle } } : {}),
+      });
+      await stripe.prices.update(ancien.id, { active: false });
+      console.log(
+        `   MIS À JOUR : ${p.cle} · ${ancien.unit_amount / 100} € → ${p.montant / 100} € (${nouveau.id}, ancien ${ancien.id} archivé)`
+      );
       continue;
     }
     const prix = await stripe.prices.create({

@@ -8,8 +8,8 @@ import {
   getOffre,
   calculer,
   euros,
+  pourcentEconomie,
   SEMAINES_TRIMESTRE,
-  REDUCTION_TRIMESTRE,
   type OffreId,
   type Formule,
   type Rythme,
@@ -25,6 +25,12 @@ type Etat = "repos" | "envoi" | "erreur";
 type Onglet = "groupe" | "individuel";
 
 const INDIVIDUELS: OffreId[] = ["perso", "therapie"];
+
+const FORMULES = [
+  ["cours", "Au cours"],
+  ["trim", "Au trimestre"],
+  ["annee", "À l’année"],
+] as const;
 
 const IMAGES: Record<OffreId, string> = {
   kundalini: "/images/kundalini.png",
@@ -67,11 +73,20 @@ export default function ReservationForm({
   const [cgv, setCgv] = useState(false);
 
   const offre = getOffre(offreId);
-  const formuleEff: Formule = offre.trimestre ? formule : "cours";
+  const formuleEff: Formule =
+    formule === "annee" && offre.annee
+      ? "annee"
+      : formule === "trim" && offre.trimestre
+        ? "trim"
+        : "cours";
   const rythmeEff: Rythme = offre.rythmeChoisi ? rythme : 1;
-  const trim = formuleEff === "trim";
+  const forfait = formuleEff !== "cours"; // trimestre ou année scolaire
   const c = calculer(offre, formuleEff, rythmeEff);
-  const pourcent = Math.round(REDUCTION_TRIMESTRE * 100);
+
+  const trimMessage =
+    formuleEff === "trim"
+      ? `${SEMAINES_TRIMESTRE} semaines, un seul paiement, sans renouvellement automatique.`
+      : "Vous payez à la séance. Chantal vous rappelle après le paiement pour fixer la date.";
 
   const visibles = offres.filter((o) =>
     onglet === "individuel" ? INDIVIDUELS.includes(o.id) : !INDIVIDUELS.includes(o.id)
@@ -92,9 +107,15 @@ export default function ReservationForm({
 
   const resume = [
     offre.nom,
-    offre.trimestre ? (trim ? "au trimestre" : "au cours") : null,
+    offre.trimestre
+      ? formuleEff === "annee"
+        ? "à l'année"
+        : formuleEff === "trim"
+          ? "au trimestre"
+          : "au cours"
+      : null,
     offre.rythmeChoisi
-      ? trim
+      ? forfait
         ? `${rythmeEff} par semaine`
         : `${rythmeEff} cours`
       : null,
@@ -249,8 +270,8 @@ export default function ReservationForm({
 
       {onglet === "groupe" && (
         <p className="mt-5 text-center text-sm text-encre/70">
-          Au trimestre : <strong>−{pourcent} %</strong> sur tous les cours et
-          ateliers en groupe.
+          Au trimestre ou à l’année : <strong>des tarifs dégressifs</strong> sur
+          les cours et ateliers en groupe.
         </p>
       )}
 
@@ -264,13 +285,12 @@ export default function ReservationForm({
             {offre.nom} : votre formule
           </h3>
 
-          <div className="mt-5 grid grid-cols-2 gap-1 rounded-pill bg-[#F5F3E7] p-1">
-            {(
-              [
-                ["cours", "Au cours"],
-                ["trim", "Au trimestre"],
-              ] as const
-            ).map(([valeur, libelle]) => (
+          <div
+            className={`mt-5 grid gap-1 rounded-pill bg-[#F5F3E7] p-1 ${
+              offre.annee ? "grid-cols-3" : "grid-cols-2"
+            }`}
+          >
+            {FORMULES.filter(([v]) => v !== "annee" || offre.annee).map(([valeur, libelle]) => (
               <button
                 key={valeur}
                 type="button"
@@ -283,24 +303,24 @@ export default function ReservationForm({
                 }`}
               >
                 {libelle}
-                {valeur === "trim" && (
+                {valeur !== "cours" && (
                   <span
-                    className={`ml-2 rounded-pill px-2 py-0.5 text-xs ${
-                      formuleEff === "trim"
+                    className={`ml-2 hidden rounded-pill px-2 py-0.5 text-xs sm:inline ${
+                      formuleEff === valeur
                         ? "bg-white/25 text-white"
                         : "bg-[#EFE6DA] text-[#75523F]"
                     }`}
                   >
-                    −{pourcent} %
+                    −{pourcentEconomie(calculer(offre, valeur, rythmeEff))} %
                   </span>
                 )}
               </button>
             ))}
           </div>
           <p className="mt-3 text-sm text-encre/70">
-            {trim
-              ? `${SEMAINES_TRIMESTRE} semaines, un seul paiement, sans renouvellement automatique.`
-              : "Vous payez à la séance. Chantal vous rappelle après le paiement pour fixer la date."}
+            {formuleEff === "annee"
+              ? "Toute l’année scolaire (septembre à juin), un seul paiement, sans renouvellement automatique."
+              : trimMessage}
           </p>
 
           {offre.rythmeChoisi && (
@@ -325,15 +345,17 @@ export default function ReservationForm({
                       }`}
                     >
                       <span className="block text-lg font-bold">
-                        {trim ? `${n} par semaine` : `${n} cours`}
+                        {forfait ? `${n} par semaine` : `${n} cours`}
                       </span>
                       <span
                         className={`mt-0.5 block text-sm ${
                           actif ? "text-[#F5F3E7]/80" : "text-encre/70"
                         }`}
                       >
-                        {trim
-                          ? `${cn.seances} cours sur le trimestre`
+                        {forfait
+                          ? `${cn.seances} cours sur ${
+                              formuleEff === "annee" ? "l’année scolaire" : "le trimestre"
+                            }`
                           : n === 1
                             ? "Lundi (Géronce) ou mercredi (Oloron), 18 h 30 – 20 h"
                             : "Lundi et mercredi, 18 h 30 – 20 h"}
@@ -366,7 +388,7 @@ export default function ReservationForm({
               <strong className="font-display text-3xl font-normal italic sm:text-4xl">
                 {euros(c.total)}
               </strong>
-              {trim && (
+              {forfait && (
                 <>
                   <span className="text-sm text-[#F5F3E7]/55 line-through">
                     {euros(c.plein)}
@@ -426,7 +448,7 @@ export default function ReservationForm({
         <li>✓ Un compte gratuit est nécessaire pour payer</li>
         <li>
           ✓{" "}
-          {trim
+          {forfait
             ? "Un seul paiement, sans renouvellement"
             : "Chantal vous rappelle pour fixer la date"}
         </li>

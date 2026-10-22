@@ -43,7 +43,11 @@ export default async function MerciPage({ searchParams }: Props) {
     if (offre.trimestre) {
       lignes.push([
         "Formule",
-        commande.formule === "trim" ? "Trimestre" : "Au cours",
+        commande.formule === "trim"
+          ? "Trimestre"
+          : commande.formule === "annee"
+            ? "Année scolaire"
+            : "Au cours",
       ]);
     }
     lignes.push([

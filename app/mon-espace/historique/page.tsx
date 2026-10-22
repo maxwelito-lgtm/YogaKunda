@@ -35,9 +35,10 @@ function dateFr(iso: string | null | undefined): string {
 function detailCommande(c: Commande): string {
   const offre = offres.find((o) => o.id === c.offre);
   const n = c.seances ?? 1;
-  if (c.formule === "trim") {
+  if (c.formule === "trim" || c.formule === "annee") {
     const rythme = c.rythme && c.rythme > 0 ? ` · ${c.rythme} par semaine` : "";
-    return `Trimestre · ${n} séances${rythme}`;
+    const nom = c.formule === "annee" ? "Année scolaire" : "Trimestre";
+    return `${nom} · ${n} ${offre?.unite === "cours" ? "cours" : "séances"}${rythme}`;
   }
   if (offre?.unite === "cours") return n > 1 ? `${n} cours` : "1 cours";
   return n > 1 ? `${n} séances` : "1 séance";

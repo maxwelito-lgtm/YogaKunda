@@ -171,10 +171,14 @@ async function marquerCommandePayee(session: Stripe.Checkout.Session, origine: s
 
   const offre = getOffre(lireOffre(commande.offre));
   const seances = Number(commande.seances) || 1;
+  const nbSeances = `${seances} ${offre.unite}${seances > 1 ? "s" : ""}`;
+  const parSemaine = Number(commande.rythme) === 2 ? " · 2 par semaine" : "";
   const detail =
     commande.formule === "trim"
-      ? `Au trimestre (${SEMAINES_TRIMESTRE} semaines) · ${seances} ${offre.unite}${seances > 1 ? "s" : ""}`
-      : `À l'unité · ${seances} ${offre.unite}${seances > 1 ? "s" : ""}`;
+      ? `Au trimestre (${SEMAINES_TRIMESTRE} semaines) · ${nbSeances}${parSemaine}`
+      : commande.formule === "annee"
+        ? `À l'année (année scolaire) · ${nbSeances}${parSemaine}`
+        : `À l'unité · ${nbSeances}`;
 
   const client = await lireClient(commande.user_id);
   const cgv = session.metadata?.cgv_acceptees_le;

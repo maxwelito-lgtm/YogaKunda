@@ -5,6 +5,7 @@ import {
   getOffre,
   calculer,
   euros,
+  pourcentEconomie,
   ABONNEMENT,
   SEMAINES_TRIMESTRE,
   REDUCTION_TRIMESTRE,
@@ -24,7 +25,7 @@ function lienReservation(
 }
 
 const introParType: Record<TypeTarifs, string> = {
-  kundalini: `Deux cours par semaine sont possibles. Payez à l’unité ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
+  kundalini: `Un ou deux cours par semaine. Payez à l’unité, au trimestre ou pour toute l’année scolaire : plus la durée est longue, plus le cours revient moins cher.`,
   ateliers: `Un atelier le lundi (Tantra) et un le samedi (Kundalini). Payez à la séance ou pour tout le trimestre, avec ${pourcent} % de réduction.`,
   "en-ligne": `Le Yoga Nidra fait partie des cours en ligne : essayez gratuitement pendant ${ABONNEMENT.essaiJours} jours.`,
   therapie:
@@ -58,10 +59,12 @@ function TarifsKundalini() {
   const c2 = calculer(o, "cours", 2);
   const t1 = calculer(o, "trim", 1);
   const t2 = calculer(o, "trim", 2);
+  const a1 = calculer(o, "annee", 1);
+  const a2 = calculer(o, "annee", 2);
 
   return (
     <>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 lg:grid-cols-3">
         <Plan
           titre="Au cours"
           sous="Vous payez ce dont vous avez besoin. Chantal vous rappelle pour fixer la date."
@@ -81,8 +84,7 @@ function TarifsKundalini() {
         </Plan>
 
         <Plan
-          meilleur
-          badge={`−${pourcent} % · Meilleur prix`}
+          badge={`Jusqu'à −${pourcentEconomie(t2)} %`}
           titre="Au trimestre"
           sous={`${SEMAINES_TRIMESTRE} semaines, un seul paiement, sans renouvellement automatique.`}
         >
@@ -97,6 +99,26 @@ function TarifsKundalini() {
             detail={`${t2.seances} cours · ${euros(t2.parSeance)} le cours`}
             prix={euros(t2.total)}
             href={lienReservation("kundalini", "trim", 2)}
+          />
+        </Plan>
+
+        <Plan
+          meilleur
+          badge="Meilleur prix"
+          titre="À l’année"
+          sous="Toute l’année scolaire, de septembre à juin. Un seul paiement, sans renouvellement automatique."
+        >
+          <Ligne
+            titre="1 cours par semaine"
+            detail={`${a1.seances} cours · ${euros(a1.parSeance)} le cours`}
+            prix={euros(a1.total)}
+            href={lienReservation("kundalini", "annee", 1)}
+          />
+          <Ligne
+            titre="2 cours par semaine"
+            detail={`${a2.seances} cours · ${euros(a2.parSeance)} le cours`}
+            prix={euros(a2.total)}
+            href={lienReservation("kundalini", "annee", 2)}
           />
         </Plan>
       </div>

@@ -2,10 +2,11 @@
 // Pour changer un prix, la durée d'un trimestre ou la réduction, c'est ici et nulle part ailleurs.
 
 export const SEMAINES_TRIMESTRE = 12;
-export const REDUCTION_TRIMESTRE = 0.1; // 10 %
+export const SEMAINES_ANNEE = 31; // année scolaire : septembre à juin (calendrier de Chantal)
+export const REDUCTION_TRIMESTRE = 0.1; // 10 % (ateliers : forfait calculé)
 
 export type OffreId = "kundalini" | "tantra" | "atelier" | "perso" | "therapie";
-export type Formule = "cours" | "trim";
+export type Formule = "cours" | "trim" | "annee";
 export type Rythme = 1 | 2;
 
 export type Offre = {
@@ -15,6 +16,10 @@ export type Offre = {
   prixUnitaire: number; // en euros
   rythmeChoisi: boolean; // la personne peut choisir 1 ou 2 cours par semaine
   trimestre: boolean; // une formule trimestre existe
+  annee: boolean; // une formule « année scolaire » existe
+  // Prix fixes des forfaits (en euros), selon le nombre de cours par semaine.
+  // Sans cette table, le forfait trimestre est calculé (prix × semaines − réduction).
+  forfaits?: Partial<Record<"trim" | "annee", Record<Rythme, number>>>;
   unite: string; // "cours" ou "séance"
 };
 
@@ -23,9 +28,14 @@ export const offres: Offre[] = [
     id: "kundalini",
     nom: "Cours de Kundalini",
     sous: "En groupe · lundi à Géronce, mercredi à Oloron, de 18 h 30 à 20 h",
-        prixUnitaire: 15,
+    prixUnitaire: 15,
     rythmeChoisi: true,
     trimestre: true,
+    annee: true,
+    forfaits: {
+      trim: { 1: 110, 2: 165 },
+      annee: { 1: 305, 2: 450 },
+    },
     unite: "cours",
   },
   {
@@ -35,6 +45,7 @@ export const offres: Offre[] = [
     prixUnitaire: 20,
     rythmeChoisi: false,
     trimestre: true,
+    annee: false,
     unite: "séance",
   },
   {
@@ -44,6 +55,7 @@ export const offres: Offre[] = [
     prixUnitaire: 30,
     rythmeChoisi: false,
     trimestre: true,
+    annee: false,
     unite: "séance",
   },
   {
@@ -53,6 +65,7 @@ export const offres: Offre[] = [
     prixUnitaire: 60,
     rythmeChoisi: false,
     trimestre: false,
+    annee: false,
     unite: "séance",
   },
   {
@@ -62,6 +75,7 @@ export const offres: Offre[] = [
     prixUnitaire: 60,
     rythmeChoisi: false,
     trimestre: false,
+    annee: false,
     unite: "séance",
   },
 ];
@@ -75,7 +89,7 @@ export function lireOffre(valeur?: string): OffreId {
   return offres.some((o) => o.id === valeur) ? (valeur as OffreId) : "kundalini";
 }
 export function lireFormule(valeur?: string): Formule {
-  return valeur === "trim" ? "trim" : "cours";
+  return valeur === "trim" || valeur === "annee" ? valeur : "cours";
 }
 export function lireRythme(valeur?: string): Rythme {
   return valeur === "2" ? 2 : 1;
@@ -92,6 +106,22 @@ export type Calcul = {
 // Le même calcul sert à l'affichage et, plus tard, au paiement (côté serveur).
 export function calculer(offre: Offre, formule: Formule, rythme: Rythme): Calcul {
   const n = offre.rythmeChoisi ? rythme : 1;
+
+  // Forfait à prix fixe (trimestre ou année) : le prix est dans la table de l'offre.
+  const forfait = formule === "cours" ? undefined : offre.forfaits?.[formule];
+  if (forfait) {
+    const seances = (formule === "annee" ? SEMAINES_ANNEE : SEMAINES_TRIMESTRE) * n;
+    const total = forfait[n === 2 ? 2 : 1];
+    const plein = offre.prixUnitaire * seances;
+    return {
+      total,
+      plein,
+      economie: Math.round((plein - total) * 100) / 100,
+      seances,
+      parSeance: total / seances,
+    };
+  }
+
   const trim = formule === "trim" && offre.trimestre;
 
   if (trim) {
@@ -109,6 +139,11 @@ export function calculer(offre: Offre, formule: Formule, rythme: Rythme): Calcul
 
   const total = offre.prixUnitaire * n;
   return { total, plein: total, economie: 0, seances: n, parSeance: offre.prixUnitaire };
+}
+
+// Pourcentage d'économie d'un forfait (pour les étiquettes « −39 % »).
+export function pourcentEconomie(c: Calcul): number {
+  return c.plein > 0 ? Math.round((c.economie / c.plein) * 100) : 0;
 }
 
 export function euros(montant: number): string {

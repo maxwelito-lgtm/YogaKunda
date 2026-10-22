@@ -55,7 +55,9 @@ function detail(l: Ligne): string {
   const o = getOffre(lireOffre(l.offre));
   const n = Number(l.seances) || 1;
   const nb = `${n} ${o.unite}${n > 1 ? "s" : ""}`;
-  return `${o.nom} · ${l.formule === "trim" ? `trimestre · ${nb}` : nb} · ${euros((l.montant_centimes ?? 0) / 100)}`;
+  const forfait =
+    l.formule === "trim" ? `trimestre · ${nb}` : l.formule === "annee" ? `année scolaire · ${nb}` : nb;
+  return `${o.nom} · ${forfait} · ${euros((l.montant_centimes ?? 0) / 100)}`;
 }
 
 async function lireClients(ids: string[]): Promise<Map<string, Client>> {

@@ -6,6 +6,7 @@ import {
   euros,
   ABONNEMENT,
   SEMAINES_TRIMESTRE,
+  SEMAINES_ANNEE,
   REDUCTION_TRIMESTRE,
 } from "@/data/offres";
 
@@ -38,8 +39,21 @@ export default function CgvPage() {
           <li key={o.id}>
             <strong>{o.nom}</strong> — {o.sous} : {euros(o.prixUnitaire)} par{" "}
             {o.unite}
-            {o.trimestre &&
-              ` ; forfait trimestre de ${SEMAINES_TRIMESTRE} semaines avec ${reduction} % de réduction`}
+            {o.forfaits ? (
+              <>
+                {" "}
+                ; forfait trimestre ({SEMAINES_TRIMESTRE} semaines) :{" "}
+                {euros(o.forfaits.trim?.[1] ?? 0)} pour 1 cours par semaine ou{" "}
+                {euros(o.forfaits.trim?.[2] ?? 0)} pour 2 cours par semaine ;
+                forfait année scolaire ({SEMAINES_ANNEE} semaines, de septembre
+                à juin) : {euros(o.forfaits.annee?.[1] ?? 0)} pour 1 cours par
+                semaine ou {euros(o.forfaits.annee?.[2] ?? 0)} pour 2 cours par
+                semaine
+              </>
+            ) : (
+              o.trimestre &&
+              ` ; forfait trimestre de ${SEMAINES_TRIMESTRE} semaines avec ${reduction} % de réduction`
+            )}
             .
           </li>
         ))}
@@ -67,7 +81,7 @@ export default function CgvPage() {
       <p>
         Le paiement s’effectue en ligne par carte bancaire, au moment de la
         commande, via notre prestataire sécurisé Stripe. L’association n’a
-        jamais accès à vos numéros de carte. Le forfait trimestre se règle en
+        jamais accès à vos numéros de carte. Les forfaits trimestre et année scolaire se règlent en
         un seul paiement, sans renouvellement automatique.
       </p>
 
@@ -99,10 +113,10 @@ export default function CgvPage() {
         délai, ou en cas d’absence, la séance est due et n’est pas remboursée.
       </p>
       <p>
-        <strong>Forfait trimestre.</strong> Une séance manquée n’est pas
-        remboursée. Elle peut être rattrapée sur un autre créneau du même
-        trimestre, dans la limite des places disponibles, si vous avez prévenu
-        à l’avance.
+        <strong>Forfaits trimestre et année scolaire.</strong> Une séance
+        manquée n’est pas remboursée. Elle peut être rattrapée sur un autre
+        créneau de la même période, dans la limite des places disponibles, si
+        vous avez prévenu à l’avance.
       </p>
       <p>
         <strong>À l’initiative de l’association.</strong> Si une séance doit

@@ -16,6 +16,7 @@ function cleStripe(offre: OffreId, formule: Formule, rythme: Rythme): string {
   const trim = formule === "trim";
   switch (offre) {
     case "kundalini":
+      if (formule === "annee") return `kundalini_annee_${rythme}`;
       return trim ? `kundalini_trim_${rythme}` : "kundalini_cours";
     case "tantra":
       return trim ? "tantra_trim" : "tantra_cours";
@@ -53,7 +54,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Offre inconnue." }, { status: 400 });
   }
   const formule: Formule =
-    offre.trimestre && corps.formule === "trim" ? "trim" : "cours";
+    offre.trimestre && corps.formule === "trim"
+      ? "trim"
+      : offre.annee && corps.formule === "annee"
+        ? "annee"
+        : "cours";
   const rythme: Rythme = offre.rythmeChoisi && corps.rythme === 2 ? 2 : 1;
 
   const supabase = await createClient();
@@ -138,10 +143,13 @@ export async function POST(request: Request) {
     commandeId = commande.id;
 
     // 4. La page de paiement Stripe (avec le numéro de téléphone pour le rappel).
+    const parSemaine = rythme === 2 && offre.rythmeChoisi ? " · 2 cours par semaine" : "";
     const libelle =
       formule === "trim"
-        ? `${offre.nom} — trimestre`
-        : rythme === 2 && offre.rythmeChoisi
+        ? `${offre.nom} — trimestre${parSemaine}`
+        : formule === "annee"
+          ? `${offre.nom} — année scolaire${parSemaine}`
+          : rythme === 2 && offre.rythmeChoisi
           ? `${offre.nom} — 2 cours`
           : offre.nom;
 
