@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const avantages = [
   "Cours de Kundalini et de Tantra Yoga en direct",
   "Replays pour pratiquer à votre rythme",
@@ -6,37 +8,38 @@ const avantages = [
 
 export default function OnlineBanner() {
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-      <article className="relative flex min-h-[480px] flex-col justify-end overflow-hidden rounded-2xl shadow-sm md:min-h-[380px]">
-        <img
-          src="https://picsum.photos/seed/enligne/1600/700"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+    <section className="bg-[#75523F] py-10 lg:py-[60px]">
+      <div className="lg:grid lg:grid-cols-[44.4%_minmax(0,1fr)] lg:items-center">
+        {/* Photo : colle au bord gauche de l'écran */}
+        <div className="relative h-64 w-[92%] sm:h-80 lg:h-[500px] lg:w-full">
+          <Image
+            src="/images/podcast.png"
+            alt=""
+            fill
+            loading="lazy"
+            sizes="(min-width: 1024px) 45vw, 92vw"
+            className="object-cover"
+            style={{ objectPosition: "60% center" }}
+          />
+          <span className="absolute right-4 top-5 z-10 rounded-pill bg-[#F5F3E7] px-3 py-1 text-xs font-semibold text-encre">
+            Nouveau !
+          </span>
+        </div>
 
-        {/* Dégradé : du bas vers le haut sur mobile, de la gauche vers la droite sur PC */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/20 md:bg-gradient-to-r md:from-black/80 md:via-black/50 md:to-black/10" />
+        {/* Panneau sombre : chevauche la photo */}
+        <div className="relative z-10 -mt-10 ml-auto mr-4 w-[92%] bg-[#2B1F19] p-6 text-[#F5F3E7] sm:mr-8 sm:p-10 lg:-ml-20 lg:mr-[6%] lg:mt-0 lg:w-auto lg:p-14">
+          <h2 className="font-display text-3xl italic leading-[1.05] sm:text-4xl xl:text-5xl">
+            Cours en ligne &amp; relaxations audio
+          </h2>
+          <p className="mt-2 font-display italic text-[#F5F3E7]/85">
+            Pratiquez où vous voulez, quand vous voulez.
+          </p>
 
-        <span className="absolute left-5 top-5 z-10 rounded-pill bg-[#75523F] px-3 py-1 text-xs font-semibold text-white sm:left-8 sm:top-8">
-          Nouveau !
-        </span>
-
-        <div className="relative z-10 flex flex-col gap-6 p-6 pt-20 sm:p-8 md:max-w-xl md:p-10">
-          <div>
-            <h2 className="font-display text-3xl italic text-white drop-shadow-md sm:text-4xl">
-              Cours en ligne &amp; relaxations audio
-            </h2>
-            <p className="mt-2 font-display italic text-white/90 drop-shadow-md">
-              Pratiquez où vous voulez, quand vous voulez.
-            </p>
-          </div>
-
-          <ul className="flex flex-col gap-2">
+          <ul className="mt-5 flex flex-col gap-2">
             {avantages.map((a) => (
               <li
                 key={a}
-                className="flex items-start gap-2 text-sm text-white/90 drop-shadow-md sm:text-base"
+                className="flex items-start gap-2.5 text-sm sm:text-[15px]"
               >
                 <CheckIcon />
                 <span>{a}</span>
@@ -44,19 +47,19 @@ export default function OnlineBanner() {
             ))}
           </ul>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
             <a
               href="#abonnement"
-              className="btn-bounce inline-flex min-h-[44px] w-full items-center justify-center rounded-pill bg-white px-6 py-3 text-sm font-semibold text-encre sm:w-auto"
+              className="btn-bounce inline-flex min-h-[48px] w-full items-center justify-center rounded-pill bg-[#F5F3E7] px-7 py-3 text-sm font-semibold text-encre sm:w-auto"
             >
               Essayer 7 jours gratuits
             </a>
-            <p className="text-center text-sm text-white/85 drop-shadow-md sm:text-left">
+            <p className="text-center text-sm text-[#F5F3E7]/85 sm:text-left">
               À partir de 17&nbsp;€/mois
             </p>
           </div>
         </div>
-      </article>
+      </div>
     </section>
   );
 }
@@ -69,7 +72,7 @@ function CheckIcon() {
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
-      className="mt-0.5 flex-none text-white"
+      className="mt-0.5 flex-none text-[#F5F3E7]"
     >
       <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2" />
       <path

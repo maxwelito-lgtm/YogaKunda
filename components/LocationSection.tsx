@@ -6,39 +6,38 @@ export default function LocationSection() {
   return (
     <section
       id="espace"
-      className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6"
+      className="scroll-mt-20 bg-[#2B1F19] text-encre lg:grid lg:min-h-[640px] lg:grid-cols-[minmax(0,1fr)_31%]"
     >
-      <div className="relative flex min-h-[640px] flex-col items-start justify-between gap-10 overflow-hidden rounded-[40px] bg-[#2B1F19] p-8 text-[#F5F3E7] sm:p-12 lg:flex-row lg:items-center lg:p-16">
-        {/* Fond : la salle */}
-        <Image
-          src="/images/lieu2.png"
-          alt="Salle de pratique avec tapis de yoga"
-          fill
-          loading="lazy"
-          sizes="(min-width: 1152px) 1152px, 100vw"
-          className="object-cover"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-b from-[#2B1F19]/85 via-[#2B1F19]/55 to-[#2B1F19]/40 lg:bg-gradient-to-r lg:from-[#2B1F19]/85 lg:via-[#2B1F19]/45 lg:to-[#2B1F19]/30"
-        />
+      {/* Colonne de gauche : la salle en haut, le bloc crème par-dessus */}
+      <div className="relative lg:py-[110px]">
+        <div className="relative h-56 sm:h-72 lg:absolute lg:left-0 lg:top-0 lg:h-[430px] lg:w-[56%]">
+          <Image
+            src="/images/lieu2.png"
+            alt="Salle de pratique avec tapis de yoga"
+            fill
+            loading="lazy"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            className="object-cover"
+            style={{ objectPosition: "center 55%" }}
+          />
+        </div>
 
-        {/* Texte */}
-        <div className="relative flex max-w-[520px] flex-col gap-5">
-          <span className="text-[13px] font-semibold uppercase tracking-[0.14em] opacity-85">
+        <div className="relative z-10 mx-4 -mt-10 bg-[#F5F3E7] p-6 sm:mx-8 sm:p-10 lg:mx-0 lg:ml-[44%] lg:mt-0 lg:p-10 xl:p-12">
+          <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#75523F]">
             Le lieu
           </span>
-          <h2 className="font-display text-5xl italic leading-[1.02] sm:text-6xl lg:text-7xl">
+          <h2 className="mt-2 font-display text-4xl italic leading-[1.04] xl:text-5xl">
             L&rsquo;espace Shantalam vous accueille
           </h2>
-          <p className="text-[17px] leading-relaxed opacity-90">
+          <p className="mt-3 text-[15px] leading-relaxed text-encre/80">
             Un espace chaleureux et intimiste pour vos activités
             hebdomadaires, vos ateliers ou vos événements.
           </p>
-          <div className="mt-2">
+          <div className="mt-4">
             <VideoDialog />
           </div>
-          <ul className="mt-2 flex flex-col gap-4 border-t border-[#F5F3E7]/25 pt-5 sm:flex-row sm:gap-10">
+
+          <ul className="mt-5 flex flex-col gap-3 border-t border-encre/20 pt-4">
             {lieux.map((l) => (
               <li key={l.id}>
                 <a
@@ -47,11 +46,11 @@ export default function LocationSection() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block text-sm leading-snug"
+                  className="group block text-[13px] leading-snug"
                 >
                   <span className="font-display text-xl italic">{l.ville}</span>
-                  <span className="opacity-75"> · le {l.jourNom}</span>
-                  <span className="mt-1 block opacity-85 group-hover:underline">
+                  <span className="text-[#75523F]"> · le {l.jourNom}</span>
+                  <span className="mt-0.5 block text-encre/80 group-hover:underline">
                     {l.salle}, {l.adresse}
                   </span>
                 </a>
@@ -59,18 +58,19 @@ export default function LocationSection() {
             ))}
           </ul>
         </div>
+      </div>
 
-        {/* Photo de Chantal : cadre arrondi avec bordure noire */}
-        <div className="relative aspect-[340/540] w-[min(72vw,340px)] self-center overflow-hidden rounded-[36px] border-[4px] border-[#141118] bg-[#D3BFA8] lg:self-auto">
-          <Image
-            src="/images/lieu1.jpg"
-            alt="Chantal assise en tailleur dans la salle de pratique"
-            fill
-            loading="lazy"
-            sizes="340px"
-            className="object-cover"
-          />
-        </div>
+      {/* Colonne de droite : Chantal, pleine hauteur */}
+      <div className="relative mt-10 h-[420px] sm:h-[520px] lg:mt-0 lg:h-auto lg:border-l-[6px] lg:border-[#2B1F19]">
+        <Image
+          src="/images/lieu1.jpg"
+          alt="Chantal assise en tailleur dans la salle de pratique"
+          fill
+          loading="lazy"
+          sizes="(min-width: 1024px) 31vw, 100vw"
+          className="object-cover"
+          style={{ objectPosition: "center 18%" }}
+        />
       </div>
     </section>
   );
