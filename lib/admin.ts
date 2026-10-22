@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-
+import { site } from "@/site.config";
 // Les adresses e-mail autorisées à entrer dans l'espace de Chantal.
 // Elles se règlent dans Vercel (variable ADMIN_EMAILS), séparées par des virgules.
 function adressesAutorisees(): string[] {
@@ -40,4 +40,18 @@ export function estAdmin(user: {
 }): boolean {
   const email = user.email?.toLowerCase() ?? "";
   return Boolean(user.email_confirmed_at) && adressesAutorisees().includes(email);
+}
+// Le lien « Gérer mon site » n'apparaît que dans l'espace de la propriétaire du site,
+// à condition qu'elle soit bien autorisée (l'accès par l'adresse /admin reste possible
+// pour toutes les adresses autorisées).
+export function lienAdminVisible(user: {
+  email?: string | null;
+  email_confirmed_at?: string | null;
+}): boolean {
+  const email = user.email?.toLowerCase() ?? "";
+  return (
+    Boolean(user.email_confirmed_at) &&
+    email === site.email.toLowerCase() &&
+    adressesAutorisees().includes(email)
+  );
 }
