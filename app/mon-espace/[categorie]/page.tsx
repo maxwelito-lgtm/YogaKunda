@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CarteCours from "@/components/CarteCours";
 import { createClient } from "@/lib/supabase/server";
+import { lienAdminVisible } from "@/lib/admin";
 import {
   CATEGORIES,
   SOUS_CATEGORIES,
@@ -50,7 +51,8 @@ export default async function CategoriePage({ params, searchParams }: Props) {
     .eq("user_id", user.id)
     .maybeSingle();
 
-  const abonne = estAbonne(abo);
+  // Abonnement en cours, ou propriétaire du site (elle voit tout).
+  const abonne = estAbonne(abo) || lienAdminVisible(user);
 
   const { data: lignes } = await supabase
     .from("cours")
@@ -148,8 +150,8 @@ export default async function CategoriePage({ params, searchParams }: Props) {
         {!abonne && (
           <div className="mt-8 flex flex-col gap-4 rounded-3xl bg-[#2B1F19] p-6 text-[#F5F3E7] sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <p className="max-w-xl text-[15px] leading-relaxed">
-              Écoutez gratuitement les 20 premières secondes de chaque contenu.
-              Pour suivre les cours en entier, démarrez vos 7 jours offerts.
+              Les contenus sont réservés aux abonnés. Pour y accéder,
+              démarrez vos 7 jours offerts.
             </p>
             <a
               href="/#abonnement"
