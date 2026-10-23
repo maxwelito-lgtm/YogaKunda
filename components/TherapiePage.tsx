@@ -107,26 +107,31 @@ export default function TherapiePage() {
       {/* En-tête : Chantal en premier */}
       <section className="bg-[#F5F3E7] px-4 pb-14 pt-28 sm:px-6 lg:pb-20 lg:pt-36">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
-          <div className="relative mx-auto w-full max-w-[420px] lg:max-w-none">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-b-2xl rounded-t-[999px] lg:aspect-[26/35]">
-              <Image
-                src="/images/chantal-arbre.jpg"
-                alt="Chantal Lassier, mains jointes, assise devant un grand arbre de vie"
-                fill
-                priority
-                sizes="(min-width: 1024px) 520px, 420px"
-                className="object-cover"
-                style={{ objectPosition: "center 38%" }}
+          <div className="relative mx-auto w-full max-w-[420px] pb-3.5 pr-3.5 sm:pb-6 sm:pr-6 lg:max-w-none">
+            <div className="relative">
+              {/* Bloc terracotta décalé derrière la photo */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 translate-x-3.5 translate-y-3.5 rounded-sm bg-[#75523F] sm:translate-x-6 sm:translate-y-6"
               />
+              <div className="relative aspect-[3/4] overflow-hidden rounded-sm lg:aspect-[26/35]">
+                <Image
+                  src="/images/chantal-arbre.jpg"
+                  alt="Chantal Lassier, mains jointes, assise devant un grand arbre de vie"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 520px, 420px"
+                  className="object-cover"
+                  style={{ objectPosition: "center 38%" }}
+                />
+              </div>
             </div>
-            <div className="absolute -bottom-5 left-4 right-4 rounded-2xl bg-[#2B1F19] px-5 py-4 text-[#F5F3E7] shadow-xl sm:left-auto sm:right-[-12px] sm:w-64 lg:right-[-28px]">
+            <div className="absolute -bottom-5 left-4 right-4 rounded-sm bg-[#2B1F19] px-5 py-4 text-[#F5F3E7] shadow-xl sm:left-auto sm:right-[-12px] sm:w-72 lg:right-[-32px]">
               <p className="font-display text-2xl italic leading-none">
                 Chantal Lassier
               </p>
               <p className="mt-1.5 text-[12.5px] leading-snug text-[#E6DCC6]">
-                Thérapeute diplômée
-                <br />
-                Diplômée de l’École du Tantra
+                Thérapeute diplômée · Diplômée de l’École du Tantra
               </p>
             </div>
           </div>
@@ -276,7 +281,7 @@ export default function TherapiePage() {
       <section className="bg-[#75523F] text-[#F5F3E7] md:grid md:grid-cols-[minmax(0,330px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
         <div className="relative h-72 md:h-auto md:min-h-[420px]">
           <Image
-            src="/images/chantal-portrait.png"
+            src="/images/chantal-portrait.jpg"
             alt="Portrait souriant de Chantal Lassier"
             fill
             loading="lazy"
