@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import TarifsActivite from "@/components/TarifsActivite";
+import { therapiePage } from "@/data/activity-pages";
 
 const RDV = "/reserver?offre=therapie";
 
@@ -104,8 +106,43 @@ function BoutonRdv({ clair = false }: { clair?: boolean }) {
 export default function TherapiePage() {
   return (
     <>
-      {/* En-tête : Chantal en premier */}
-      <section className="bg-[#F5F3E7] px-4 pb-14 pt-28 sm:px-6 lg:pb-20 lg:pt-36">
+      {/* En-tête de page : même format que les autres pages d'activité */}
+      <section className="relative min-h-[80vh] w-full overflow-hidden">
+        <Image
+          src={therapiePage.heroImage}
+          alt={therapiePage.heroAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-encre/80 via-encre/30 to-encre/10" />
+        <div className="relative z-10 flex min-h-[80vh] flex-col items-center justify-center gap-5 px-5 pb-12 pt-32 text-center sm:gap-6 sm:px-12">
+          <h1 className="max-w-3xl font-display text-4xl italic text-white drop-shadow-lg sm:text-6xl">
+            {therapiePage.titre}
+          </h1>
+          <p className="max-w-xl text-base text-white/90 drop-shadow-md sm:text-lg">
+            {therapiePage.accroche}
+          </p>
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={therapiePage.ctaPrincipal.href}
+              className="btn-bounce rounded-pill border-[1.5px] border-white bg-black/35 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur-md hover:bg-black/50 sm:px-7 sm:py-3.5 sm:text-sm"
+            >
+              {therapiePage.ctaPrincipal.label}
+            </Link>
+            <a
+              href={therapiePage.ctaSecondaire.href}
+              className="btn-bounce rounded-pill border-[1.5px] border-white/70 px-5 py-2.5 text-xs font-semibold text-white hover:bg-white/10 sm:px-7 sm:py-3.5 sm:text-sm"
+            >
+              {therapiePage.ctaSecondaire.label}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Chantal, sa présentation */}
+      <section className="bg-[#F5F3E7] px-4 pb-14 pt-16 sm:px-6 lg:pb-20 lg:pt-24">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
           <div className="relative mx-auto w-full max-w-[420px] pb-3.5 pr-3.5 sm:pb-6 sm:pr-6 lg:max-w-none">
             <div className="relative">
@@ -137,10 +174,10 @@ export default function TherapiePage() {
           </div>
 
           <div className="pt-4 lg:pt-0">
-            <Eyebrow className="text-[#75523F]">Thérapie holistique</Eyebrow>
-            <h1 className="mt-3 font-display text-4xl italic leading-[1.05] text-encre sm:text-5xl lg:text-[54px]">
+            <Eyebrow className="text-[#75523F]">Votre thérapeute</Eyebrow>
+            <h2 className="mt-3 font-display text-4xl italic leading-[1.05] text-encre sm:text-5xl lg:text-[54px]">
               Retrouver sa paix intérieure, à votre rythme
-            </h1>
+            </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-encre/80 sm:text-[17px]">
               Traumatismes, peurs, blessures d’enfance, perte de sens… Chantal
               vous accompagne avec écoute et douceur, grâce à l’approche
@@ -170,7 +207,7 @@ export default function TherapiePage() {
       </section>
 
       {/* Ce que Chantal accompagne */}
-      <section className="bg-[#E6DCC6] px-4 py-16 sm:px-6 lg:py-20">
+      <section id="situations" className="scroll-mt-8 bg-[#E6DCC6] px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <Eyebrow className="text-[#75523F]">Ce que Chantal accompagne</Eyebrow>
@@ -277,11 +314,14 @@ export default function TherapiePage() {
         </div>
       </section>
 
+      {/* Le tarif et la réservation */}
+      <TarifsActivite type={therapiePage.tarifs} />
+
       {/* Rendez-vous */}
       <section className="bg-[#75523F] text-[#F5F3E7] md:grid md:grid-cols-[minmax(0,330px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
         <div className="relative h-72 md:h-auto md:min-h-[420px]">
           <Image
-            src="/images/chantal-portrait.png"
+            src="/images/chantal-portrait.jpg"
             alt="Portrait souriant de Chantal Lassier"
             fill
             loading="lazy"
