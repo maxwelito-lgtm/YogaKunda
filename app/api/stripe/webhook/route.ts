@@ -43,10 +43,7 @@ async function lireClient(userId: string) {
 }
 
 // Renvoie true si l'abonnement vient d'être enregistré pour la première fois.
-async function synchroniser(
-  sub: Stripe.Subscription,
-  estCreation: boolean
-): Promise<{
+async function synchroniser(sub: Stripe.Subscription): Promise<{
   nouveau: boolean;
   userId: string | null;
   statut: string;
@@ -95,8 +92,28 @@ async function synchroniser(
         ? new Date(finTimestamp * 1000).toISOString()
         : null;
 
-  // Seul l'événement « création » annonce un nouvel abonné.
-  const nouveau = estCreation;
+  // Un abonnement n'est annoncé qu'une seule fois : la première fois qu'on voit son identifiant
+  // Stripe, quel que soit l'événement qui arrive en premier. Si Stripe renvoie un événement
+  // ou en envoie deux presque ensemble, la mise à jour conditionnelle ci-dessous (verrouillée
+  // par la base de données) ne laisse passer qu'un seul traitement.
+  const { data: existant } = await admin
+    .from("abonnements")
+    .select("user_id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  let nouveau = false;
+  if (!existant) {
+    nouveau = true; // première ligne pour cette personne : l'insertion se fait juste après
+  } else {
+    const { data: reserve } = await admin
+      .from("abonnements")
+      .update({ stripe_subscription_id: sub.id })
+      .eq("user_id", userId)
+      .or(`stripe_subscription_id.is.null,stripe_subscription_id.neq.${sub.id}`)
+      .select("user_id");
+    nouveau = (reserve?.length ?? 0) > 0;
+  }
 
   const { error } = await admin.from("abonnements").upsert(
     {
@@ -223,9 +240,9 @@ export async function POST(request: Request) {
       case "customer.subscription.updated":
       case "customer.subscription.deleted": {
         const resultat = await synchroniser(
-          evenement.data.object as Stripe.Subscription,
-          evenement.type === "customer.subscription.created"
-        );        // Les e-mails ne doivent jamais faire échouer le traitement.
+          evenement.data.object as Stripe.Subscription
+        );
+        // Les e-mails ne doivent jamais faire échouer le traitement.
         try {
           await prevenirAbonnement(resultat, origine);
         } catch (erreur) {

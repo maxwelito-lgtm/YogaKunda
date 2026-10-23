@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactChoice from "@/components/ContactChoice";
@@ -17,11 +18,14 @@ export default function NousContacterPage() {
 
       {/* Hero : même principe que les pages Kundalini / Tantra */}
       <section className="relative min-h-[50vh] w-full overflow-hidden">
-        <img
+        <Image
           src="/images/yoga-nature.png"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-encre/80 via-encre/30 to-encre/10" />
 
