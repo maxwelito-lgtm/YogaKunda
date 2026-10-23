@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import ActivityPage from "@/components/ActivityPage";
+import TherapiePage from "@/components/TherapiePage";
 import Footer from "@/components/Footer";
-import { therapiePage } from "@/data/activity-pages";
 import { site } from "@/site.config";
 
 export const metadata: Metadata = {
-  title: `${therapiePage.titre} — ${site.nom}`,
-  description: therapiePage.metaDescription,
+  title: `Thérapie holistique — ${site.nom}`,
+  description:
+    "Thérapie holistique avec Chantal Lassier : accompagnement des traumatismes, de l'enfant intérieur, des émotions, du chemin de vie et du féminin sacré, par l'approche psycho-intégrative transpersonnelle et l'EMDR.",
 };
 
 export default function TherapieHolistiquePage() {
   return (
-    <main style={therapiePage.fond ? { backgroundColor: therapiePage.fond } : undefined}>
+    <main style={{ backgroundColor: "#F5F3E7" }}>
       <Header />
-      <ActivityPage data={therapiePage} />
+      <TherapiePage />
       <Footer />
     </main>
   );
