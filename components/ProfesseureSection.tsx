@@ -32,7 +32,13 @@ export default function ProfesseureSection() {
         </div>
 
         {/* Fiche : compacte, chevauche légèrement la photo sur écran large */}
-        <div className="relative z-10 bg-[#F5F3E7] p-5 text-encre sm:p-7 md:-ml-16 md:py-9 md:pl-12 md:pr-9 lg:my-16 lg:ml-[7.5%] lg:w-[54%] lg:max-w-[780px] lg:p-12">
+        <div className="relative z-10 mb-3.5 mr-3.5 sm:mb-6 sm:mr-6 md:-ml-16 lg:my-16 lg:ml-[7.5%] lg:w-[54%] lg:max-w-[780px]">
+          {/* Bloc terracotta décalé derrière la fiche */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 translate-x-3.5 translate-y-3.5 bg-[#75523F] sm:translate-x-6 sm:translate-y-6"
+          />
+          <div className="relative bg-[#F5F3E7] p-5 text-encre sm:p-7 md:py-9 md:pl-12 md:pr-9 lg:p-12">
           <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#75523F]">
             Votre professeure
           </span>
@@ -68,6 +74,7 @@ export default function ProfesseureSection() {
 
           <div className="mt-5 border-t border-encre/15 pt-4 lg:mt-7 lg:pt-6">
             <VideoDialog label="Voir la vidéo de présentation" />
+          </div>
           </div>
         </div>
       </div>
