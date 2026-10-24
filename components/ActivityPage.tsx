@@ -5,6 +5,7 @@ import type { ActivityPageData } from "@/data/activity-pages";
 import ActivityTabs from "@/components/ActivityTabs";
 import TarifsActivite from "@/components/TarifsActivite";
 import ProchainsCours from "@/components/ProchainsCours";
+import { lienCta } from "@/components/lien-cta";
 
 function CtaLink({
   href,
@@ -51,16 +52,16 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
           <p className="max-w-xl text-base text-white/90 drop-shadow-md sm:text-lg">
             {data.accroche}
           </p>
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <CtaLink
               href={data.ctaPrincipal.href}
-              className="btn-bounce rounded-pill border-[1.5px] border-white bg-black/35 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur-md hover:bg-black/50 sm:px-7 sm:py-3.5 sm:text-sm"
+              className={lienCta.clair}
             >
               {data.ctaPrincipal.label}
             </CtaLink>
             <CtaLink
               href={data.ctaSecondaire.href}
-              className="btn-bounce rounded-pill border-[1.5px] border-white/70 px-5 py-2.5 text-xs font-semibold text-white hover:bg-white/10 sm:px-7 sm:py-3.5 sm:text-sm"
+              className={lienCta.clair}
             >
               {data.ctaSecondaire.label}
             </CtaLink>
@@ -80,7 +81,7 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         ))}
         <CtaLink
           href={data.intro.cta.href}
-          className="btn-bounce mt-8 inline-flex min-h-[44px] items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
+          className={`${lienCta.sombre} mt-8`}
         >
           {data.intro.cta.label}
         </CtaLink>
@@ -141,7 +142,7 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         <div className="mt-10 text-center">
           <CtaLink
             href={data.deroule.cta.href}
-            className="btn-bounce inline-flex min-h-[44px] items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
+            className={lienCta.sombre}
           >
             {data.deroule.cta.label}
           </CtaLink>

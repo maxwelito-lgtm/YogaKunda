@@ -12,6 +12,7 @@ import {
   type Formule,
   type Rythme,
 } from "@/data/offres";
+import { lienCta } from "@/components/lien-cta";
 
 
 function lienReservation(
@@ -306,7 +307,7 @@ function BoutonChoisir({
   return (
     <Link
       href={href}
-      className="btn-bounce inline-flex min-h-[40px] items-center justify-center rounded-pill border-[1.5px] border-white bg-[#75523F]/90 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_0_1px_#75523F] hover:bg-[#75523F]"
+      className={lienCta.sombre}
     >
       {libelle}
     </Link>

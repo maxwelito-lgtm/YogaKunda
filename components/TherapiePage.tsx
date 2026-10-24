@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import TarifsActivite from "@/components/TarifsActivite";
 import { therapiePage } from "@/data/activity-pages";
+import { lienCta } from "@/components/lien-cta";
 
 const RDV = "/reserver?offre=therapie";
 
@@ -92,11 +93,7 @@ function BoutonRdv({ clair = false }: { clair?: boolean }) {
   return (
     <Link
       href={RDV}
-      className={`btn-bounce inline-flex min-h-[50px] items-center justify-center rounded-pill px-7 py-3 text-[15px] font-semibold ${
-        clair
-          ? "bg-[#F5F3E7] text-[#2B1F19]"
-          : "border-[1.5px] border-white bg-[#75523F]/90 text-white hover:bg-[#75523F]"
-      }`}
+      className={clair ? lienCta.clair : lienCta.sombre}
     >
       Prendre rendez-vous
     </Link>
@@ -124,16 +121,16 @@ export default function TherapiePage() {
           <p className="max-w-xl text-base text-white/90 drop-shadow-md sm:text-lg">
             {therapiePage.accroche}
           </p>
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <Link
               href={therapiePage.ctaPrincipal.href}
-              className="btn-bounce rounded-pill border-[1.5px] border-white bg-black/35 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur-md hover:bg-black/50 sm:px-7 sm:py-3.5 sm:text-sm"
+              className={lienCta.clair}
             >
               {therapiePage.ctaPrincipal.label}
             </Link>
             <a
               href={therapiePage.ctaSecondaire.href}
-              className="btn-bounce rounded-pill border-[1.5px] border-white/70 px-5 py-2.5 text-xs font-semibold text-white hover:bg-white/10 sm:px-7 sm:py-3.5 sm:text-sm"
+              className={lienCta.clair}
             >
               {therapiePage.ctaSecondaire.label}
             </a>

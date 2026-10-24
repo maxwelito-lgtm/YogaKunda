@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { createPublicClient } from "@/lib/supabase/public";
 import { lieux } from "@/data/lieux";
 import { aujourdhui, heureFr, jourCourt, jourLong, nomMois, type Cours } from "@/lib/calendrier";
+import { lienCta } from "@/components/lien-cta";
 
 function Pastille({ children, sombre }: { children: ReactNode; sombre?: boolean }) {
   return (
@@ -139,7 +140,7 @@ export default async function ProchainsCours() {
         <div className="mt-8 text-center">
           <Link
             href="/reserver?offre=kundalini"
-            className="btn-bounce inline-flex min-h-[48px] items-center justify-center rounded-pill bg-[#75523F] px-8 py-3 text-base font-semibold text-white"
+            className={lienCta.sombre}
           >
             Réserver mes cours
           </Link>
