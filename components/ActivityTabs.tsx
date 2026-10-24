@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { ActivityPageData } from "@/data/activity-pages";
-import { lienCta } from "@/components/lien-cta";
 
 const onglets = ["Pour qui ?", "Pourquoi ?", "Programme", "Infos pratiques"];
 
@@ -107,7 +106,7 @@ export default function ActivityTabs({ data }: { data: ActivityPageData }) {
             </p>
             <a
               href="#tarifs"
-              className={`${lienCta.sombre} mt-6`}
+              className="btn-bounce mt-6 inline-flex min-h-[44px] items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
             >
               Voir les tarifs et réserver
             </a>

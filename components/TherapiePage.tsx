@@ -93,7 +93,11 @@ function BoutonRdv({ clair = false }: { clair?: boolean }) {
   return (
     <Link
       href={RDV}
-      className={clair ? lienCta.clair : lienCta.sombre}
+      className={`btn-bounce inline-flex min-h-[50px] items-center justify-center rounded-pill px-7 py-3 text-[15px] font-semibold ${
+        clair
+          ? "bg-[#F5F3E7] text-[#2B1F19]"
+          : "border-[1.5px] border-white bg-[#75523F]/90 text-white hover:bg-[#75523F]"
+      }`}
     >
       Prendre rendez-vous
     </Link>

@@ -81,7 +81,7 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         ))}
         <CtaLink
           href={data.intro.cta.href}
-          className={`${lienCta.sombre} mt-8`}
+          className="btn-bounce mt-8 inline-flex min-h-[44px] items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
         >
           {data.intro.cta.label}
         </CtaLink>
@@ -142,7 +142,7 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         <div className="mt-10 text-center">
           <CtaLink
             href={data.deroule.cta.href}
-            className={lienCta.sombre}
+            className="btn-bounce inline-flex min-h-[44px] items-center rounded-pill bg-encre px-6 py-3 text-sm font-semibold text-white"
           >
             {data.deroule.cta.label}
           </CtaLink>
