@@ -32,8 +32,8 @@ function dateFr(iso: string | null | undefined): string {
 
 // Image de chaque tuile (dans public/images) et couleur de secours si l'image manque.
 const STYLES: Record<CategorieId, { image: string; fond: string }> = {
-  replays: { image: "/images/replay.png", fond: "#2B1F19" },
-  podcasts: { image: "/images/podcast.png", fond: "#75523F" },
+  replays: { image: "/images/replay.webp", fond: "#2B1F19" },
+  podcasts: { image: "/images/podcast.webp", fond: "#75523F" },
 };
 
 const DETAILS: Record<CategorieId, string> = {

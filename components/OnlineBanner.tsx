@@ -13,7 +13,7 @@ export default function OnlineBanner() {
         {/* Photo : colle au bord gauche de l'écran */}
         <div className="relative h-64 w-[92%] sm:h-80 lg:h-[500px] lg:w-full">
           <Image
-            src="/images/podcast.png"
+            src="/images/podcast.webp"
             alt="Téléphone diffusant un podcast sur la philosophie du yoga, à côté d'un casque audio"
             fill
             loading="lazy"

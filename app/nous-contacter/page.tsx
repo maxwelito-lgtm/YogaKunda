@@ -4,11 +4,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactChoice from "@/components/ContactChoice";
 import { site } from "@/site.config";
+import { partage } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: `Nous contacter — ${site.nom}`,
   description:
-    "Appelez ou écrivez directement à Chantal pour toute question sur les cours, les ateliers ou la thérapie holistique.",
+    "Appelez ou écrivez directement à Chantal pour toute question sur les cours de yoga à Oloron et Géronce, les ateliers ou la thérapie holistique.",
+  ...partage(
+    `Nous contacter — ${site.nom}`,
+    "Appelez ou écrivez directement à Chantal pour toute question sur les cours de yoga à Oloron et Géronce, les ateliers ou la thérapie holistique.",
+  ),
 };
 
 export default function NousContacterPage() {

@@ -8,6 +8,7 @@ export type ActivityPageData = {
   slug: string;
   fond?: string;
   metaDescription: string;
+  metaTitre?: string; // titre affiché dans Google (invisible sur la page)
   titre: string;
   accroche: string;
   heroImage: string;
@@ -35,8 +36,9 @@ export type ActivityPageData = {
 const kundalini: ActivityPageData = {
   slug: "kundalini",
   fond: "#F5F3E7",
+  metaTitre: "Yoga Kundalini à Oloron et Géronce — Shantalam",
   metaDescription:
-    "Découvrez le Kundalini Yoga : stages en groupe et séances personnalisées pour réveiller votre énergie, apaiser votre mental et vous recentrer.",
+    "Cours de Kundalini Yoga en groupe le lundi à Géronce et le mercredi à Oloron (Béarn), 18 h 30–20 h, et séances personnalisées. Réveillez votre énergie.",
   titre: "Kundalini Yoga",
   accroche:
     "Réveillez votre énergie, apaisez votre mental et retrouvez votre élan intérieur.",
@@ -59,7 +61,7 @@ const kundalini: ActivityPageData = {
     titre: "Le souffle, le geste et le son",
     texte:
       "Ici, tout se pratique ensemble. La respiration guide le mouvement, le mouvement ouvre le corps, et les mantras, ces sons que l'on chante ou que l'on murmure, aident à apaiser le flot des pensées. Peu à peu, une sensation de calme et de clarté s'installe.",
-    image: "/images/lieu2.png",
+    image: "/images/lieu2.webp",
     imageAlt: "Salle de pratique lumineuse avec tapis de yoga",
   },
   deroule: {
@@ -142,8 +144,9 @@ const kundalini: ActivityPageData = {
 const tantra: ActivityPageData = {
   slug: "tantra",
   fond: "#F5F3E7",
+  metaTitre: "Ateliers Tantra & Kundalini en Béarn — Shantalam",
   metaDescription:
-    "Ateliers Tantra & Kundalini en présentiel : des ateliers de 2 heures pour lâcher prise, apaiser le mental et explorer plus profondément votre pratique, en groupe ou en séance personnalisée.",
+    "Ateliers Tantra & Kundalini en présentiel en Béarn : 2 heures pour lâcher prise, apaiser le mental et approfondir votre pratique, en groupe ou en séance personnalisée.",
   titre: "Ateliers Tantra & Kundalini",
   accroche:
     "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 heures.",
@@ -165,7 +168,7 @@ const tantra: ActivityPageData = {
     titre: "Accueillir ce qui est, et le transformer en douceur",
     texte:
       "Dans le Tantra, rien n'est à rejeter : ni la fatigue, ni la tension, ni les émotions du moment. On les accueille, on respire avec elles, et la pratique aide peu à peu à les apaiser. Le lâcher-prise ne s'impose pas, il s'installe naturellement, séance après séance.",
-    image: "/images/lieu3.png",
+    image: "/images/lieu3.webp",
     imageAlt: "Groupe en méditation dans la salle de pratique",
   },
   deroule: {
@@ -200,7 +203,7 @@ const tantra: ActivityPageData = {
     cta: { label: "Réserver votre place", href: "/reserver?offre=tantra" },
   },
   bandeau: {
-    image: "/images/lieu2.png",
+    image: "/images/lieu2.webp",
     alt: "La salle de pratique, lumineuse et chaleureuse",
   },
   pourQui:
@@ -248,12 +251,13 @@ const tantra: ActivityPageData = {
 const nidra: ActivityPageData = {
   slug: "nidra",
   fond: "#F5F3E7",
+  metaTitre: "Yoga Nidra en ligne, relaxation guidée — Shantalam",
   metaDescription:
-    "Découvrez le Yoga Nidra, disponible uniquement en ligne : une relaxation guidée, allongé et sans effort, pour relâcher les tensions, apaiser le mental et vous ressourcer en profondeur.",
+    "Yoga Nidra en ligne, où que vous soyez : une relaxation guidée, allongé et sans effort, pour relâcher les tensions, apaiser le mental et vous ressourcer en profondeur.",
   titre: "Yoga Nidra",
   accroche:
     "Allongez-vous, laissez-vous guider et offrez à votre corps et à votre mental un vrai moment de repos, où que vous soyez, 100 % en ligne.",
-  heroImage: "/images/yoga-n.png",
+  heroImage: "/images/yoga-n.webp",
   heroAlt: "Ambiance douce et lumineuse pour un moment de relaxation",
   ctaPrincipal: { label: "Cours en ligne", href: "#tarifs" },
   ctaSecondaire: { label: "Essayer 7 jours gratuits", href: "/#abonnement" },
@@ -271,7 +275,7 @@ const nidra: ActivityPageData = {
     titre: "Un voyage guidé à l'intérieur de soi",
     texte:
       "La séance conduit l'attention de façon progressive : à travers le corps, le souffle, les sensations puis les images intérieures. Peu à peu, les tensions se relâchent, le mental ralentit et une sensation de calme profond s'installe, sans effort.",
-    image: "/images/lieu3.png",
+    image: "/images/lieu3.webp",
     imageAlt: "Groupe en méditation dans la salle de pratique",
   },
   deroule: {
@@ -311,7 +315,7 @@ const nidra: ActivityPageData = {
     cta: { label: "Essayer 7 jours gratuits", href: "/#abonnement" },
   },
   bandeau: {
-    image: "/images/replay.png",
+    image: "/images/replay.webp",
     alt: "Pratiquer chez soi, en ligne",
   },
   pourQui:
@@ -364,7 +368,7 @@ const therapie: ActivityPageData = {
   titre: "Thérapie Holistique",
   accroche:
     "Un accompagnement personnel, pensé pour vous, qui prend en compte toutes les dimensions de l'être : physique, psychique et émotionnelle.",
-  heroImage: "/images/therapie.png",
+  heroImage: "/images/therapie.webp",
   heroAlt: "Moment d'écoute et d'accompagnement",
   ctaPrincipal: {
     label: "Réserver une séance",

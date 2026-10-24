@@ -46,7 +46,7 @@ const bandes: Bande[] = [
     sousTitre: "Le repos profond, guidé",
     texte:
       "Une relaxation guidée, allongé et sans effort, pour relâcher les tensions et se ressourcer en profondeur. Proposé uniquement en ligne.",
-    image: "/images/yoga-n.png",
+    image: "/images/yoga-n.webp",
     alt: "Femme allongée en relaxation profonde, pour le yoga nidra, à la lueur des bougies",
     position: "center 40%",
     href: "/yoga/nidra",

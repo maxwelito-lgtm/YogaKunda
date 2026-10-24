@@ -10,7 +10,7 @@ export default function LocationSection() {
       {/* Photo de la salle : colle au bord gauche de l'écran */}
       <div className="relative h-56 sm:h-72 lg:absolute lg:left-0 lg:top-0 lg:h-[560px] lg:w-[60%]">
         <Image
-          src="/images/lieu2.png"
+          src="/images/lieu2.webp"
           alt="Salle de pratique avec tapis de yoga"
           fill
           loading="lazy"

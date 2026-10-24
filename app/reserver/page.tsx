@@ -5,11 +5,16 @@ import Footer from "@/components/Footer";
 import ReservationForm from "@/components/ReservationForm";
 import { lireOffre, lireFormule, lireRythme } from "@/data/offres";
 import { site } from "@/site.config";
+import { partage } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: `Dates & tarifs — ${site.nom}`,
+  title: `Dates, tarifs et réservation de cours de yoga — ${site.nom}`,
   description:
-    "Choisissez votre pratique et votre formule (au cours ou au trimestre), puis payez en ligne en toute sécurité.",
+    "Dates et tarifs des cours de yoga à Oloron et Géronce, ateliers et séances en ligne : choisissez votre formule (au cours ou au trimestre) et réservez en ligne.",
+  ...partage(
+    `Dates, tarifs et réservation de cours de yoga — ${site.nom}`,
+    "Dates et tarifs des cours de yoga à Oloron et Géronce, ateliers et séances en ligne : choisissez votre formule (au cours ou au trimestre) et réservez en ligne.",
+  ),
 };
 
 type Props = {

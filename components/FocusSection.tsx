@@ -287,7 +287,7 @@ const iconStyles: Record<string, { bg: string; color: string }> = {
 // Photo de fond par catégorie
 const bgImages: Record<string, string> = {
   stress: "/images/therapie.jpeg",
-  sommeil: "/images/yoga-n.png",
+  sommeil: "/images/yoga-n.webp",
   energie: "/images/kundalini.png",
   decouverte: "/images/yoga-nature.png",
 };

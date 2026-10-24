@@ -36,8 +36,8 @@ const IMAGES: Record<OffreId, string> = {
   kundalini: "/images/kundalini.png",
   tantra: "/images/tantra.png",
   atelier: "/images/yoga-nature.png",
-  perso: "/images/yoga-n.png",
-  therapie: "/images/therapie.png",
+  perso: "/images/yoga-n.webp",
+  therapie: "/images/therapie.webp",
 };
 
 const ETIQUETTES: Record<OffreId, string> = {
