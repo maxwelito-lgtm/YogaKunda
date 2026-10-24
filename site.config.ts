@@ -6,7 +6,7 @@
 export const site = {
   nom: "Shantalam",
   accroche: "Retrouvez l'harmonie intérieure",
-  ville: "", // TODO
+  ville: "Oloron et Géronce (Béarn)",
   adresse: "Lieu précisé lors de la réservation",
   email: "shantalam-yoga@outlook.fr",
   association: {

@@ -288,7 +288,7 @@ const iconStyles: Record<string, { bg: string; color: string }> = {
 const bgImages: Record<string, string> = {
   stress: "/images/therapie.jpeg",
   sommeil: "/images/yoga-n.webp",
-  energie: "/images/kundalini.png",
+  energie: "/images/kundalini.webp",
   decouverte: "/images/yoga-nature.png",
 };
 

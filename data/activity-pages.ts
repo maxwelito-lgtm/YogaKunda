@@ -42,7 +42,7 @@ const kundalini: ActivityPageData = {
   titre: "Kundalini Yoga",
   accroche:
     "Réveillez votre énergie, apaisez votre mental et retrouvez votre élan intérieur.",
-  heroImage: "/images/kundalini.png",  
+  heroImage: "/images/kundalini.webp",  
   heroAlt: "Ambiance paisible et lumineuse pour une pratique de yoga",
   ctaPrincipal: { label: "Séance collective", href: "#tarifs" },
   ctaSecondaire: {
@@ -150,7 +150,7 @@ const tantra: ActivityPageData = {
   titre: "Ateliers Tantra & Kundalini",
   accroche:
     "Prenez le temps d'explorer : lâchez prise, apaisez votre mental et approfondissez votre pratique lors d'ateliers de 2 heures.",
-  heroImage: "/images/tantra.png",
+  heroImage: "/images/tantra.webp",
   heroAlt: "Salle de pratique chaleureuse pour un atelier de Tantra et Kundalini Yoga",
   ctaPrincipal: { label: "Séance collective", href: "#tarifs" },
   ctaSecondaire: {

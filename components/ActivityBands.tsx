@@ -20,7 +20,7 @@ const bandes: Bande[] = [
     sousTitre: "Le Yoga pour l'éveil de l'énergie créatrice",
     texte:
       "Au-delà de l'équilibre entre le corps et l'esprit, ce yoga est une véritable science pour révéler son plein potentiel. Chaque lundi à Géronce et chaque mercredi à Oloron.",
-    image: "/images/kundalini.png",
+    image: "/images/kundalini.webp",
     alt: "Groupe de personnes pratiquant le yoga face à la mer, au coucher du soleil",
     position: "center 30%",
     href: "/yoga/kundalini",
@@ -33,7 +33,7 @@ const bandes: Bande[] = [
     sousTitre: "Prendre le temps d'approfondir",
     texte:
       "Des ateliers de 2 heures pour explorer davantage le Tantra Yoga et le Kundalini Yoga, ressentir plus profondément et enrichir votre pratique.",
-    image: "/images/tantra.png",
+    image: "/images/tantra.webp",
     alt: "Atelier de yoga en groupe : postures du chien tête en bas sur des tapis violets, sous une terrasse ouverte sur la nature",
     position: "center 40%",
     href: "/yoga/tantra",

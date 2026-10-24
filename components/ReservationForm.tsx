@@ -33,8 +33,8 @@ const FORMULES = [
 ] as const;
 
 const IMAGES: Record<OffreId, string> = {
-  kundalini: "/images/kundalini.png",
-  tantra: "/images/tantra.png",
+  kundalini: "/images/kundalini.webp",
+  tantra: "/images/tantra.webp",
   atelier: "/images/yoga-nature.png",
   perso: "/images/yoga-n.webp",
   therapie: "/images/therapie.webp",
