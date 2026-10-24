@@ -33,7 +33,7 @@ export const offres: Offre[] = [
     trimestre: true,
     annee: true,
     forfaits: {
-      trim: { 1: 110, 2: 165 },
+      trim: { 1: 125, 2: 180 },
       annee: { 1: 305, 2: 450 },
     },
     unite: "cours",

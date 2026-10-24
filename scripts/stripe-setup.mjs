@@ -26,8 +26,8 @@ const CATALOGUE = [
     description: "Cours collectif en présentiel.",
     prix: [
       { cle: "kundalini_cours", nom: "Un cours", montant: 1500 },
-      { cle: "kundalini_trim_1", nom: "Trimestre, 1 cours par semaine", montant: 11000 },
-      { cle: "kundalini_trim_2", nom: "Trimestre, 2 cours par semaine", montant: 16500 },
+      { cle: "kundalini_trim_1", nom: "Trimestre, 1 cours par semaine", montant: 12500 },
+      { cle: "kundalini_trim_2", nom: "Trimestre, 2 cours par semaine", montant: 18000 },
       { cle: "kundalini_annee_1", nom: "Année scolaire, 1 cours par semaine", montant: 30500 },
       { cle: "kundalini_annee_2", nom: "Année scolaire, 2 cours par semaine", montant: 45000 },
     ],
