@@ -154,13 +154,13 @@ export default function TherapiePage() {
               />
               <div className="relative aspect-[3/4] overflow-hidden rounded-sm lg:aspect-[26/35]">
                 <Image
-                  src="/images/chantal-arbre.jpg"
-                  alt="Chantal Lassier, mains jointes, assise devant un grand arbre de vie"
+                  src="/images/chantal-portrait.jpg"
+                  alt="Portrait de Chantal Lassier"
                   fill
                   priority
                   sizes="(min-width: 1024px) 520px, 420px"
                   className="object-cover"
-                  style={{ objectPosition: "center 38%" }}
+                  style={{ objectPosition: "center 20%" }}
                 />
               </div>
             </div>
@@ -322,13 +322,13 @@ export default function TherapiePage() {
       <section className="bg-[#75523F] text-[#F5F3E7] md:grid md:grid-cols-[minmax(0,330px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
         <div className="relative h-72 md:h-auto md:min-h-[420px]">
           <Image
-            src="/images/chantal-portrait.jpg"
-            alt="Portrait souriant de Chantal Lassier"
+            src="/images/chantal-arbre.jpg"
+            alt="Chantal Lassier, souriante, en veste sombre"
             fill
             loading="lazy"
             sizes="(min-width: 1024px) 420px, (min-width: 768px) 330px, 100vw"
             className="object-cover"
-            style={{ objectPosition: "center 22%" }}
+            style={{ objectPosition: "center 20%" }}
           />
         </div>
         <div className="px-6 py-12 sm:px-10 md:px-12 lg:px-20 lg:py-16">
