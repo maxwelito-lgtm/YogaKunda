@@ -6,6 +6,7 @@ type Bande = {
   sousTitre: string;
   texte: string;
   image: string;
+  alt: string; // description de la photo pour Google et les lecteurs d'écran (invisible)
   position: string; // cadrage de la photo (object-position)
   href: string;
   niveau?: string;
@@ -20,6 +21,7 @@ const bandes: Bande[] = [
     texte:
       "Au-delà de l'équilibre entre le corps et l'esprit, ce yoga est une véritable science pour révéler son plein potentiel. Chaque lundi à Géronce et chaque mercredi à Oloron.",
     image: "/images/kundalini.png",
+    alt: "Groupe de personnes pratiquant le yoga face à la mer, au coucher du soleil",
     position: "center 30%",
     href: "/yoga/kundalini",
     niveau: "Niveau 2",
@@ -32,6 +34,7 @@ const bandes: Bande[] = [
     texte:
       "Des ateliers de 2 heures pour explorer davantage le Tantra Yoga et le Kundalini Yoga, ressentir plus profondément et enrichir votre pratique.",
     image: "/images/tantra.png",
+    alt: "Atelier de yoga en groupe : postures du chien tête en bas sur des tapis violets, sous une terrasse ouverte sur la nature",
     position: "center 40%",
     href: "/yoga/tantra",
     niveau: "Niveau 1",
@@ -44,6 +47,7 @@ const bandes: Bande[] = [
     texte:
       "Une relaxation guidée, allongé et sans effort, pour relâcher les tensions et se ressourcer en profondeur. Proposé uniquement en ligne.",
     image: "/images/yoga-n.png",
+    alt: "Femme allongée en relaxation profonde, pour le yoga nidra, à la lueur des bougies",
     position: "center 40%",
     href: "/yoga/nidra",
     niveau: "Tous niveaux",
@@ -56,6 +60,7 @@ const bandes: Bande[] = [
     texte:
       "Une thérapie qui prend en compte toutes les dimensions de l'être — physique, psychique et émotionnelle.",
     image: "/images/therapie.jpeg",
+    alt: "Séance d'accompagnement : deux personnes en échange face à face",
     position: "center 40%",
     href: "/therapie-holistique",
     niveau: "Tous niveaux",
@@ -98,7 +103,7 @@ export default function ActivityBands() {
               >
                 <Image
                   src={b.image}
-                  alt=""
+                  alt={b.alt}
                   fill
                   loading={i === 0 ? "eager" : "lazy"}
                   sizes="(min-width: 1024px) 60vw, 88vw"

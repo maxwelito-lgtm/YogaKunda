@@ -14,7 +14,7 @@ export default function OnlineBanner() {
         <div className="relative h-64 w-[92%] sm:h-80 lg:h-[500px] lg:w-full">
           <Image
             src="/images/podcast.png"
-            alt=""
+            alt="Téléphone diffusant un podcast sur la philosophie du yoga, à côté d'un casque audio"
             fill
             loading="lazy"
             sizes="(min-width: 1024px) 45vw, 92vw"
