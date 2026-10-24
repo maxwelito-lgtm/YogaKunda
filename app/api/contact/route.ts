@@ -58,7 +58,7 @@ export async function POST(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: `${site.nom} <onboarding@resend.dev>`,
+      from: process.env.EMAIL_FROM || `${site.nom} <onboarding@resend.dev>`,
       to: [destinataire],
       reply_to: email,
       subject: `Nouveau message de ${nom} (site ${site.nom})`,
