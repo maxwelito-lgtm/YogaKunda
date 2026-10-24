@@ -21,6 +21,9 @@ export const site = {
     mediateur: "",
   },
   telephone: "06 74 15 76 78",
+  // Lien YouTube de la vidéo de présentation de Chantal (n'importe quel lien de partage convient).
+  // Tant qu'il est vide, la fenêtre indique « La vidéo arrive bientôt ».
+  videoPresentation: "",
   reseaux: {
     youtube: "#",
     facebook: "#",

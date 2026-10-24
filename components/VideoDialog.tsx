@@ -1,19 +1,24 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { site } from "@/site.config";
+import { extraireIdYoutube } from "@/lib/youtube";
 
 type Props = {
-  src?: string;
+  lien?: string; // lien YouTube ; par défaut, celui de site.config.ts
   label?: string;
 };
 
 export default function VideoDialog({
-  src = "/videos/presentation.mp4",
+  lien = site.videoPresentation,
   label = "Voir la vidéo du studio",
 }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
+  const [ouverte, setOuverte] = useState(false);
+  const idVideo = extraireIdYoutube(lien);
 
   function ouvrir() {
+    setOuverte(true);
     ref.current?.showModal();
   }
 
@@ -21,8 +26,9 @@ export default function VideoDialog({
     ref.current?.close();
   }
 
-  function arreterVideo() {
-    ref.current?.querySelector("video")?.pause();
+  // À la fermeture, le lecteur est retiré de la page : la vidéo s'arrête et rien n'est chargé tant qu'on n'a pas cliqué.
+  function apresFermeture() {
+    setOuverte(false);
   }
 
   return (
@@ -46,7 +52,7 @@ export default function VideoDialog({
 
       <dialog
         ref={ref}
-        onClose={arreterVideo}
+        onClose={apresFermeture}
         onClick={(e) => {
           if (e.target === e.currentTarget) fermer();
         }}
@@ -73,15 +79,22 @@ export default function VideoDialog({
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
-          <video
-            className="aspect-video w-full object-contain"
-            controls
-            playsInline
-            preload="none"
-          >
-            <source src={src} type="video/mp4" />
-            Votre navigateur ne permet pas la lecture de cette vidéo.
-          </video>
+          {idVideo ? (
+            ouverte && (
+              <iframe
+                className="aspect-video w-full"
+                src={`https://www.youtube-nocookie.com/embed/${idVideo}?rel=0&modestbranding=1&playsinline=1&autoplay=1`}
+                title="Vidéo de présentation"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            )
+          ) : (
+            <p className="flex aspect-video w-full items-center justify-center bg-encre p-6 text-center text-white/90">
+              La vidéo de présentation arrive bientôt.
+            </p>
+          )}
         </div>
       </dialog>
     </>
