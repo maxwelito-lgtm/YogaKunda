@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { exigerAdmin } from "@/lib/admin";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { nomComplet } from "@/lib/texte";
 import { getOffre, lireOffre, euros } from "@/data/offres";
 import { site } from "@/site.config";
 import { marquerRappelee, remettreARappeler } from "./actions";
@@ -68,7 +69,7 @@ async function lireClients(ids: string[]): Promise<Map<string, Client>> {
         const { data } = await admin.auth.admin.getUserById(id);
         const u = data?.user;
         const m = (u?.user_metadata ?? {}) as { prenom?: string; nom?: string };
-        return [id, { nom: [m.prenom, m.nom].filter(Boolean).join(" ").trim(), email: u?.email ?? "" }];
+        return [id, { nom: nomComplet(m), email: u?.email ?? "" }];
       } catch {
         return [id, { nom: "", email: "" }];
       }

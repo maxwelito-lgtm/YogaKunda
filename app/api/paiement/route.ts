@@ -80,6 +80,30 @@ export async function POST(request: Request) {
     const stripe = getStripe();
     const admin = createAdminClient();
 
+    // Anti-abus : au plus 10 paiements commencés par heure et par personne.
+    // Au passage, on retire les commandes de cette personne restées « en attente » depuis plus
+    // de 2 jours (la page de paiement Stripe expire après 24 h : elles ne peuvent plus être payées).
+    const ilYa1h = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const ilYa2j = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+    await admin
+      .from("commandes")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("statut", "en_attente")
+      .lt("created_at", ilYa2j);
+    const { count: recentes } = await admin
+      .from("commandes")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("statut", "en_attente")
+      .gte("created_at", ilYa1h);
+    if ((recentes ?? 0) >= 10) {
+      return NextResponse.json(
+        { error: "Trop de tentatives. Merci de patienter quelques minutes avant de réessayer." },
+        { status: 429 }
+      );
+    }
+
     // 1. Le prix Stripe doit exister et correspondre exactement au calcul du site.
     const cle = cleStripe(offre.id, formule, rythme);
     const liste = await stripe.prices.list({

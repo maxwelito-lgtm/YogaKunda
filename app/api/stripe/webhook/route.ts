@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { nomComplet } from "@/lib/texte";
 import { getOffre, lireOffre, SEMAINES_TRIMESTRE } from "@/data/offres";
 import {
   alerteAchat,
@@ -34,7 +35,7 @@ async function lireClient(userId: string) {
     const { data } = await createAdminClient().auth.admin.getUserById(userId);
     const u = data?.user;
     const meta = (u?.user_metadata ?? {}) as { prenom?: string; nom?: string };
-    const nom = [meta.prenom, meta.nom].filter(Boolean).join(" ").trim();
+    const nom = nomComplet(meta);
     return { nom, email: u?.email ?? "" };
   } catch (erreur) {
     console.error("Webhook : client introuvable pour l'e-mail", erreur);
