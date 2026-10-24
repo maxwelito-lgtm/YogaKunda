@@ -130,3 +130,16 @@ export function schemaService(nom: string, description: string, chemin: string) 
     areaServed: { "@type": "AdministrativeArea", name: "Béarn" },
   };
 }
+
+// Questions fréquentes : Google peut les afficher directement dans les résultats.
+export function schemaFaq(questions: { question: string; reponse: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      acceptedAnswer: { "@type": "Answer", text: q.reponse },
+    })),
+  };
+}

@@ -51,6 +51,10 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-encre/10 px-4 py-6 text-center text-xs text-encre/70 sm:px-6">
+        <nav aria-label="Nos lieux" className="mb-3 flex flex-wrap justify-center gap-x-6 gap-y-2">
+          <a href="/cours-yoga-oloron">Cours de yoga à Oloron</a>
+          <a href="/cours-yoga-geronce">Cours de yoga à Géronce</a>
+        </nav>
         <nav className="mb-3 flex flex-wrap justify-center gap-x-6 gap-y-2">
           <a href="/mentions-legales">Mentions légales</a>
           <a href="/cgv">Conditions générales de vente</a>

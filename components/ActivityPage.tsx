@@ -85,6 +85,19 @@ export default function ActivityPage({ data }: { data: ActivityPageData }) {
         >
           {data.intro.cta.label}
         </CtaLink>
+        {data.slug === "kundalini" && (
+          <p className="mt-6 text-sm text-encre/70">
+            Les cours ont lieu{" "}
+            <Link href="/cours-yoga-oloron" className="underline underline-offset-4 hover:text-encre">
+              à Oloron
+            </Link>{" "}
+            et{" "}
+            <Link href="/cours-yoga-geronce" className="underline underline-offset-4 hover:text-encre">
+              à Géronce
+            </Link>
+            .
+          </p>
+        )}
         {data.intro.sousCta && (
           <p className="mt-3 text-sm italic text-encre/60">
             {data.intro.sousCta}

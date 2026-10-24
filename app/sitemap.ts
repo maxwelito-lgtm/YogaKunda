@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { chemin: "", priorite: 1 },
     ...Object.keys(activityPages).map((slug) => ({ chemin: `/yoga/${slug}`, priorite: 0.9 })),
     { chemin: "/therapie-holistique", priorite: 0.9 },
+    { chemin: "/cours-yoga-oloron", priorite: 0.9 },
+    { chemin: "/cours-yoga-geronce", priorite: 0.9 },
     { chemin: "/reserver", priorite: 0.8 },
     { chemin: "/nous-contacter", priorite: 0.6 },
     { chemin: "/cgv", priorite: 0.3 },
